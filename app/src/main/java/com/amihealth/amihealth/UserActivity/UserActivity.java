@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -83,6 +85,8 @@ public class UserActivity extends AppCompatActivity {
     private Button fecha;
     private Button btn_update;
 
+    private File filetoUp = null;
+
     public final static int CODE_GALERIA = 300;
     public final static int CODE_CAMERA = 301;
 
@@ -114,13 +118,14 @@ public class UserActivity extends AppCompatActivity {
         estatura = (EditText) findViewById(R.id.profile_altura);
         sexo = (Spinner) findViewById(R.id.profile_sp_sexo);
         btn_update = (Button) findViewById(R.id.btn_actualizar_profile);
+        //btn_update.setEnabled(false);
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(btn_update.isEnabled()){
+                if(filetoUp != null){
                     RetrofitAdapter retrofit = new RetrofitAdapter();
 
-                    File file = new File(path_foto);
+                    File file = filetoUp;
 
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"),file);
                     MultipartBody.Part cuerpo = MultipartBody.Part.createFormData("img",file.getName(),reqFile);
@@ -167,9 +172,6 @@ public class UserActivity extends AppCompatActivity {
 
                         }
                     });
-                }
-                if(path_foto.length() > 0){
-
                 }
             }
         });
@@ -324,6 +326,7 @@ public class UserActivity extends AppCompatActivity {
                 +File.separator
                 +nombre_img;
         File nueva_img = new File(path_foto);
+        this.filetoUp = nueva_img;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
@@ -345,8 +348,12 @@ public class UserActivity extends AppCompatActivity {
             switch (requestCode){
                 case CODE_GALERIA:
                     final Uri path = data.getData();
-                    path_foto = data.getData().getEncodedPath();
+
+                    //path_foto = data.getData().getEncodedPath();
                     imageView.setImageURI(path);
+
+                    filetoUp = new File(getPath_from_uri(path));
+
                     break;
                 case CODE_CAMERA:
                     MediaScannerConnection.scanFile(this, new String[]{path_foto}, null, new MediaScannerConnection.OnScanCompletedListener() {
@@ -360,6 +367,20 @@ public class UserActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+
+    public String getPath_from_uri(Uri uri){
+        String[] datos = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(
+                this,
+                uri, datos, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+
+        int column_index =
+                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 
 

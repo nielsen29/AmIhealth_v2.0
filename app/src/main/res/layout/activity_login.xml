@@ -17,7 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6">
+            android:layout_weight="0.5">
 
             <ImageView
                 android:id="@+id/logo"
@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:cropToPadding="false"
-                app:srcCompat="@drawable/amihealth"
+                app:srcCompat="@drawable/ic_amihealth"
                 tools:ignore="ContentDescription" />
 
         </RelativeLayout>

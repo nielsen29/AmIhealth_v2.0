@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.User;
@@ -30,6 +31,9 @@ import com.amihealth.amihealth.UserActivity.UserActivity;
 import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,6 +98,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
        if (sessionManager.isLoggedIn()){
+           getUser();
            email.setText(user.getEmail());
            nombre.setText(user.getNombre()+ " " + user.getApellido());
            Picasso.with(getApplicationContext()).load(Configuracion.URL_IMG_ROOT + user.getImg()).into(img_profile);
@@ -157,5 +162,49 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public void getUser(){
+        RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
+        Call<User> call = retrofitAdapter.getClientService(sessionManager.getUserLogin().get(SessionManager.AUTH)).getUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, final Response<User> response) {
+                if (response.isSuccessful()){
+                    realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.insertOrUpdate(response.body());
+                        }
+                    });
+                    realm.close();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getUser();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getUser();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUser();
     }
 }
