@@ -11,7 +11,7 @@
     <application
         android:name=".AppConfig.AppInicio"
         android:allowBackup="true"
-        android:icon="@drawable/amihealth"
+        android:icon="@drawable/ic_amihealth_v2_02"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
