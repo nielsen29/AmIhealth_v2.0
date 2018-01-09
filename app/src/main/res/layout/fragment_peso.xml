@@ -1,0 +1,76 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context="com.amihealth.amihealth.Home.FragmentosHome.Peso.View.PesoFragment">
+
+
+
+<ScrollView
+    android:id="@+id/scrollPeso"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/cardview_default_elevation"
+            android:layout_marginTop="@dimen/horizontal_activity_margin">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/graf_peso_titulo"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:textSize="@dimen/textsize_username_card"/>
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/graf_peso"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:layout_margin="8dp"></com.github.mikephil.charting.charts.LineChart>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/peso_Recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/recyclerMarginTop"/>
+        <ProgressBar
+            android:id="@+id/prg_Peso"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+</ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_nuevoPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:clickable="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.stepstone.stepper.StepperLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/step_registro"
+    app:ms_backButtonText="@string/step_btn_back"
+    app:ms_nextButtonText="@string/step_btn_next"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:ms_stepperType="tabs"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:ms_tabStepDividerWidth="@dimen/tab_divider"
+    app:ms_activeStepColor="@color/Froly"
+    app:ms_inactiveStepColor="@color/ms_material_grey_400"
+    app:ms_completeButtonText="@string/registro_completo_btn"
+    app:ms_backButtonColor="@color/FrolyDark"
+    app:ms_nextButtonColor="@color/FrolyDark"
+    app:ms_completeButtonColor="@color/logoblue"
+    >
+</com.stepstone.stepper.StepperLayout>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.amihealth.amihealth.UserActivity.UserActivity"
+
+    >
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        >
+
+        <include layout="@layout/actionbar_toolbar"></include>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--<android.support.v4.widget.NestedScrollView
+        android:id="@+id/ns"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:textSize="16dp"
+            />
+
+    </android.support.v4.widget.NestedScrollView>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/layout_user_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageView"
+                    android:layout_width="@dimen/dimen_circleimageprofile"
+                    android:layout_height="@dimen/dimen_circleimageprofile"
+                    android:elevation="@dimen/elevation_circleimageprofile"
+                    android:src="@drawable/image"
+                    android:layout_marginBottom="-70dp"
+                    android:layout_gravity="bottom|center"
+                    app:layout_anchor="@id/layout_user_profile"
+                    app:layout_anchorGravity="center|top"
+
+                    />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_detalle_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <LinearLayout
+                        android:layout_marginTop="90dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="left"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/marginGraph"
+                            >
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColorHint="@color/accBlue"
+                                android:gravity="center"
+                                >
+
+                                <EditText
+                                    android:id="@+id/profile_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/rg_user_name_edit" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="left"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/marginGraph"
+                            >
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColorHint="@color/accBlue"
+                                >
+
+                                <EditText
+                                    android:id="@+id/profile_lastname"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/rg_user_lastname_edit" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_margin="@dimen/marginGraph"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.4"
+                                >
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/rg_lay_fecha"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".4"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:textColorHint="@color/accBlue"
+                                    >
+
+                                    <EditText
+                                        android:id="@+id/profile_fecha_nacimiento"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/rg_user_nacimiento"
+                                        android:inputType="date"
+                                        android:textSize="@dimen/global_text_size"
+                                        android:enabled="false"
+                                        />
+
+                                </android.support.design.widget.TextInputLayout>
+                                <Button
+                                    android:id="@+id/btn_fecha_profile"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/btn_fecha"
+                                    />
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_margin="@dimen/marginGraph"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColorHint="@color/accBlue"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/rg_user_sexo"
+                                    android:labelFor="@+id/rg_sp_sexo"/>
+
+                            </android.support.design.widget.TextInputLayout>
+                            <Spinner
+                                android:id="@+id/profile_sp_sexo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/sp_topPadding"
+                                app:theme="@style/Animation.AppCompat.DropDownUp"
+
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="left"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/marginGraph"
+                            >
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColorHint="@color/accBlue"
+                                android:gravity="center"
+                                >
+
+                                <EditText
+                                    android:id="@+id/profile_altura"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/rg_altura"
+                                    android:inputType="numberDecimal"
+                                    />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_actualizar_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update"
+                            />
+
+                    </LinearLayout>
+
+
+
+                </android.support.v7.widget.CardView>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
+

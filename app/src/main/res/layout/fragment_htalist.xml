@@ -1,0 +1,87 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmenthtaMedidas"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ModuloHTA.HTAhomeActivity"
+
+    >
+    <LinearLayout
+        android:id="@+id/progress_layout_hta_frag"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/progress_hta_frag"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
+        <TextView
+            android:text="@string/msg_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/error_layout_hta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        >
+        <ImageView
+            android:id="@+id/img_error_hta"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@android:drawable/stat_notify_error"
+            android:tint="@color/ms_errorColor"
+            />
+        <TextView
+            android:text="@string/msg_error_conection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/errorEmpty_layout_hta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        >
+        <ImageView
+            android:id="@+id/img_empty_hta"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_empty_registros"
+            android:tint="@color/dark_azulBR"
+            />
+        <TextView
+            android:text="@string/msg_empty_conection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipeRefresh_hta">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/htaList_Recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

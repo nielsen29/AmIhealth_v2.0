@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "744421529408",
+    "firebase_url": "https://amihealth2.firebaseio.com",
+    "project_id": "amihealth2",
+    "storage_bucket": "amihealth2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744421529408:android:513264ade7f7d7f9",
+        "android_client_info": {
+          "package_name": "com.amihealth.amihealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744421529408-2pggockb2hhf13fc9qc7nbg1rk6jqmmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amihealth.amihealth",
+            "certificate_hash": "fc2e17f71e79a4df4883fa55209425758abf8443"
+          }
+        },
+        {
+          "client_id": "744421529408-tfe8ebcn93dgvrc4s7tser7q94vv9ubi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxYFHbR9fuY5qFckOHKGqEFNUiaQwYRUQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744421529408-tfe8ebcn93dgvrc4s7tser7q94vv9ubi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

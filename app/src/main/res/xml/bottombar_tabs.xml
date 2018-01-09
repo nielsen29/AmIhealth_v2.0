@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tb_medical"
+        title="@string/tb_medical_tittle"
+        icon="@mipmap/ic_me"
+        />
+    <tab
+        id="@+id/tb_lista"
+        title="@string/tb_lista_tittle"
+        icon="@mipmap/ic_lista"
+
+        />
+    <tab
+        id="@+id/tb_buscar"
+        title="@string/tb_calendario_tittle"
+        icon="@mipmap/ic_calendario"
+        />
+</tabs>

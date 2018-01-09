@@ -1,0 +1,46 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/azulBR</item>
+        <item name="titleTextColor">@color/colorText</item>
+        <item name="android:colorBackground">@color/appBackgroundColor</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorText</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="titleTextColor">@color/colorText</item>
+        <item name="android:actionBarTabTextStyle">@color/colorText</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="titleTextColor">@color/colorText</item>
+    </style>
+
+
+    <style name="btnDark" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorText</item>
+        <item name="colorControlHighlight">@color/logoblue_light</item>
+        <item name="android:textColor">@color/icons</item>
+        <item name="android:textColorHint">@color/icons</item>
+    </style>
+
+    <style name="EditRed" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/colorText</item>
+        <item name="android:textSize">@dimen/EditText_login</item>
+        <item name="android:textColorPrimary">@color/colorText</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/logoRed</item>
+        <item name="colorControlActivated">@color/logoRed</item>
+    </style>
+
+</resources>
