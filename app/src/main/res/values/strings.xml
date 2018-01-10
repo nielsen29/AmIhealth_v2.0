@@ -150,5 +150,9 @@
     <string name="cargarImg">Cargar imagen</string>
     <string name="titulo_foto_dialog">Seleccione una opción:</string>
     <string name="update">Actualizar</string>
+    <string name="title_activity_med_antro_main">MedAntroMainActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
     <string name="text_launch_peso">Peso / IMC</string>
 </resources>

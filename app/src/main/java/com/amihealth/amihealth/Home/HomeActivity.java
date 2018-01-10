@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Button launchHTA_btn;
+    private Button launchHTA_peso;
     private Button launchUSER_btn;
     private User user;
     private Realm realm;
