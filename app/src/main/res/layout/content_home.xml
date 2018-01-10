@@ -44,7 +44,7 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            app:srcCompat="@drawable/ic_amihealth_v2_02"
+                            app:srcCompat="@drawable/ic_blood_presure"
 
                             />
                     </LinearLayout>
