@@ -150,4 +150,5 @@
     <string name="cargarImg">Cargar imagen</string>
     <string name="titulo_foto_dialog">Seleccione una opción:</string>
     <string name="update">Actualizar</string>
+    <string name="text_launch_peso">Peso / IMC</string>
 </resources>

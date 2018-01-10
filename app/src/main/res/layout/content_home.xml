@@ -16,66 +16,139 @@
         android:foregroundGravity="center"
         android:weightSum="1"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
         >
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_margin="4dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_margin="4dp"
                 >
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:background="@drawable/dis_gradient"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
                     >
-                    <LinearLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        >
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            app:srcCompat="@drawable/ic_blood_presure"
-
-                            />
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnlaunch_hta"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:gravity="center|bottom"
-                        android:singleLine="false"
-                        android:hapticFeedbackEnabled="true"
+                        android:layout_height="150dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circle_icon_main"
+                        >
+                        <LinearLayout
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+
+
+                            >
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                app:srcCompat="@drawable/ic_blood_presure"
+                                android:tint="@color/ms_white"
+
+
+
+                                />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnlaunch_hta"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:gravity="center|bottom"
+                            android:singleLine="false"
+                            android:hapticFeedbackEnabled="true"
+                            />
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_launch_hta"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_margin="16dp"
                         />
 
-                </RelativeLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_launch_hta"
-                    android:textColor="@color/primary_text"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_margin="16dp"
-                    />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_margin="4dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circle_icon_main_peso"
+                        >
+                        <LinearLayout
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+
+
+                            >
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                app:srcCompat="@drawable/ic_peso"
+                                android:tint="@color/ms_white"
+
+
+
+                                />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnlaunch_peso"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:gravity="center|bottom"
+                            android:singleLine="false"
+                            android:hapticFeedbackEnabled="true"
+                            />
+
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_launch_peso"
+                        android:textColor="@color/primary_text"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_margin="16dp"
+                        />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+
         <android.support.v7.widget.CardView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:layout_margin="4dp"
             >
             <RelativeLayout
