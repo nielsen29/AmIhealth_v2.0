@@ -122,28 +122,59 @@ public class UserActivity extends AppCompatActivity {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(filetoUp != null){
-                    RetrofitAdapter retrofit = new RetrofitAdapter();
 
+                boolean cambios = false;
+
+                MultipartBody.Part cuerpo = null;
+
+                if(filetoUp != null) {
                     File file = filetoUp;
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+                    cuerpo = MultipartBody.Part.createFormData("img", file.getName(), reqFile);
+                    cambios = true;
+                    Toast.makeText(getApplicationContext(),"cambio img",Toast.LENGTH_LONG).show();
+                }
+                Map<String, RequestBody> requestbody = new HashMap<String, RequestBody>();
 
-                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"),file);
-                    MultipartBody.Part cuerpo = MultipartBody.Part.createFormData("img",file.getName(),reqFile);
+                if( !nombre.getText().toString().equals(user.getNombre())){
+                    RequestBody mNombre = RequestBody.create(MediaType.parse("plain/text"), nombre.getText().toString());
+                    requestbody.put("nombre",mNombre);
+                    cambios = true;
+                    Toast.makeText(getApplicationContext(),"cambio nom",Toast.LENGTH_LONG).show();
 
-                    Map<String, RequestBody> requestbody = new HashMap<String, RequestBody>();
+                }
+                if( !apellido.getText().toString().equals(user.getApellido())){
+                    RequestBody mApellido= RequestBody.create(MediaType.parse("plain/text"), apellido.getText().toString());
+                    requestbody.put("apellido",mApellido);
+                    cambios = true;
+                    Toast.makeText(getApplicationContext(),"cambio apl",Toast.LENGTH_LONG).show();
 
-                    if( !nombre.getText().equals(user.getNombre())){
-                        RequestBody mNombre = RequestBody.create(MediaType.parse("plain/text"), nombre.getText().toString());
-                        requestbody.put("nombre",mNombre);
-                    }
-                    if( !apellido.getText().equals(user.getApellido())){
-                        RequestBody mApellido= RequestBody.create(MediaType.parse("plain/text"), apellido.getText().toString());
-                        requestbody.put("apellido",mApellido);
-                    }
+                }
+                if(!estatura.getText().toString().equals(String.valueOf(user.getPaciente().getEstatura()))){
+                    RequestBody mEstatura = RequestBody.create(MediaType.parse("plain/text"),estatura.getText().toString());
+                    requestbody.put("estatura",mEstatura);
+                    cambios = true;
+                    Toast.makeText(getApplicationContext(),"cambio estat",Toast.LENGTH_LONG).show();
+
+                }
+                if(!fecha_nacimiento.getText().toString().equals(user.getPaciente().getFecha_nacimiento())){
+                    RequestBody mFechaN = RequestBody.create(MediaType.parse("plain/text"),fecha_nacimiento.getText().toString());
+                    requestbody.put("fecha_nacimiento",mFechaN);
+                    cambios = true;
+                    Toast.makeText(getApplicationContext(),"cambio fecha",Toast.LENGTH_LONG).show();
+
+                }
+                if(sexo.getSelectedItemId() != user.getPaciente().getSexo()){
+                    RequestBody mSexo = RequestBody.create(MediaType.parse("plain/text"),String.valueOf(sexo.getSelectedItemId()));
+                    requestbody.put("sexo",mSexo);
+                    cambios = true;
+                    Toast.makeText(getApplicationContext(),"cambio fecha",Toast.LENGTH_LONG).show();
+
+                }
 
 
-                    //MultipartBody aki = MultipartBody.Builder().
-
+                if(cambios){
+                    RetrofitAdapter retrofit = new RetrofitAdapter();
 
 
                     Call<User> call = retrofit
@@ -172,7 +203,15 @@ public class UserActivity extends AppCompatActivity {
 
                         }
                     });
+                }else{
+                    Toast.makeText(getApplicationContext(),"no realizo cambios",Toast.LENGTH_LONG).show();
                 }
+
+
+                    //MultipartBody aki = MultipartBody.Builder().
+
+
+
             }
         });
 
@@ -208,8 +247,6 @@ public class UserActivity extends AppCompatActivity {
                     showFechaDialogo();
                 }
             });
-
-
         }
 
         if(validaPermisos()){
@@ -224,6 +261,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void actualizarDatosUser(final User body) {
+        realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -231,7 +269,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
         realm.close();
-
     }
 
     private void cargarClickListener_img() {

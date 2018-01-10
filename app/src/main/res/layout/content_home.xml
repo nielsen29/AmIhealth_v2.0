@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,50 +7,77 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.amihealth.amihealth.Home.HomeActivity"
     tools:showIn="@layout/app_bar_home"
-    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:background="@drawable/dis_gradient"
     >
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="520dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center|top"
         android:foregroundGravity="center"
+        android:weightSum="1"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         >
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-            <RelativeLayout
+            android:layout_weight="0.5"
+            android:layout_margin="4dp"
+            >
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
                 >
-                <Button
-                    android:id="@+id/btnlaunch_hta"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/text_launch_hta"
-                    android:background="@color/nocolor"
-                    android:gravity="center|bottom"
-                    android:singleLine="false"
-                    android:paddingBottom="20dp"
-                    android:textSize="18sp"
-                    android:hapticFeedbackEnabled="true"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/dis_gradient"
+                    >
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        >
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_blood_presure"
+                            android:tintMode="src_in"
+                            />
+                    </LinearLayout>
 
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/btnlaunch_hta"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:gravity="center|bottom"
+                        android:singleLine="false"
+                        android:hapticFeedbackEnabled="true"
+                        />
+
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icons8_hearts_filled_50"
-                    android:layout_centerInParent="true"
-
+                    android:text="@string/text_launch_hta"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_margin="16dp"
                     />
-            </RelativeLayout>
+
+            </LinearLayout>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:layout_margin="4dp"
+            >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -81,4 +108,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
