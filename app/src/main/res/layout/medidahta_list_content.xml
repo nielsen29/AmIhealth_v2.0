@@ -167,7 +167,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/nocolor"
-                    android:src="@drawable/ic_more_vert" />
+                    app:srcCompat="@drawable/ic_more_vert" />
 
             </LinearLayout>
 

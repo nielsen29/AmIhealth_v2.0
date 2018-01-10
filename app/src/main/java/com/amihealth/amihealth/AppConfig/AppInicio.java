@@ -1,6 +1,9 @@
 package com.amihealth.amihealth.AppConfig;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.widget.Toast;
 
 import com.amihealth.amihealth.Configuraciones.Configuracion;
@@ -33,7 +36,7 @@ import static io.realm.RealmConfiguration.*;
  * Created by amihealthmel on 11/12/17.
  */
 
-public class AppInicio extends Application {
+public class AppInicio extends MultiDexApplication {
 
     //Archivo para configurar la App Esta Clase se inicia antes que todas
 
@@ -45,8 +48,11 @@ public class AppInicio extends Application {
 
     public SessionManager sessionManager;
 
+    private static AppInicio mainApplication;
+
     @Override
     public void onCreate() {
+
 
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -73,6 +79,7 @@ public class AppInicio extends Application {
         realm           .close();
         getConfigTables();
         super           .onCreate();
+        mainApplication = this;
     }
 
     private void SetUpRealm(){
@@ -243,6 +250,17 @@ public class AppInicio extends Application {
         RealmResults<T> realmResults = realm.where(classT).findAll();
         return
                 (realmResults.size() > 0) ? true:false;
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
+
+
+    public static synchronized AppInicio getInstance() {
+        return mainApplication;
     }
 
 
