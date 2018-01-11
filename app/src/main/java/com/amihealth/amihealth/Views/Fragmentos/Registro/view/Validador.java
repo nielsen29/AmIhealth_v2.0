@@ -19,6 +19,7 @@ public class Validador {
     final private String PATRON_EMAIL = "^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@"+"[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*(\\.[a-z]{2,})$";
     final private String PATRON_NUMBER = "^[_0-9]";
     final private String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$";
+
     private boolean valido;
 
     public VerificationError VerificarCampo(Context context,EditText editText){
@@ -44,6 +45,17 @@ public class Validador {
                         return null;
                     }else{
                         editText.setError(context.getResources().getString(R.string.error_pass));
+                        return new VerificationError("Para continuar por favor verifica los campos que marquen error");
+                    }
+                }
+                case InputType.TYPE_TEXT_VARIATION_PERSON_NAME:
+                {
+                    Pattern pattern = Pattern.compile(PATRON_EMAIL);
+                    Matcher matcher = pattern.matcher(editText.getText().toString());
+                    if(matcher.matches()){
+                        return null;
+                    }else{
+                        editText.setError(context.getResources().getString(R.string.error_email));
                         return new VerificationError("Para continuar por favor verifica los campos que marquen error");
                     }
                 }

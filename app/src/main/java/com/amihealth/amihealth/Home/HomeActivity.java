@@ -24,6 +24,7 @@ import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.User;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.MedAntroMainActivity;
 import com.amihealth.amihealth.ModuloHTA.HTAhomeActivity;
 import com.amihealth.amihealth.ModuloHTA.MedidaHTAListActivity;
 import com.amihealth.amihealth.R;
@@ -62,12 +63,20 @@ public class HomeActivity extends AppCompatActivity
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
         launchHTA_btn = (Button) findViewById(R.id.btnlaunch_hta);
+        launchHTA_peso = (Button) findViewById(R.id.btnlaunch_peso);
         launchUSER_btn = (Button) findViewById(R.id.btnlaunch_User);
 
         launchHTA_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), HTAhomeActivity.class);
+                startActivity(i);
+            }
+        });
+        launchHTA_peso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MedAntroMainActivity.class);
                 startActivity(i);
             }
         });
