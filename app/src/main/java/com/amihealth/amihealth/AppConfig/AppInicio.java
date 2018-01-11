@@ -36,7 +36,7 @@ import static io.realm.RealmConfiguration.*;
  * Created by amihealthmel on 11/12/17.
  */
 
-public class AppInicio extends MultiDexApplication {
+public class  AppInicio extends MultiDexApplication {
 
     //Archivo para configurar la App Esta Clase se inicia antes que todas
 
