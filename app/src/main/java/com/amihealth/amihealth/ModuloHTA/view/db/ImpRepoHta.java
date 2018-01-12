@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
+import com.amihealth.amihealth.ApiAmIHealth.InternetConnection;
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.MedidaHTA;
@@ -19,6 +20,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -38,15 +40,19 @@ public class ImpRepoHta implements RepositorioHta {
     private Context context;
     private String token;
 
+
+
     public ImpRepoHta(IteractorHta iteractorHta, PresenterHta presenterHta, Context context) {
         this.iteractorHta = iteractorHta;
         this.presenterHta = presenterHta;
         this.context = context;
         this.token = new SessionManager(context).getUserLogin().get(SessionManager.AUTH);
+
     }
 
     @Override
     public void getMedidas(int orden) {
+
 
         //syncRealmToServ();
 

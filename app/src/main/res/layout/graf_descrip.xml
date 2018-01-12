@@ -49,7 +49,7 @@
                             >
                             <ImageView
                                 android:tint="@color/colorText"
-                                android:src="@drawable/ic_calendario"
+                                app:srcCompat="@drawable/ic_calendario"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/graf_descrip_margin"
@@ -71,7 +71,7 @@
                             >
                             <ImageView
                                 android:tint="@color/colorText"
-                                android:src="@drawable/ic_clock"
+                                app:srcCompat="@drawable/ic_clock"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/graf_descrip_margin"
@@ -128,7 +128,7 @@
                                     >
                                     <ImageView
                                         android:tint="@color/ms_white"
-                                        android:src="@drawable/ic_sys"
+                                        app:srcCompat="@drawable/ic_sys"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginRight="@dimen/graf_descrip_margin"
@@ -156,7 +156,7 @@
                                     >
                                     <ImageView
                                         android:tint="@color/ms_white"
-                                        android:src="@drawable/ic_dis"
+                                        app:srcCompat="@drawable/ic_dis"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:rotation="180"
@@ -185,7 +185,7 @@
                             >
                             <ImageView
                                 android:tint="@color/ms_white"
-                                android:src="@drawable/ic_pls"
+                                app:srcCompat="@drawable/ic_pls"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:rotation="180"

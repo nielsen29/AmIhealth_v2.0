@@ -2,6 +2,7 @@ package com.amihealth.amihealth.ApiAmIHealth;
 
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Models.MedidaHTA;
+import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.Models.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -60,6 +62,19 @@ public interface ServiceRetrofit {
     @Multipart
     @POST(Configuracion.URL_UpdateProfile)
     Call<User> update_profile(@Part MultipartBody.Part img, @PartMap Map<String, RequestBody> map);
+
+
+    /********************************************************************
+     *          METODOS DE ACCESO A DATOS DE PESO
+     ********************************************************************/
+
+    @GET(Configuracion.URL_GETMEDIDAS_PESO)
+    Call<ArrayList<Peso>> getMedidas_Peso();
+
+    @POST(Configuracion.URL_INSERT_PESO)
+    Call<Peso> insert_Peso(@Body Peso peso);
+
+
 
 
 

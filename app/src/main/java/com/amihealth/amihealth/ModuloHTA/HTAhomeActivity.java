@@ -302,7 +302,6 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
     protected void onDestroy() {
         super.onDestroy();
         finishAffinity();
-        Toast.makeText(getApplicationContext(),"DESTROY", Toast.LENGTH_LONG).show();
     }
 
     @Override

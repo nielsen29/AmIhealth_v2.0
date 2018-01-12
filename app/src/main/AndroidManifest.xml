@@ -107,7 +107,12 @@
         <activity
             android:name=".ModuloAntropomorficas.Home.MedAntroMainActivity"
             android:label="@string/title_activity_med_antro_main"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".Home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.Home.HomeActivity" />
+    </activity>
     </application>
 
 </manifest>
