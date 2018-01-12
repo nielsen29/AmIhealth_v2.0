@@ -10,4 +10,5 @@ public interface PesoViewInterface {
     void OnDeleteResponse();
     void OnUpdateResponse();
     void OnErrorResponse(String error);
+    void RespuestaActivity(int cargar);
 }

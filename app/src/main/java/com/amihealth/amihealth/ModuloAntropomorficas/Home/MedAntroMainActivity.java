@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.AddPesoDialogFragment;
@@ -33,10 +34,16 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoListaFra
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresenterInterface;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentrerIMP;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
+import com.amihealth.amihealth.ModuloHTA.view.fragments.lolFragment;
 import com.amihealth.amihealth.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class MedAntroMainActivity extends AppCompatActivity implements PesoViewInterface, PesoListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener {
 
@@ -292,7 +299,19 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     public void onDialogPositiveClick(DialogFragment dialog, double value) {
         Peso peso = new Peso();
         peso.setPeso(String.valueOf(value));
-        pesoPresenterInterface.RequestInsertPeso(peso);
+       pesoPresenterInterface.RequestInsertPeso(peso);
+
+
+         /*RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
+        Observable<Response<Peso>> observable =retrofitAdapter.getClientService(sessionManager.getUserLogin().get(SessionManager.AUTH)).insert_Peso(peso);
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(pesoResponse -> {
+                    if(pesoResponse.isSuccessful()){
+                        onErrorMSG(pesoResponse.toString());
+                    }
+                });
+                */
+
     }
 
     @Override
@@ -302,7 +321,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnGetAllResponse() {
-        pesoViewInterface.OnGetAllResponse();
+        pesoViewInterface.RespuestaActivity(2);
     }
 
     @Override
@@ -322,6 +341,11 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnErrorResponse(String error) {
+
+    }
+
+    @Override
+    public void RespuestaActivity(int cargar) {
 
     }
 
@@ -353,10 +377,10 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
                     pesoViewInterface = (PesoViewInterface) f;
                     break;
                 case 1:
-                    f = new PesoListaFragment();
+                    f = new lolFragment();
                     break;
                 default:
-                    f = new PesoListaFragment();
+                    f = new lolFragment();
                     break;
             }
             return f;

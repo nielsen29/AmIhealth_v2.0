@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -72,7 +74,7 @@ public interface ServiceRetrofit {
     Call<ArrayList<Peso>> getMedidas_Peso();
 
     @POST(Configuracion.URL_INSERT_PESO)
-    Call<Peso> insert_Peso(@Body Peso peso);
+    Observable<Response<Peso>> insert_Peso(@Body Peso peso);
 
 
 

@@ -52,6 +52,8 @@ public class PesoPresentrerIMP implements PesoPresenterInterface {
     @Override
     public void OnErrorResponse(String error) {
 
+        pesoViewInterface.OnErrorResponse(error);
+
     }
 
     @Override

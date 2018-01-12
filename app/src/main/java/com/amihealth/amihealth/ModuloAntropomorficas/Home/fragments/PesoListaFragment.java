@@ -35,6 +35,8 @@ import com.amihealth.amihealth.R;
 
 import java.util.ArrayList;
 
+import io.realm.OrderedCollectionChangeSet;
+import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -184,6 +186,10 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
 
     }
 
+    @Override
+    public void RespuestaActivity(int cargar) {
+        ordenarARRAY(0);
+    }
 
 
     public void ordenarARRAY(int order){

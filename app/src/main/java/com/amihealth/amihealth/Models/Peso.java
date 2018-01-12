@@ -19,9 +19,10 @@ import io.realm.annotations.PrimaryKey;
 
 public class Peso extends RealmObject {
 
-    @PrimaryKey
+
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private String id;
 
     @SerializedName("id_paciente")

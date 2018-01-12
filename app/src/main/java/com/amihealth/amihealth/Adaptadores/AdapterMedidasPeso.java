@@ -29,8 +29,8 @@ public class AdapterMedidasPeso extends RecyclerView.Adapter<AdapterMedidasPeso.
     private ArrayList<MedidasPesoList> listItem;
 
     public AdapterMedidasPeso(Context activity,ArrayList<MedidasPesoList> listItem){
+            super();
             this.activity=activity;
-
             this.listItem=listItem;
             }
 
@@ -51,6 +51,7 @@ public class AdapterMedidasPeso extends RecyclerView.Adapter<AdapterMedidasPeso.
         holder.recyclerView.setHasFixedSize(false);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         holder.recyclerView.setAdapter(adapterPeso);
+        holder.recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override

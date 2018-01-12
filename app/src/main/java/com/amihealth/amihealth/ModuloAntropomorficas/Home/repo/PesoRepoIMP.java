@@ -1,5 +1,6 @@
 package com.amihealth.amihealth.ModuloAntropomorficas.Home.repo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
@@ -11,6 +12,13 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentr
 
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -50,6 +58,7 @@ public class PesoRepoIMP implements PesoRepoInterface {
                 if (response.isSuccessful()){
                     insertar_pesos_REALM(response.body());
                 }
+
             }
 
             @Override
@@ -73,20 +82,28 @@ public class PesoRepoIMP implements PesoRepoInterface {
 
     @Override
     public void RequestInsertPeso(Peso peso) {
-        Call<Peso> call = retrofitAdapter.getClientService(token).insert_Peso(peso);
-        call.enqueue(new Callback<Peso>() {
-            @Override
-            public void onResponse(Call<Peso> call, Response<Peso> response) {
-                if (response.isSuccessful()){
-                    insertar_REALM(response.body());
-                }
-            }
+/*
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(context);
+        progressDoalog.setMax(100);
+        progressDoalog.setMessage("Its loading....");
+        progressDoalog.setTitle("ProgressDialog bar example");
+        progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDoalog.show();*/
 
-            @Override
-            public void onFailure(Call<Peso> call, Throwable t) {
 
-            }
-        });
+        Observable<Response<Peso>> observable =retrofitAdapter.getClientService(token).insert_Peso(peso);
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map(new Function<Response<Peso>, Peso>() {
+                    @Override
+                    public Peso apply(Response<Peso> pesoResponse) throws Exception {
+                        return pesoResponse.body();
+                    }
+                })
+                .subscribe(peso1 -> {
+                    this.insertar_REALM(peso1);
+                });
     }
 
     @Override
