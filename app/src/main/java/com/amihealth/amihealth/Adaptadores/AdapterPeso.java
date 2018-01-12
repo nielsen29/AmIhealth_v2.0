@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.Models.Peso;
@@ -25,7 +26,9 @@ import com.amihealth.amihealth.ModuloHTA.view.presenter.ImpPresenterHta;
 import com.amihealth.amihealth.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmModel;
@@ -70,10 +73,22 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder view = (ViewHolder) holder;
         Peso peso = (Peso) getData().get(position);
+        view.mItem = peso;
         view.peso.setText(String.valueOf(peso.getPeso()));
         view.view.setBackgroundColor(Color.parseColor(peso.getRgb()));
         view.imc.setText(String.valueOf(peso.getImc()));
-        view.date.setText(peso.getDatetime());
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date= new Date();
+        try {
+            date = df.parse(peso.getDatetime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat f = new SimpleDateFormat("d MMMM yyyy\nhh:mm a");
+        String textFecha = f.format(date);
+        view.date.setText(textFecha);
         int color = Color.parseColor(peso.getRgb());
 
         view.imcColor.setBackgroundColor(color);
@@ -116,11 +131,14 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private final ImageButton menuBoton;
         private View view;
         private TextView peso;
         private TextView imc;
         private TextView date;
         private LinearLayout imcColor;
+        private Peso mItem;
+
 
         public ViewHolder(View v) {
             super(v);
@@ -129,7 +147,24 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
             imc = (TextView) v.findViewById(R.id.peso_imc_item);
             date = (TextView) v.findViewById(R.id.peso_fecha_item);
             imcColor = (LinearLayout) v.findViewById(R.id.lin_imc_color);
-            imcColor.getBackground().setAlpha(50);
+            menuBoton = (ImageButton) v.findViewById(R.id.menupopup1);
+            menuBoton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(view.getContext(),view );
+                    popup.inflate(R.menu.menu_medida);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if(mItem.isLoaded()){
+                                date.setText(mItem.getId());
+                            }
+                            return  true;
+                        }
+                    });
+                    popup.show();
+                }
+            });
         }
 
 

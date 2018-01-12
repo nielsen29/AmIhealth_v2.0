@@ -61,7 +61,7 @@ public class PesoPresentrerIMP implements PesoPresenterInterface {
 
     @Override
     public void RequestInsertPeso(Peso peso) {
-
+        pesoIteractorInterface.RequestInsertPeso(peso);
     }
 
     @Override

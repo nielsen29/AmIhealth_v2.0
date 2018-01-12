@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterfaceVi
 
     final private String PATRON_EMAIL = "^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@"+"[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*(\\.[a-z]{2,})$";
     final private String PATRON_NUMBER = "^[_0-9]";
-    final private String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$";
+    final private String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{4,}$";
 
     public boolean verificarPatronesText(EditText editText){
         if(editText.getText().length()>0 ){

@@ -150,7 +150,6 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     public void OnGetAllResponse() {
         Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
 
-        realm = Realm.getDefaultInstance();
         RealmResults<Peso> realmResults = realm.where(Peso.class).findAll();
         if(realmResults.isEmpty()){
             linearLayout_error_empty.setVisibility(View.VISIBLE);
@@ -189,7 +188,6 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
 
     public void ordenarARRAY(int order){
         medidasPesoList.clear();
-        this.realm = Realm.getDefaultInstance();
         RealmResults<Peso> lol;
         switch (order){
             case 0:
@@ -271,7 +269,14 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
 
     @Override
     public void orderListener(int order) {
+        mListener.onErrorMSG("EY INSERTEEEEEE");
+        //recyclerView.getAdapter().notifyDataSetChanged();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 
     /**

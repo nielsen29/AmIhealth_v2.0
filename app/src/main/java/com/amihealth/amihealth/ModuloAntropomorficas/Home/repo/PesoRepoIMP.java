@@ -57,9 +57,22 @@ public class PesoRepoIMP implements PesoRepoInterface {
 
             }
         });
+        pesoPresenterInterface.OnGetAllResponse();
     }
 
     public void insert_Peso_server(Peso peso){
+
+
+
+    }
+
+    @Override
+    public void RequestGetAll() {
+        getAllmedidas();
+    }
+
+    @Override
+    public void RequestInsertPeso(Peso peso) {
         Call<Peso> call = retrofitAdapter.getClientService(token).insert_Peso(peso);
         call.enqueue(new Callback<Peso>() {
             @Override
@@ -74,17 +87,6 @@ public class PesoRepoIMP implements PesoRepoInterface {
 
             }
         });
-
-    }
-
-    @Override
-    public void RequestGetAll() {
-        getAllmedidas();
-    }
-
-    @Override
-    public void RequestInsertPeso(Peso peso) {
-        insert_Peso_server(peso);
     }
 
     @Override
@@ -192,6 +194,7 @@ public class PesoRepoIMP implements PesoRepoInterface {
             }
         });
         realm.close();
+        pesoPresenterInterface.OnGetAllResponse();
     }
 
 

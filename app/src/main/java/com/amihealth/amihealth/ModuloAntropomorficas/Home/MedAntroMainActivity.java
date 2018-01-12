@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,13 +26,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.amihealth.amihealth.Configuraciones.SessionManager;
+import com.amihealth.amihealth.Models.Peso;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.AddPesoDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoListaFragment;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresenterInterface;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentrerIMP;
+import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
 import com.amihealth.amihealth.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedAntroMainActivity extends AppCompatActivity implements PesoListaFragment.OnFragmentInteractionListener {
+public class MedAntroMainActivity extends AppCompatActivity implements PesoViewInterface, PesoListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -53,13 +60,22 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoLista
     private SectionsPagerAdapter fragmentHTAadapter;
     private ViewPager viewPager;
     private int tabPos = 0;
+    private PesoPresenterInterface pesoPresenterInterface;
 
     private LayoutInflater layoutInflater;
+    private SessionManager sessionManager;
+
+    private OrdenSelectorListener ordenSelectorListener;
+    private PesoViewInterface pesoViewInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_med_antro_main);
+
+        sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.checkLogin();
+        pesoPresenterInterface = new PesoPresentrerIMP(getApplicationContext(),this);
 
         layoutInflater = LayoutInflater.from(getApplicationContext());
 
@@ -71,8 +87,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoLista
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showNoticeDialog();
             }
         });
 
@@ -184,6 +199,14 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoLista
     }
 
 
+    public void showNoticeDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new AddPesoDialogFragment();
+        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -219,6 +242,11 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoLista
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
+        if(fragment instanceof OrdenSelectorListener){
+            ordenSelectorListener = (OrdenSelectorListener) fragment;
+            //listaOrdenArray.add((OrdenSelectorListener) fragment);
+        }
+
     }
 
     @Override
@@ -260,6 +288,43 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoLista
         super.onDestroy();
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, double value) {
+        Peso peso = new Peso();
+        peso.setPeso(String.valueOf(value));
+        pesoPresenterInterface.RequestInsertPeso(peso);
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void OnGetAllResponse() {
+        pesoViewInterface.OnGetAllResponse();
+    }
+
+    @Override
+    public void OnInsertResponse() {
+
+    }
+
+    @Override
+    public void OnDeleteResponse() {
+
+    }
+
+    @Override
+    public void OnUpdateResponse() {
+
+    }
+
+    @Override
+    public void OnErrorResponse(String error) {
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -284,6 +349,8 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoLista
 
                 case 0:
                     f = new PesoListaFragment();
+                    ordenSelectorListener = (OrdenSelectorListener) f;
+                    pesoViewInterface = (PesoViewInterface) f;
                     break;
                 case 1:
                     f = new PesoListaFragment();

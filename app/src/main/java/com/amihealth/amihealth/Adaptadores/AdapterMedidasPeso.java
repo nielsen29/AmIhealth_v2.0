@@ -43,15 +43,15 @@ public class AdapterMedidasPeso extends RecyclerView.Adapter<AdapterMedidasPeso.
 
     @Override
     public void onBindViewHolder(ViewListHolder holder,int position){
-    final String titulo=listItem.get(position).toString();
-    final RealmResults<Peso> results=listItem.get(position).getRealmResults();
-            //AdapterMedidasHTA adapterMedidasHTA=new AdapterMedidasHTA(results.sort("Date", Sort.DESCENDING),true,activity);
-            AdapterPeso adapterPeso = new AdapterPeso(results.sort("datetime",Sort.DESCENDING), true, activity );
-            holder.textView.setText(titulo);
-            holder.recyclerView.setHasFixedSize(false);
-            holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
-            holder.recyclerView.setAdapter(adapterPeso);
-            }
+        final String titulo=listItem.get(position).toString();
+        final RealmResults<Peso> results=listItem.get(position).getRealmResults();
+        //AdapterMedidasHTA adapterMedidasHTA=new AdapterMedidasHTA(results.sort("Date", Sort.DESCENDING),true,activity);
+        AdapterPeso adapterPeso = new AdapterPeso(results.sort("datetime",Sort.DESCENDING), true, activity );
+        holder.textView.setText(titulo);
+        holder.recyclerView.setHasFixedSize(false);
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
+        holder.recyclerView.setAdapter(adapterPeso);
+    }
 
     @Override
     public int getItemCount(){
@@ -66,6 +66,8 @@ public class AdapterMedidasPeso extends RecyclerView.Adapter<AdapterMedidasPeso.
             this.listItem.add(medidasHTAList);
             this.notifyDataSetChanged();
             }
+
+
 
 
     public class ViewListHolder extends RecyclerView.ViewHolder {

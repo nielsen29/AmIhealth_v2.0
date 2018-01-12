@@ -301,7 +301,6 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        finishAffinity();
     }
 
     @Override
