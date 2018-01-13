@@ -156,4 +156,5 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="text_launch_peso">Peso / IMC</string>
     <string name="title_pesoActivity">Mod Peso</string>
+    <string name="editar_peso_title">Editar Medida</string>
 </resources>

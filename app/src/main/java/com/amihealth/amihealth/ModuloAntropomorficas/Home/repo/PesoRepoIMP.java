@@ -2,7 +2,9 @@ package com.amihealth.amihealth.ModuloAntropomorficas.Home.repo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
+import com.amihealth.amihealth.ApiAmIHealth.ErrorRetrofit;
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.MedidaHTA;
@@ -13,6 +15,7 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentr
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -51,22 +54,20 @@ public class PesoRepoIMP implements PesoRepoInterface {
      *********************************************************************************************/
 
     public void getAllmedidas(){
-        Call<ArrayList<Peso>> call = retrofitAdapter.getClientService(this.token).getMedidas_Peso();
-        call.enqueue(new Callback<ArrayList<Peso>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Peso>> call, Response<ArrayList<Peso>> response) {
-                if (response.isSuccessful()){
-                    insertar_pesos_REALM(response.body());
-                }
+        Observable<Response<ArrayList<Peso>>> observable = retrofitAdapter.getClientService(this.token).getMedidas_Peso();
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(arrayListResponse -> {
+                    if(arrayListResponse.isSuccessful()){
+                        insertar_pesos_REALM(arrayListResponse.body());
+                    }else{
+                        pesoPresenterInterface.OnErrorResponse(arrayListResponse.errorBody().string());
+                    }
+                }, throwable -> {
+                    Log.i("ERROR", "RxJava2, HTTP Error: " + throwable.getMessage());
+                    pesoPresenterInterface.OnErrorResponse(throwable.getMessage());
+                });
 
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Peso>> call, Throwable t) {
-
-            }
-        });
-        pesoPresenterInterface.OnGetAllResponse();
     }
 
     public void insert_Peso_server(Peso peso){
@@ -82,38 +83,70 @@ public class PesoRepoIMP implements PesoRepoInterface {
 
     @Override
     public void RequestInsertPeso(Peso peso) {
-/*
-        final ProgressDialog progressDoalog;
-        progressDoalog = new ProgressDialog(context);
-        progressDoalog.setMax(100);
-        progressDoalog.setMessage("Its loading....");
-        progressDoalog.setTitle("ProgressDialog bar example");
-        progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDoalog.show();*/
-
 
         Observable<Response<Peso>> observable =retrofitAdapter.getClientService(token).insert_Peso(peso);
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .map(new Function<Response<Peso>, Peso>() {
-                    @Override
-                    public Peso apply(Response<Peso> pesoResponse) throws Exception {
-                        return pesoResponse.body();
-                    }
-                })
-                .subscribe(peso1 -> {
-                    this.insertar_REALM(peso1);
-                });
+                .subscribe(
+                        pesoResponse -> {
+                            if (pesoResponse.isSuccessful()){
+                                insertar_REALM(pesoResponse.body());
+                            }else {
+                                pesoPresenterInterface.OnErrorResponse(pesoResponse.errorBody().string());
+                            }
+                        },
+                        t -> {
+                            Log.i("ERROR", "RxJava2, HTTP Error: " + t.getMessage());
+                            pesoPresenterInterface.OnErrorResponse(t.getMessage());
+                        }
+                );
     }
 
     @Override
     public void RequestUpdatePeso(Peso peso) {
-
+        Observable<Response<Peso>> observable =retrofitAdapter.getClientService(token).edit_Peso(peso);
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        pesoResponse -> {
+                            if (pesoResponse.isSuccessful()){
+                                insertar_REALM(pesoResponse.body());
+                            }else {
+                                pesoPresenterInterface.OnErrorResponse(pesoResponse.errorBody().string());
+                            }
+                        },
+                        t -> {
+                            Log.i("ERROR", "RxJava2, HTTP Error: " + t.getMessage());
+                            pesoPresenterInterface.OnErrorResponse(t.getMessage());
+                        }
+                );
     }
 
     @Override
     public void RequestDeletePeso(Peso peso) {
-
+        Observable<Response<Peso>> observable =retrofitAdapter.getClientService(token).delete_Peso(peso);
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        pesoResponse -> {
+                            if (pesoResponse.isSuccessful()){
+                                realm = Realm.getDefaultInstance();
+                                realm.executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        realm.where(Peso.class).equalTo("id",pesoResponse.body().getId()).findFirst().deleteFromRealm();
+                                    }
+                                });
+                                realm.close();
+                            }else {
+                                pesoPresenterInterface.OnErrorResponse(pesoResponse.errorBody().string());
+                            }
+                        },
+                        t -> {
+                            Log.i("ERROR", "RxJava2, HTTP Error: " + t.getMessage());
+                            pesoPresenterInterface.OnErrorResponse(t.getMessage());
+                        }
+                );
     }
 
 

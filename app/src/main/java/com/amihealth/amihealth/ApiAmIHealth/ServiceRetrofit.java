@@ -71,10 +71,16 @@ public interface ServiceRetrofit {
      ********************************************************************/
 
     @GET(Configuracion.URL_GETMEDIDAS_PESO)
-    Call<ArrayList<Peso>> getMedidas_Peso();
+    Observable<Response<ArrayList<Peso>>> getMedidas_Peso();
 
     @POST(Configuracion.URL_INSERT_PESO)
     Observable<Response<Peso>> insert_Peso(@Body Peso peso);
+
+    @POST(Configuracion.URL_EDIT_PESO)
+    Observable<Response<Peso>> edit_Peso(@Body Peso peso);
+
+    @POST(Configuracion.URL_DELETE_PESO)
+    Observable<Response<Peso>> delete_Peso(@Body Peso peso);
 
 
 

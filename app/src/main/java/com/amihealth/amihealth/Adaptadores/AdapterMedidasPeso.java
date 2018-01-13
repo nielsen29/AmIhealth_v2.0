@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amihealth.amihealth.Models.Peso;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.Utils.MedidasPesoList;
 import com.amihealth.amihealth.R;
 
@@ -27,11 +28,13 @@ public class AdapterMedidasPeso extends RecyclerView.Adapter<AdapterMedidasPeso.
     private Context activity;
     //private InterfaceHta interfaceHta;
     private ArrayList<MedidasPesoList> listItem;
+    private PesoViewInterface pesoViewInterface;
 
-    public AdapterMedidasPeso(Context activity,ArrayList<MedidasPesoList> listItem){
+    public AdapterMedidasPeso(Context activity, PesoViewInterface pesoViewInterface, ArrayList<MedidasPesoList> listItem){
             super();
             this.activity=activity;
             this.listItem=listItem;
+            this.pesoViewInterface = pesoViewInterface;
             }
 
     @Override
@@ -46,7 +49,7 @@ public class AdapterMedidasPeso extends RecyclerView.Adapter<AdapterMedidasPeso.
         final String titulo=listItem.get(position).toString();
         final RealmResults<Peso> results=listItem.get(position).getRealmResults();
         //AdapterMedidasHTA adapterMedidasHTA=new AdapterMedidasHTA(results.sort("Date", Sort.DESCENDING),true,activity);
-        AdapterPeso adapterPeso = new AdapterPeso(results.sort("datetime",Sort.DESCENDING), true, activity );
+        AdapterPeso adapterPeso = new AdapterPeso(this.pesoViewInterface,results.sort("datetime",Sort.DESCENDING), true, activity );
         holder.textView.setText(titulo);
         holder.recyclerView.setHasFixedSize(false);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));

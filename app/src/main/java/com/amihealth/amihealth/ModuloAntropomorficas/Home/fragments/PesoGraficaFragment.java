@@ -16,13 +16,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amihealth.amihealth.Adaptadores.AdapterMedidasList;
 import com.amihealth.amihealth.Adaptadores.AdapterMedidasPeso;
+import com.amihealth.amihealth.Adaptadores.AdapterPeso;
+import com.amihealth.amihealth.Adaptadores.AdapterPesoGraficas;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
-import com.amihealth.amihealth.Models.Peso;
-import com.amihealth.amihealth.Models.MedidasHTAList;
 import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.Utils.MedidasPesoList;
@@ -30,13 +28,10 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresente
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentrerIMP;
 import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
-import com.amihealth.amihealth.ModuloHTA.view.presenter.ImpPresenterHta;
 import com.amihealth.amihealth.R;
 
 import java.util.ArrayList;
 
-import io.realm.OrderedCollectionChangeSet;
-import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -44,14 +39,12 @@ import io.realm.Sort;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PesoListaFragment.OnFragmentInteractionListener} interface
+ * {@link PesoGraficaFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
+public class PesoGraficaFragment extends Fragment implements PesoViewInterface, OrdenSelectorListener {
 
-
-public class PesoListaFragment extends Fragment implements PesoViewInterface, OrdenSelectorListener {
-
-    private OnFragmentInteractionListener mListener;
+    private PesoListaFragment.OnFragmentInteractionListener mListener;
     private PesoPresenterInterface pesoPresenterInterface;
 
 
@@ -71,17 +64,17 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     private AlertDialog dialog;
     private Realm realm;
     private ArrayList<MedidasPesoList> medidasPesoList;
-    private AdapterMedidasPeso adapter;
+    private AdapterPesoGraficas adapter;
     private SessionManager sessionManager;
     private Intent intent;
     private RealmResults<Peso> realmResults;
     private int ORDEN = 0;
     private PesoViewInterface mListenerViewActivity;
 
-
-    public PesoListaFragment() {
+    public PesoGraficaFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,7 +128,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         registerForContextMenu(recyclerView);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AdapterMedidasPeso(getActivity(),this,medidasPesoList);
+        adapter = new AdapterPesoGraficas(medidasPesoList,getContext());
         recyclerView.setAdapter(adapter);
         //presenterHta.getMedidas(0);
 
@@ -247,7 +240,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
                     break;
             }
         }
-        recyclerView.setAdapter(new AdapterMedidasPeso(getActivity(),this,medidasPesoList));
+        recyclerView.setAdapter(new AdapterPesoGraficas(medidasPesoList,getContext()));
         recyclerView.getAdapter().notifyDataSetChanged();
         realm.close();
     }
@@ -272,8 +265,8 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof PesoListaFragment.OnFragmentInteractionListener) {
+            mListener = (PesoListaFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -319,8 +312,5 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         void onFragmentInteraction(Uri uri);
         void onErrorMSG(String error);
     }
-
-
-
 
 }

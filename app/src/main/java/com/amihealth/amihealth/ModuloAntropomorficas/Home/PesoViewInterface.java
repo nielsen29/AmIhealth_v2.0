@@ -11,4 +11,7 @@ public interface PesoViewInterface {
     void OnUpdateResponse();
     void OnErrorResponse(String error);
     void RespuestaActivity(int cargar);
+    void onClickMenuItem_EDIT(String id);
+    void onClickMenuItem_DELETE(String id);
+
 }

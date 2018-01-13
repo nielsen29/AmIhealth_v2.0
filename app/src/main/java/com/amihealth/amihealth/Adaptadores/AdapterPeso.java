@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.Models.Peso;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
 import com.amihealth.amihealth.ModuloHTA.MedidaHTADetailActivity;
 import com.amihealth.amihealth.ModuloHTA.view.InterfaceHta;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.MedidaHTADetailFragment;
@@ -46,10 +47,13 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
     private boolean mTwoPane;
 
     private int position;
+    private PesoViewInterface pesoViewInterface;
 
-    public AdapterPeso(@Nullable OrderedRealmCollection<Peso> data, boolean autoUpdate, Context context) {
+    public AdapterPeso(PesoViewInterface pesoViewInterface, @Nullable OrderedRealmCollection<Peso> data, boolean autoUpdate, Context context) {
 
         super(data, autoUpdate);
+
+        this.pesoViewInterface = pesoViewInterface;
 
 
         this.context = context;
@@ -73,10 +77,11 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder view = (ViewHolder) holder;
         Peso peso = (Peso) getData().get(position);
-        view.mItem = peso;
+        view.setmItem((Peso) getData().get(position));
         view.peso.setText(String.valueOf(peso.getPeso()));
         view.view.setBackgroundColor(Color.parseColor(peso.getRgb()));
         view.imc.setText(String.valueOf(peso.getImc()));
+
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date= new Date();
@@ -157,7 +162,14 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             if(mItem.isLoaded()){
-                                date.setText(mItem.getId());
+                                switch (item.getItemId()){
+                                    case R.id.edit_medida:
+                                        pesoViewInterface.onClickMenuItem_EDIT(mItem.getId());
+                                        break;
+                                    case R.id.drop_medida:
+                                        pesoViewInterface.onClickMenuItem_DELETE(mItem.getId());
+                                        break;
+                                }
                             }
                             return  true;
                         }
@@ -175,5 +187,12 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
 
         }
 
+        public Peso getmItem() {
+            return mItem;
+        }
+
+        public void setmItem(Peso mItem) {
+            this.mItem = mItem;
+        }
     }
 }

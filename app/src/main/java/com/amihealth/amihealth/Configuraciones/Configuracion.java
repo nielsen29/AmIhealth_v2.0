@@ -54,9 +54,15 @@ public class Configuracion {
     public static final String URL_GETMEDIDAS_HTA_ID = "getHTAbyID";
     public static final String URL_UpdateProfile = "update_profile";
 
+
+
     //SECCION PATRA LOS ENDPOINT DE PESO
 
     public static final String URL_GETMEDIDAS_PESO = "peso";
     public static final String URL_INSERT_PESO = "nuevo_peso";
+    public static final String URL_EDIT_PESO = "editar_peso";
+    public static final String URL_DELETE_PESO = "borrar_peso";
+    public static final String URL_GETbyID_PESO = "get_by_id_peso";
+    public static final String URL_STATUS = "status_peso";
 
 }

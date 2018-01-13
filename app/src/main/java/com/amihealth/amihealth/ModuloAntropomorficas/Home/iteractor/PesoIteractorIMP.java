@@ -34,11 +34,11 @@ public class PesoIteractorIMP implements PesoIteractorInterface {
 
     @Override
     public void RequestUpdatePeso(Peso peso) {
-
+        pesoRepoInterface.RequestUpdatePeso(peso);
     }
 
     @Override
     public void RequestDeletePeso(Peso peso) {
-
+        pesoRepoInterface.RequestDeletePeso(peso);
     }
 }

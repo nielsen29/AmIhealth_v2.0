@@ -190,7 +190,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <ImageView
-                                android:src="@drawable/ic_calendario"
+                                app:srcCompat="@drawable/ic_calendario"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:tint="@color/ms_white"
@@ -210,7 +210,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <ImageView
-                                android:src="@drawable/ic_clock"
+                                app:srcCompat="@drawable/ic_clock"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:tint="@color/ms_white"
@@ -231,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <ImageView
-                                android:src="@drawable/icons8_hearts_filled_50"
+                                app:srcCompat="@drawable/icons8_hearts_filled_50"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:tint="@color/ms_white"
