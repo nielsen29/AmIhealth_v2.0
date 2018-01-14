@@ -5,277 +5,344 @@
     style="?android:attr/textAppearanceLarge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:textIsSelectable="true"
     >
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_detalle_descrip"
+                android:layout_margin="@dimen/activity_horizontal_margin">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:elevation="8dp"
-                    >
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="@dimen/marginGraph"
-                        >
-                        <TextView
-                            android:id="@+id/descrip_detalle_descrip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="DESCRIPCION"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:textColor="@color/ms_white"
-                            android:textStyle="bold"
-                            android:textSize="20dp"
-                            android:layout_margin="@dimen/marginGraph"
-                            />
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
+                        android:layout_height="wrap_content">
 
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="1"
-            android:background="@drawable/sys_gradient"
-            android:elevation="@dimen/cardview_default_elevation"
-            >
-            <LinearLayout
-                android:layout_weight="0.9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:weightSum="1"
-                    android:gravity="center"
-                    android:padding="@dimen/activity_horizontal_margin"
-                    >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.CardView
+                                android:id="@+id/card_detalle_descrip"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:elevation="8dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="@dimen/marginGraph">
+
+                                    <TextView
+                                        android:id="@+id/descrip_detalle_descrip"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="@dimen/marginGraph"
+                                        android:gravity="center"
+                                        android:text="DESCRIPCION"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:background="@drawable/sys_gradient"
+                        android:elevation="@dimen/cardview_default_elevation"
                         android:orientation="vertical"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
-                        >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ms_white"
-                            android:text="@string/detalle_Sys"
-                            android:gravity="center"
-                            android:textSize="20dp"
-                            />
-                        <TextView
-                            android:id="@+id/sys_tool_detalle_descrip"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ms_white"
-                            android:text="SYS"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="40dp"
-                            android:textStyle="bold"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ms_white"
-                            android:text="@string/lb_medidas_mmhg"
-                            android:gravity="center"
-                            android:textSize="10dp"
-                            />
+                        android:weightSum="1">
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.49"
-                        android:padding="3dp"
-                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.9">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/activity_horizontal_margin"
+                                android:weightSum="1">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/detalle_Sys"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="20dp" />
+
+                                    <TextView
+                                        android:id="@+id/sys_tool_detalle_descrip"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="SYS"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="40dp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/lb_medidas_mmhg"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="10dp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.49"
+                                    android:padding="3dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/ms_white">
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/detalle_Dis"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="20dp" />
+
+                                    <TextView
+                                        android:id="@+id/dis_tool_detalle_descrip"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="DIS"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="40dp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/lb_medidas_mmhg"
+                                        android:textColor="@color/ms_white"
+                                        android:textSize="10dp" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/ms_white">
+                            android:orientation="vertical">
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/activity_horizontal_margin"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:divider="@color/accent"
+                                    android:dividerPadding="@dimen/height_divider"
+                                    android:gravity="left"
+                                    android:orientation="horizontal"
+                                    android:showDividers="beginning"
+                                    android:weightSum="1">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.3"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:tint="@color/ms_white"
+                                            app:srcCompat="@drawable/ic_calendario" />
+
+                                        <TextView
+                                            android:id="@+id/fecha_detalle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                                            android:textColor="@color/ms_white" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.3"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/ms_white"
+                                            android:tint="@color/ms_white"
+                                            app:srcCompat="@drawable/ic_clock" />
+
+                                        <TextView
+                                            android:id="@+id/hora_detalle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                                            android:textColor="@color/ms_white" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.3"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/ms_white"
+                                            android:tint="@color/ms_white"
+                                            app:srcCompat="@drawable/icons8_hearts_filled_50" />
+
+                                        <TextView
+                                            android:id="@+id/pls_detalle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                                            android:textColor="@color/ms_white" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:text="bpm"
+                                            android:textColor="@color/ms_white" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/medidas_graph"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="250dp"
+                                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                                    android:scrollbarDefaultDelayBeforeFade="100000000"
+                                    app:paddingStart="5dp">
+
+
+                                </com.github.mikephil.charting.charts.LineChart>
+
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ms_white"
-                            android:text="@string/detalle_Dis"
-                            android:gravity="center"
-                            android:textSize="20dp"
-                            />
-                        <TextView
-                            android:id="@+id/dis_tool_detalle_descrip"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ms_white"
-                            android:text="DIS"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="40dp"
-                            android:textStyle="bold"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ms_white"
-                            android:text="@string/lb_medidas_mmhg"
-                            android:gravity="center"
-                            android:textSize="10dp"
-                            />
 
                     </LinearLayout>
 
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin">
 
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin">
+                <LinearLayout
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:layout_gravity="center"
-                        android:weightSum="1"
-                       android:dividerPadding="@dimen/height_divider"
-                        android:divider="@color/accent"
-                        android:showDividers="beginning"
+                        android:orientation="vertical"
                         >
-                        <LinearLayout
-                            android:layout_weight="0.3"
-                            android:layout_width="wrap_content"
+
+                        <TextView
+                            android:text="@string/title_medidas_Graficas"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <ImageView
-                                app:srcCompat="@drawable/ic_calendario"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:tint="@color/ms_white"
-                                />
-                            <TextView
-                                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/fecha_detalle"
-                                android:layout_gravity="center"
-                                android:textColor="@color/ms_white"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_weight="0.3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <ImageView
-                                app:srcCompat="@drawable/ic_clock"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:tint="@color/ms_white"
-                                android:textColor="@color/ms_white"
-                                />
-                            <TextView
-                                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/hora_detalle"
-                                android:layout_gravity="center"
-                                android:textColor="@color/ms_white"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_weight="0.3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <ImageView
-                                app:srcCompat="@drawable/icons8_hearts_filled_50"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:tint="@color/ms_white"
-                                android:textColor="@color/ms_white"
-                                />
-                            <TextView
-                                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/pls_detalle"
-                                android:layout_gravity="center"
-                                android:textColor="@color/ms_white"
-                                />
-                            <TextView
-                                android:text="bpm"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:textColor="@color/ms_white"
-                                />
-                        </LinearLayout>
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            />
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/tabla_HTA"
+                            android:layout_width="match_parent"
+                            android:layout_height="400dp"
+                            >
+
+
+
+                        </com.github.mikephil.charting.charts.LineChart>
+                        <ListView
+                            android:id="@+id/list_descrip_color"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            >
+                        </ListView>
+
                     </LinearLayout>
-
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/medidas_graph"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:scrollbarDefaultDelayBeforeFade="100000000"
-                        android:scrollbarAlwaysDrawHorizontalTrack="true"
-                        app:paddingStart="5dp">
 
-
-                    </com.github.mikephil.charting.charts.LineChart>
-
-                </LinearLayout>
-            </LinearLayout>
-
+            </android.support.v7.widget.CardView>
         </LinearLayout>
 
-    </LinearLayout>
+
+    </ScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>

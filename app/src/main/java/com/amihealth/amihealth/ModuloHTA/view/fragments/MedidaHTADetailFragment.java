@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,8 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
     private TextView hora;
     private TextView descrip;
     private CardView cardView;
+    private LineChart tabla_HTA;
+    private ListView lista_descrip_color;
 
 
 
@@ -201,6 +204,8 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
         View rootView = inflater.inflate(R.layout.medidahta_detail, container, false);
         toolbar         = (Toolbar) activity.findViewById(R.id.detail_toolbar);
         graf            = (LineChart) rootView.findViewById(R.id.medidas_graph);
+        tabla_HTA = (LineChart) rootView.findViewById(R.id.tabla_HTA);
+
 
         sys = (TextView) rootView.findViewById(R.id.sys_tool_detalle_descrip);
         dis = (TextView) rootView.findViewById(R.id.dis_tool_detalle_descrip);
@@ -221,6 +226,20 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
         SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
         hora.setText(df.format(datoFecha));
         pls.setText(String.valueOf(medidaHTAs.getPulso()));
+
+        tabla_HTA.setData(setDataGrafica(medidaHTAs));
+        tabla_HTA.getLegend().setDrawInside(false);
+        tabla_HTA.getXAxis().setAxisMinimum(70f);
+        //tabla_HTA.getXAxis().setAxisMaximum(200f);
+        tabla_HTA.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        tabla_HTA.getAxis(YAxis.AxisDependency.LEFT).setAxisMinimum(70f);
+        tabla_HTA.getAxis(YAxis.AxisDependency.LEFT).setAxisMaximum(200f);
+        tabla_HTA.getAxisRight().setDrawLabels(false);
+        tabla_HTA.getAxisRight().setDrawGridLines(false);
+
+
+
+
 
 
 
@@ -547,5 +566,159 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
         return a;
 
     }
+
+    private LineData setDataGrafica(MedidaHTA medidaHTA){
+
+        ArrayList<Entry> normal = new ArrayList<>();
+        normal.add(new Entry((float)0,120));
+        normal.add(new Entry((float)80,120));
+        normal.add(new Entry((float)80,0));
+
+
+
+
+        LineDataSet lineSys = new LineDataSet(normal,activity.getString(R.string.detalle_Sys));
+
+        lineSys.setColor(ContextCompat.getColor(activity,R.color.logoRed));
+        lineSys.setFillColor(Color.parseColor("#333333"));
+        //lineSys.setFillDrawable(ContextCompat.getDrawable(activity,R.drawable.sys_graf_detalle_gradient));
+        lineSys.setFillAlpha(300);
+        lineSys.setLineWidth(2f);
+        lineSys.setDrawCircleHole(true);
+        lineSys.setValueTextSize(12f);
+        lineSys.setDrawFilled(true);
+        lineSys.setAxisDependency(YAxis.AxisDependency.LEFT);
+        lineSys.setMode(LineDataSet.Mode.LINEAR);
+
+        lineSys.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                DecimalFormat mformat = new DecimalFormat("###,###,###");
+                String x = mformat.format(value).toString();
+                return x;
+            }
+        });
+
+
+
+
+
+        LineData a = new LineData();
+
+
+        a.addDataSet(setDateset(200,300,0,Color.parseColor("#b71c1c"),Color.parseColor("#b71c1c"),"Hipertensión grado 3"));
+        a.addDataSet(setDateset(200,300,0,Color.parseColor("#b71c1c"),Color.parseColor("#b71c1c"),"Hipertensión grado 3"));
+
+        a.addDataSet(setDateset(179,109,0,Color.parseColor("#ef6c00"),Color.parseColor("#ef6c00"),"Hipertensión grado 2"));
+        a.addDataSet(setDateset(109,179,0,Color.parseColor("#ef6c00"),Color.parseColor("#ef6c00"),"Hipertensión grado 2"));
+
+        a.addDataSet(setDateset(159,99,0,Color.parseColor("#ffab00"),Color.parseColor("#ffab00"),"Hipertensión grado 1"));
+        a.addDataSet(setDateset(99,159,0,Color.parseColor("#ffab00"),Color.parseColor("#ffab00"),"Hipertensión grado 1"));
+        a.addDataSet(setDateset(139,89,0,Color.parseColor("#33691e"),Color.parseColor("#33691e"),"Normal Alta"));
+        a.addDataSet(setDateset(89,139,0,Color.parseColor("#33691e"),Color.parseColor("#33691e"),"Normal Alta"));
+        a.addDataSet(setDateset(84,129,0, Color.parseColor("#558b2f"),Color.parseColor("#558b2f"),"Normal"));
+        a.addDataSet(setDateset(129,84,0, Color.parseColor("#558b2f"),Color.parseColor("#558b2f"),"Normal"));
+
+        a.addDataSet(setDateset(80,120,0, Color.parseColor("#8bc34a"),Color.parseColor("#8bc34a"),"Óptima"));
+
+
+        a.addDataSet(setDateset(120,80,0, Color.parseColor("#8bc34a"),Color.parseColor("#8bc34a"),"Óptima"));
+
+
+
+        a.addDataSet(setDateset((float) medidaHTA.getDIS(), (float) medidaHTA.getDIS(),(float) medidaHTA.getDIS(),Color.parseColor(medidaHTA.getRgb()),Color.parseColor(medidaHTA.getRgb()),"DIS",true));
+        a.addDataSet(setDateset((float) medidaHTA.getSYS(),(float) medidaHTA.getSYS(),(float) medidaHTA.getSYS(),Color.parseColor(medidaHTA.getRgb()),Color.parseColor(medidaHTA.getRgb()),"SYS",true));
+
+
+        return a;
+
+    }
+
+    public LineDataSet setDateset( float x, float y, float dominio, int color_fill, int color_border, String nombre){
+        ArrayList<Entry> normal = new ArrayList<>();
+        normal.add(new Entry(dominio,y));
+        normal.add(new Entry(x,y));
+        normal.add(new Entry(x,dominio));
+
+
+
+
+        LineDataSet lineSys = new LineDataSet(normal,nombre);
+
+        lineSys.setColor(color_border);
+        lineSys.setFillColor(color_fill);
+        lineSys.setFillAlpha(500);
+        //lineSys.setFillDrawable(ContextCompat.getDrawable(activity,R.drawable.sys_graf_detalle_gradient));
+        lineSys.setLineWidth(2f);
+        //lineSys.setDrawCircleHole(true);
+        lineSys.setValueTextSize(12f);
+        lineSys.setDrawCircles(false);
+        lineSys.setDrawFilled(true);
+        lineSys.setAxisDependency(YAxis.AxisDependency.LEFT);
+        lineSys.setMode(LineDataSet.Mode.LINEAR);
+
+        lineSys.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                DecimalFormat mformat = new DecimalFormat("###,###,###");
+                String x = mformat.format(value).toString();
+                return x;
+            }
+        });
+        return lineSys;
+    }
+
+
+    public LineDataSet setDateset( float x, float y, float dominio, int color_fill, int color_border, String nombre,boolean meddida){
+        ArrayList<Entry> normal = new ArrayList<>();
+        normal.add(new Entry(dominio,y));
+        normal.add(new Entry(x,y));
+        normal.add(new Entry(x,dominio));
+
+
+
+
+        LineDataSet lineSys = new LineDataSet(normal,nombre);
+
+        lineSys.setColor(color_border);
+        lineSys.setFillColor(Color.WHITE);
+        lineSys.setFillAlpha(500);
+        //lineSys.setFillDrawable(ContextCompat.getDrawable(activity,R.drawable.sys_graf_detalle_gradient));
+        lineSys.setLineWidth(2f);
+        lineSys.setCircleRadius(8f);
+        lineSys.setCircleHoleRadius(5f);
+        lineSys.setDrawCircleHole(true);
+        lineSys.setValueTextSize(12f);
+        lineSys.setDrawFilled(true);
+        //lineSys.setDrawIcons(true);
+        lineSys.setAxisDependency(YAxis.AxisDependency.LEFT);
+        lineSys.setMode(LineDataSet.Mode.LINEAR);
+        lineSys.enableDashedLine(1,(float) 0.5, (float) 0.5);
+        lineSys.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                DecimalFormat mformat = new DecimalFormat("###,###,###");
+                String x = mformat.format(value).toString();
+                return x;
+            }
+        });
+        return lineSys;
+    }
+
+    public void setLista_descrip_color(){
+
+        ArrayList<String[]> a = new ArrayList();
+        a.add(new String[]{"#b71c1c","Hipertensión grado 3"});
+        a.add(new String[]{"#ef6c00","Hipertensión grado 2"});
+        a.add(new String[]{"#ffab00","Hipertensión grado 1"});
+        a.add(new String[]{"#33691e","Normal Alta"});
+        a.add(new String[]{"#558b2f","Normal"});
+        a.add(new String[]{"#8bc34a","Óptima"});
+
+
+
+
+    }
+
 
 }

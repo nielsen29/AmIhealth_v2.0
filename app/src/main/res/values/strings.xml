@@ -157,4 +157,5 @@
     <string name="text_launch_peso">Peso / IMC</string>
     <string name="title_pesoActivity">Mod Peso</string>
     <string name="editar_peso_title">Editar Medida</string>
+    <string name="title_medidas_Graficas">Medida en la Tabla de Calificación</string>
 </resources>
