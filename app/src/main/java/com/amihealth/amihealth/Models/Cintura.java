@@ -1,24 +1,16 @@
 package com.amihealth.amihealth.Models;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by nielsen29 on 07/09/17.
+ * Created by GITCE on 01/15/18.
  */
 
-public class Peso extends RealmObject {
-
+public class Cintura extends RealmObject {
 
     @SerializedName("id")
     @Expose
@@ -29,13 +21,13 @@ public class Peso extends RealmObject {
     @Expose
     private  String id_paciente;
 
-    @SerializedName("peso")
+    @SerializedName("cintura")
     @Expose
-    private double peso;
+    private double cintura;
 
-    @SerializedName("imc")
+    @SerializedName("ica")
     @Expose
-    private double imc;
+    private double ica;
 
     @SerializedName("descrip")
     @Expose
@@ -81,31 +73,7 @@ public class Peso extends RealmObject {
     @Expose
     private String datetime;
 
-    private Date fecha;
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Peso() {
-    }
-
-    public Peso(String id, String id_paciente, double peso) {
-        this.id = id;
-        this.id_paciente = id_paciente;
-        this.peso = peso;
-    }
-
-    public int getSync() {
-        return sync;
-    }
-
-    public void setSync(int sync) {
-        this.sync = sync;
+    public Cintura() {
     }
 
     public String getId() {
@@ -124,20 +92,20 @@ public class Peso extends RealmObject {
         this.id_paciente = id_paciente;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getCintura() {
+        return cintura;
     }
 
-    public void setPeso(String peso) {
-        this.peso = Double.valueOf(peso);
+    public void setCintura(String cintura) {
+        this.cintura = Double.valueOf(cintura);
     }
 
-    public double getImc() {
-        return imc;
+    public double getIca() {
+        return ica;
     }
 
-    public void setImc(String imc) {
-        this.imc = Double.valueOf(imc);
+    public void setIca(String ica) {
+        this.ica = Double.valueOf(ica);
     }
 
     public String getDescrip() {
@@ -156,6 +124,21 @@ public class Peso extends RealmObject {
         this.rgb = rgb;
     }
 
+    public int getSync() {
+        return sync;
+    }
+
+    public void setSync(int sync) {
+        this.sync = sync;
+    }
+
+    public Creado getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Creado created_at) {
+        this.created_at = created_at;
+    }
 
     public String getUpdated_at() {
         return updated_at;
@@ -211,19 +194,5 @@ public class Peso extends RealmObject {
 
     public void setDatetime(String datetime) {
         this.datetime = datetime;
-    }
-
-    public Creado getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Creado created_at) {
-        this.created_at = created_at;
-    }
-
-    public static Creado parseJSON(String response){
-        Gson gson = new GsonBuilder().create();
-        Creado created_at = gson.fromJson(response,Creado.class);
-        return created_at;
     }
 }

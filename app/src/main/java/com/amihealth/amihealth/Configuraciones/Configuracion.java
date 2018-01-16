@@ -56,7 +56,7 @@ public class Configuracion {
 
 
 
-    //SECCION PATRA LOS ENDPOINT DE PESO
+    //SECCION PARA LOS ENDPOINT DE PESO
 
     public static final String URL_GETMEDIDAS_PESO = "peso";
     public static final String URL_INSERT_PESO = "nuevo_peso";
@@ -64,5 +64,15 @@ public class Configuracion {
     public static final String URL_DELETE_PESO = "borrar_peso";
     public static final String URL_GETbyID_PESO = "get_by_id_peso";
     public static final String URL_STATUS = "status_peso";
+
+
+    //SECCION PARA LOS ENDPOINT DE CINTURA
+
+    public static final  String URL_GET_CINTURA = "cintura";
+    public static final  String URL_INSERT_CINTURA = "add_cintura";
+    public static final  String URL_EDIT_CINTURA = "editar_cintura";
+    public static final  String URL_DELETE_CINTURA = "borrar_cintura";
+    public static final  String URL_STATUS_CINTURA = "status_cintura";
+
 
 }

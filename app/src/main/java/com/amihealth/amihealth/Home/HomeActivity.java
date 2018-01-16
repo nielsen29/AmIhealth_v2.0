@@ -1,6 +1,7 @@
 package com.amihealth.amihealth.Home;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,8 +20,10 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.MyPusherService;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.User;
@@ -29,7 +32,16 @@ import com.amihealth.amihealth.ModuloHTA.HTAhomeActivity;
 import com.amihealth.amihealth.ModuloHTA.MedidaHTAListActivity;
 import com.amihealth.amihealth.R;
 import com.amihealth.amihealth.UserActivity.UserActivity;
+import com.pusher.client.Pusher;
+import com.pusher.client.PusherOptions;
+import com.pusher.client.channel.Channel;
+import com.pusher.client.channel.SubscriptionEventListener;
+import com.pusher.client.connection.ConnectionEventListener;
+import com.pusher.client.connection.ConnectionState;
+import com.pusher.client.connection.ConnectionStateChange;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import io.realm.Realm;
 import retrofit2.Call;
@@ -48,6 +60,7 @@ public class HomeActivity extends AppCompatActivity
     private ImageView img_profile;
     private TextView email;
     private TextView nombre;
+    private MyPusherService pusherService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +71,16 @@ public class HomeActivity extends AppCompatActivity
         if(sessionManager.isLoggedIn()){
             realm = Realm.getDefaultInstance();
             user = realm.where(User.class).equalTo("id_InServer", sessionManager.getUserLogin().get(SessionManager.KEY).toString()).findFirst();
+            startService(new Intent(this,MyPusherService.class));
+
         }
+
+
+
+
+// Create a new Pusher instance
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);

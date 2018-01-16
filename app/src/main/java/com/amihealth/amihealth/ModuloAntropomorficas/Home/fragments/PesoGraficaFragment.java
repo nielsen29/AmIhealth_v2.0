@@ -42,7 +42,7 @@ import io.realm.Sort;
  * {@link PesoGraficaFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class PesoGraficaFragment extends Fragment implements PesoViewInterface, OrdenSelectorListener {
+public class PesoGraficaFragment extends Fragment implements PesoViewInterface, OrdenSelectorListener.OrdenGraficaListener {
 
     private PesoListaFragment.OnFragmentInteractionListener mListener;
     private PesoPresenterInterface pesoPresenterInterface;
@@ -285,16 +285,17 @@ public class PesoGraficaFragment extends Fragment implements PesoViewInterface, 
         mListener = null;
     }
 
-    @Override
-    public void orderListener(int order) {
-        ORDEN = order;
-        ordenarARRAY(order);
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         realm.close();
+    }
+
+    @Override
+    public void orderGraficListener(int order) {
+        ORDEN = order;
+        ordenarARRAY(order);
     }
 
     /**

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".AppConfig.AppInicio"
@@ -107,12 +108,29 @@
         <activity
             android:name=".ModuloAntropomorficas.Home.MedAntroMainActivity"
             android:label="@string/title_activity_med_antro_main"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".Home.HomeActivity">
+            android:parentActivityName=".Home.HomeActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.amihealth.amihealth.Home.HomeActivity" />
-    </activity>
+        </activity>
+        <activity
+            android:name=".ModuloAntropomorficas.Home.CinturaMod.CinturaActivity"
+            android:label="@string/title_activity_cintura"
+            android:theme="@style/AppTheme" />
+
+        <receiver
+            android:name=".AppConfig.PusherReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".AppConfig.MyPusherService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".AppConfig.MyPusherIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

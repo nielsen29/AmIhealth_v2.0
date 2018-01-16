@@ -38,6 +38,9 @@ import static io.realm.RealmConfiguration.*;
 
 public class  AppInicio extends MultiDexApplication {
 
+
+    private MyPusherService pusherService;
+
     //Archivo para configurar la App Esta Clase se inicia antes que todas
 
 
@@ -80,6 +83,7 @@ public class  AppInicio extends MultiDexApplication {
         getConfigTables();
         super           .onCreate();
         mainApplication = this;
+
     }
 
     private void SetUpRealm(){
