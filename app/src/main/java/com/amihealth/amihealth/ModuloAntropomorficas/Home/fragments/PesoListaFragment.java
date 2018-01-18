@@ -87,7 +87,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.pesoPresenterInterface = new PesoPresentrerIMP(getContext(),this);
-        realm = Realm.getDefaultInstance();
+
         sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
 
@@ -122,6 +122,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
 
                 medidasPesoList.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
+                OnGetAllResponse();
                 //presenterHta.getMedidas(0);
                 //swipeRefreshLayout.setRefreshing(false);
             }
@@ -152,6 +153,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     @Override
     public void OnGetAllResponse() {
         //Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
+        realm = Realm.getDefaultInstance();
 
         RealmResults<Peso> realmResults = realm.where(Peso.class).findAll();
         if(realmResults.isEmpty()){
@@ -206,6 +208,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
 
 
     public void ordenarARRAY(int order){
+        realm = Realm.getDefaultInstance();
         medidasPesoList.clear();
         RealmResults<Peso> lol;
         switch (order){

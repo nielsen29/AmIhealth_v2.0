@@ -103,7 +103,7 @@ public class PesoGraficaFragment extends Fragment implements PesoViewInterface, 
         progressBar = (ProgressBar) view.findViewById(R.id.progress_hta_frag);
         pesoPresenterInterface.RequestGetAll();
         setupRecyclerView();
-        //setupSwipeRefresh();
+        setupSwipeRefresh();
 
         return view;
     }
@@ -115,6 +115,7 @@ public class PesoGraficaFragment extends Fragment implements PesoViewInterface, 
 
                 medidasPesoList.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
+                OnGetAllResponse();
                 //presenterHta.getMedidas(0);
                 //swipeRefreshLayout.setRefreshing(false);
             }
@@ -144,6 +145,7 @@ public class PesoGraficaFragment extends Fragment implements PesoViewInterface, 
 
     @Override
     public void OnGetAllResponse() {
+        realm = Realm.getDefaultInstance();
         //Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
 
         RealmResults<Peso> realmResults = realm.where(Peso.class).findAll();
@@ -199,6 +201,7 @@ public class PesoGraficaFragment extends Fragment implements PesoViewInterface, 
 
 
     public void ordenarARRAY(int order){
+        realm = Realm.getDefaultInstance();
         medidasPesoList.clear();
         RealmResults<Peso> lol;
         switch (order){

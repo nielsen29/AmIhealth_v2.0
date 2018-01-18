@@ -27,6 +27,7 @@ import com.amihealth.amihealth.AppConfig.MyPusherService;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.User;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.CinturaActivity;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.MedAntroMainActivity;
 import com.amihealth.amihealth.ModuloHTA.HTAhomeActivity;
 import com.amihealth.amihealth.ModuloHTA.MedidaHTAListActivity;
@@ -61,6 +62,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView email;
     private TextView nombre;
     private MyPusherService pusherService;
+    private Button launchICA_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,6 @@ public class HomeActivity extends AppCompatActivity
             realm = Realm.getDefaultInstance();
             user = realm.where(User.class).equalTo("id_InServer", sessionManager.getUserLogin().get(SessionManager.KEY).toString()).findFirst();
             startService(new Intent(this,MyPusherService.class));
-
         }
 
 
@@ -87,6 +88,7 @@ public class HomeActivity extends AppCompatActivity
         launchHTA_btn = (Button) findViewById(R.id.btnlaunch_hta);
         launchHTA_peso = (Button) findViewById(R.id.btnlaunch_peso);
         launchUSER_btn = (Button) findViewById(R.id.btnlaunch_User);
+        launchICA_btn = (Button) findViewById(R.id.btnlaunch_cintura);
 
         launchHTA_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +108,13 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), UserActivity.class);
+                startActivity(i);
+            }
+        });
+        launchICA_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CinturaActivity.class);
                 startActivity(i);
             }
         });

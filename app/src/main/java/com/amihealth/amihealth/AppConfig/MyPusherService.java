@@ -79,7 +79,7 @@ public class MyPusherService extends Service {
                 //JSONObject jdo = new JSONObject(data).getJSONObject()
                 Gson gson = new Gson();
                 AmIHealthNotificacion notificacion = gson.fromJson(data, AmIHealthNotificacion.class);
-                showNotification(notificacion);
+               // showNotification(notificacion);
 
             }
         });

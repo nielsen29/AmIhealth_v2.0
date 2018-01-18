@@ -80,6 +80,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     private OrdenSelectorListener ordenSelectorListener;
     private PesoViewInterface pesoViewInterface;
     private OrdenSelectorListener.OrdenGraficaListener GrafOrderListener;
+    private PesoViewInterface pesoGrafViewInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -352,6 +353,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnGetAllResponse() {
+        pesoGrafViewInterface.OnGetAllResponse();
         pesoViewInterface.RespuestaActivity(2);
     }
 
@@ -435,6 +437,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
                 case 1:
                     f = new PesoGraficaFragment();
                     GrafOrderListener = (OrdenSelectorListener.OrdenGraficaListener) f;
+                    pesoGrafViewInterface = (PesoViewInterface) f;
                     break;
                 default:
                     f = new lolFragment();
