@@ -20,7 +20,13 @@ import com.amihealth.amihealth.ModuloHTA.view.InterfaceHta;
 import com.amihealth.amihealth.ModuloHTA.view.presenter.ImpPresenterHta;
 import com.amihealth.amihealth.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -50,7 +56,25 @@ public class AdapterMedidasList extends RecyclerView.Adapter<AdapterMedidasList.
 
     @Override
     public void onBindViewHolder(ViewListHolder holder, int position) {
-        final String titulo = listItem.get(position).toString();
+        String titulo = "";
+
+
+        switch(listItem.get(position).getNombre().toString()){
+            case "SEMANA":
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date date= new Date();
+                try {
+                    date = df.parse(listItem.get(position).getRealmResults().get(0).getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                titulo = calendar.toString();
+                break;
+
+        }
+
         final RealmResults<MedidaHTA> results = listItem.get(position).getRealmResults();
         AdapterMedidasHTA adapterMedidasHTA = new AdapterMedidasHTA(results.sort("Date", Sort.DESCENDING),true,interfaceHta,activity);
         holder.textView.setText(titulo);

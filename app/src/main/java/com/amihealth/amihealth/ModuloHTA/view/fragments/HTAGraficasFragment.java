@@ -194,9 +194,10 @@ public class HTAGraficasFragment extends Fragment implements OrdenSelectorListen
                 lol = realm.where(MedidaHTA.class).distinct("year").sort("year",Sort.DESCENDING);
                 break;
             default:
-                lol = realm.where(MedidaHTA.class).distinct("week").sort("week",Sort.DESCENDING);
+                lol = realm.where(MedidaHTA.class).distinct("year").sort("year",Sort.DESCENDING);
                 break;
         }
+        lol = lol.sort("year",Sort.DESCENDING);
 
         for (int i = 0; i < lol.size() ; i++) {
             switch (order){

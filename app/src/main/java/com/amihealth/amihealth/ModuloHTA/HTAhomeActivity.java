@@ -369,7 +369,7 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override

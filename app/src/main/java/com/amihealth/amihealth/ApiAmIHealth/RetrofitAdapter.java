@@ -89,4 +89,14 @@ public class RetrofitAdapter {
                 .build();
         return retrofit.create(ServiceRetrofit.class);
     }
+
+    public ServiceRetrofit getOUTauth(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Configuracion.SERVER)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return  retrofit.create(ServiceRetrofit.class);
+    }
 }

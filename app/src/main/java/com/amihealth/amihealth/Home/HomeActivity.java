@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.AppConfig.MyPusherService;
+import com.amihealth.amihealth.AppConfig.WebDialog;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.User;
@@ -73,8 +74,13 @@ public class HomeActivity extends AppCompatActivity
         if(sessionManager.isLoggedIn()){
             realm = Realm.getDefaultInstance();
             user = realm.where(User.class).equalTo("id_InServer", sessionManager.getUserLogin().get(SessionManager.KEY).toString()).findFirst();
+        }
+        if(user == null){
+            sessionManager.logoutUser();
+        }else{
             startService(new Intent(this,MyPusherService.class));
         }
+
 
 
 
@@ -195,6 +201,9 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+
+
+
 
         }else if (id == R.id.btn_logout){
             sessionManager.logoutUser();

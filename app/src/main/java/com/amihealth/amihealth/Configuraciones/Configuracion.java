@@ -74,5 +74,7 @@ public class Configuracion {
     public static final  String URL_DELETE_CINTURA = "borrar_cintura";
     public static final  String URL_STATUS_CINTURA = "status_cintura";
 
+    public static final  String URL_verificaremail = "getEmailUser";
+
 
 }

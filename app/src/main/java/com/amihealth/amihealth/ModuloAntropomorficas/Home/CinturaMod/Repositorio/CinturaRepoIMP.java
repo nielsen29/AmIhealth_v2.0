@@ -59,7 +59,7 @@ public class CinturaRepoIMP implements InterfaceCinturaRepo {
     }
 
     @Override
-    public void RequestInsertPeso(Cintura cintura) {
+    public void RequestInsert(Cintura cintura) {
 
         Observable<Response<Cintura>> observable =retrofitAdapter.getClientService(token).insert_Cintura(cintura);
         observable.observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +82,7 @@ public class CinturaRepoIMP implements InterfaceCinturaRepo {
     }
 
     @Override
-    public void RequestUpdatePeso(Cintura cintura) {
+    public void RequestUpdate(Cintura cintura) {
 
         Observable<Response<Cintura>> observable =retrofitAdapter.getClientService(token).edit_Cintura(cintura);
         observable.observeOn(AndroidSchedulers.mainThread())
@@ -104,7 +104,7 @@ public class CinturaRepoIMP implements InterfaceCinturaRepo {
     }
 
     @Override
-    public void RequestDeletePeso(Cintura cintura) {
+    public void RequestDelete(Cintura cintura) {
 
         Observable<Response<Cintura>> observable =retrofitAdapter.getClientService(token).delete_Cintura(cintura);
         observable.observeOn(AndroidSchedulers.mainThread())

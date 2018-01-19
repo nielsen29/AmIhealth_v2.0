@@ -100,7 +100,7 @@ public class RegistroIteractorIMP implements RegistroIteractorINT {
             JSONArray provincias = JsonObj.getJSONArray("data");
             for (int i = 0; i < provincias.length(); i++){
                 JSONObject prov = provincias.getJSONObject(i);
-                etnia = new Etnia(prov.getInt("id"),prov.getString("nombre"));
+                etnia = new Etnia(prov.getInt("id"),prov.getString("descrip"));
                 arr.add(etnia);
             }
             return arr;

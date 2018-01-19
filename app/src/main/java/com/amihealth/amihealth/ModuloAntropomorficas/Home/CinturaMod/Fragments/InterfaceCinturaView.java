@@ -10,4 +10,7 @@ public interface InterfaceCinturaView {
     void OnDeleteResponse();
     void OnUpdateResponse();
     void OnErrorResponse(String error);
+    void RespuestaActivity(int cargar);
+    void onClickMenuItem_EDIT(String id);
+    void onClickMenuItem_DELETE(String id);
 }

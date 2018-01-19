@@ -55,17 +55,17 @@ public class CinturaPresenterIMP implements InterfaceCinturaPresenter {
     }
 
     @Override
-    public void RequestInsertPeso(Cintura cintura) {
-        cinturaIteractor.RequestInsertPeso(cintura);
+    public void RequestInsert(Cintura cintura) {
+        cinturaIteractor.RequestInsert(cintura);
     }
 
     @Override
-    public void RequestUpdatePeso(Cintura cintura) {
-        cinturaIteractor.RequestUpdatePeso(cintura);
+    public void RequestUpdate(Cintura cintura) {
+        cinturaIteractor.RequestUpdate(cintura);
     }
 
     @Override
-    public void RequestDeletePeso(Cintura cintura) {
-        cinturaIteractor.RequestDeletePeso(cintura);
+    public void RequestDelete(Cintura cintura) {
+        cinturaIteractor.RequestDelete(cintura);
     }
 }

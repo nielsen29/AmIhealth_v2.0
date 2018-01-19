@@ -156,8 +156,26 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="text_launch_peso">Peso / IMC</string>
     <string name="title_pesoActivity">Mod Peso</string>
+    <string name="title_cinturaActivity">Cintura</string>
     <string name="editar_peso_title">Editar Medida</string>
     <string name="title_medidas_Graficas">Medida en la Tabla de Calificación</string>
     <string name="title_activity_cintura">CinturaActivity</string>
     <string name="text_launch_cintura">indice Cintura/altura</string>
+
+    <string name="new_message_notification_title_template">New message: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="new_message_notification_placeholder_text_template">You said %1$s and lorem ipsum
+        dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel
+        semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
+        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
+        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
+        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
+        tortor.
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+    <string name="nuevo_WebTerminos_titulo">Términos y Condiciones</string>
+    <string name="accept">Acepto</string>
 </resources>

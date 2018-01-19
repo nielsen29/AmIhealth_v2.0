@@ -215,9 +215,10 @@ public class PesoGraficaFragment extends Fragment implements PesoViewInterface, 
                 lol = realm.where(Peso.class).distinct("year").sort("year",Sort.DESCENDING);
                 break;
             default:
-                lol = realm.where(Peso.class).distinct("week").sort("week",Sort.DESCENDING);
+                lol = realm.where(Peso.class).distinct("year").sort("year",Sort.DESCENDING);
                 break;
         }
+        lol = lol.sort("year",Sort.DESCENDING);
 
         for (int i = 0; i < lol.size() ; i++) {
             switch (order){

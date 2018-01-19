@@ -29,17 +29,17 @@ public class CinturaIteractorIMP implements InterfaceCinturaIteractor {
     }
 
     @Override
-    public void RequestInsertPeso(Cintura cintura) {
-        cinturaRepo.RequestInsertPeso(cintura);
+    public void RequestInsert(Cintura cintura) {
+        cinturaRepo.RequestInsert(cintura);
     }
 
     @Override
-    public void RequestUpdatePeso(Cintura cintura) {
-        cinturaRepo.RequestUpdatePeso(cintura);
+    public void RequestUpdate(Cintura cintura) {
+        cinturaRepo.RequestUpdate(cintura);
     }
 
     @Override
-    public void RequestDeletePeso(Cintura cintura) {
-        cinturaRepo.RequestDeletePeso(cintura);
+    public void RequestDelete(Cintura cintura) {
+        cinturaRepo.RequestDelete(cintura);
     }
 }

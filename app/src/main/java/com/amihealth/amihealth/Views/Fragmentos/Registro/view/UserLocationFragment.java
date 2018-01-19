@@ -128,6 +128,10 @@ public class UserLocationFragment extends Fragment implements Step, RegistroView
         ArrayList<VerificationError> verificationErrors = new ArrayList<>();
         verificationErrors.add(new Validador().VerificarCampo(getContext(),direccion));
         verificationErrors.add(new Validador().VerificarCampo(getContext(),numero));
+        if (numero.getText().length() < 8){
+            verificationErrors.add(new VerificationError("Error numero de Teléfono"));
+            numero.setError("Error numero de Teléfono");
+        }
         for( int i = 0; i < verificationErrors.size(); i++){
             if(verificationErrors.get(i) != null){
                 return verificationErrors.get(i);

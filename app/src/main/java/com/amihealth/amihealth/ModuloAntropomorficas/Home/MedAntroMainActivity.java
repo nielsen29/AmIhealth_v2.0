@@ -353,6 +353,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnGetAllResponse() {
+        pesoViewInterface.OnGetAllResponse();
         pesoGrafViewInterface.OnGetAllResponse();
         pesoViewInterface.RespuestaActivity(2);
     }
@@ -390,7 +391,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     @Override
     public void onClickMenuItem_DELETE(String id) {
         Snackbar snackbar = Snackbar.make(viewPager,getResources()
-                .getString(R.string.msj_borrar_medida),1500)
+                .getString(R.string.msj_borrar_medida),3500)
                 .setAction("Borrar", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -457,7 +458,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -58,12 +59,16 @@ public class UserInformationFragment extends Fragment implements Step, GetFecha,
     private ArrayList<Etnia> etnias;
     private ArrayAdapter<Etnia> adapterEtnias;
     private RegistroPresenterINT presenterINT;
+    private ArrayAdapter<String> arrayAdapter;
 
     private Button btn_fecha_rg;
+
+    private ArrayList<String> ced;
 
     private RegistroInterface registroInterface;
 
     private  int year,mes,dia;
+    private Spinner sp_ced;
 
     public UserInformationFragment() {
         // Required empty public constructor
@@ -85,6 +90,39 @@ public class UserInformationFragment extends Fragment implements Step, GetFecha,
         etnia           = (TextView) view.findViewById(R.id.rg_etnia_text);
         sp_etnia        = (Spinner) view.findViewById(R.id.rg_etnia);
         sp_sexo         = (Spinner) view.findViewById(R.id.rg_sp_sexo);
+        sp_ced = (Spinner) view.findViewById(R.id.sp_ced);
+        ced = new ArrayList<>();
+        ced.add("01");
+        ced.add("02");
+        ced.add("03");
+        ced.add("04");
+        ced.add("05");
+        ced.add("06");
+        ced.add("07");
+        ced.add("08");
+        ced.add("09");
+        ced.add("10");
+        ced.add("11");
+        ced.add("12");
+        ced.add("13");
+        ced.add("AV");
+        ced.add("E");
+        ced.add("N");
+        ced.add("PE");
+        ced.add("PI");
+        ced.add("SB");
+        sp_ced.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,ced));
+        sp_ced.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cedula.setText(adapterView.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         presenterINT    = new RegistroPresenterIMP(this);
         etnias          = new ArrayList<>();

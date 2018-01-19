@@ -68,7 +68,9 @@
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/accBlue"
                     android:textAlignment="center"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/dark_celesteBR"
+                    >
 
                     <EditText
                         android:id="@+id/pass"

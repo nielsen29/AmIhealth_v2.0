@@ -18,23 +18,23 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.amihealth.amihealth.Configuraciones.SessionManager;
-import com.amihealth.amihealth.Models.Peso;
+import com.amihealth.amihealth.Models.Cintura;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.CinturaGraficaFragment;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.CinturaListaFragment;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.InterfaceCinturaView;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.CinturaPresenterIMP;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.InterfaceCinturaPresenter;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.MedAntroMainActivity;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.AddPesoDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.EditPesoDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoGraficaFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoListaFragment;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresenterInterface;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentrerIMP;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.lolFragment;
 import com.amihealth.amihealth.R;
@@ -42,7 +42,7 @@ import com.amihealth.amihealth.R;
 import io.realm.Realm;
 
 //activity_cintura
-public class CinturaActivity extends AppCompatActivity implements PesoViewInterface, PesoListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener {
+public class CinturaActivity extends AppCompatActivity implements InterfaceCinturaView, CinturaListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -64,13 +64,14 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
     private SectionsPagerAdapter fragmentHTAadapter;
     private ViewPager viewPager;
     private int tabPos = 0;
-    private PesoPresenterInterface pesoPresenterInterface;
+    private InterfaceCinturaPresenter cinturaPresenter;
 
     private LayoutInflater layoutInflater;
     private SessionManager sessionManager;
 
     private OrdenSelectorListener ordenSelectorListener;
-    private PesoViewInterface pesoViewInterface;
+    private InterfaceCinturaView viewInterface;
+    private InterfaceCinturaView viewInterfaceGrafica;
     private OrdenSelectorListener.OrdenGraficaListener GrafOrderListener;
 
     @Override
@@ -80,11 +81,11 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
 
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
-        pesoPresenterInterface = new PesoPresentrerIMP(getApplicationContext(),this);
+        cinturaPresenter = new CinturaPresenterIMP(this,getApplicationContext());
 
         layoutInflater = LayoutInflater.from(getApplicationContext());
 
-        showtoolbar(getResources().getString(R.string.title_pesoActivity),true);
+        showtoolbar(getResources().getString(R.string.title_cinturaActivity),true);
         setTabLayout();
         setViewPager();
 
@@ -287,7 +288,7 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
     @Override
     protected void onResume() {
         super.onResume();
-        pesoPresenterInterface.RequestGetAll();
+        cinturaPresenter.RequestGetAll();
         //listaOrdenArray = new ArrayList<>();
         //Toast.makeText(getApplicationContext(),"ONRESUME", Toast.LENGTH_LONG).show();
     }
@@ -312,9 +313,9 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, double value) {
-        Peso peso = new Peso();
-        peso.setPeso(String.valueOf(value));
-        pesoPresenterInterface.RequestInsertPeso(peso);
+        Cintura cintura = new Cintura();
+        cintura.setCintura(String.valueOf(value));
+        cinturaPresenter.RequestInsert(cintura);
 
 
          /*RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
@@ -331,10 +332,10 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
 
     @Override
     public void onDialogPositiveEdit(String id, double value) {
-        Peso peso = new Peso();
-        peso.setId(id);
-        peso.setPeso(String.valueOf(value));
-        pesoPresenterInterface.RequestUpdatePeso(peso);
+        Cintura cintura = new Cintura();
+        cintura.setId(id);
+        cintura.setCintura(String.valueOf(value));
+        cinturaPresenter.RequestUpdate(cintura);
     }
 
     @Override
@@ -344,7 +345,9 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
 
     @Override
     public void OnGetAllResponse() {
-        pesoViewInterface.RespuestaActivity(2);
+        viewInterface.OnGetAllResponse();
+        viewInterfaceGrafica.OnGetAllResponse();
+        viewInterface.RespuestaActivity(2);
     }
 
     @Override
@@ -380,15 +383,15 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
     @Override
     public void onClickMenuItem_DELETE(String id) {
         Snackbar snackbar = Snackbar.make(viewPager,getResources()
-                .getString(R.string.msj_borrar_medida),1500)
+                .getString(R.string.msj_borrar_medida),3500)
                 .setAction("Borrar", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //presenterHTA.dropbyId(where);
-                        Peso peso = new Peso();
+                        Cintura cintura = new Cintura();
                         Realm realm = Realm.getDefaultInstance();
-                        peso.setId(realm.where(Peso.class).equalTo("id",id).findFirst().getId());
-                        pesoPresenterInterface.RequestDeletePeso(peso);
+                        cintura.setId(realm.where(Cintura.class).equalTo("id",id).findFirst().getId());
+                        cinturaPresenter.RequestDelete(cintura);
                     }
                 }).setActionTextColor(getResources().getColor(R.color.ms_white));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -403,7 +406,7 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private String title[] = new String[]{"Medidas", "Graficas", "Estado"};
+        private String title[] = new String[]{"Medidas", "Graficas"};
         public final String orderData;
 
         private FragmentManager frag;
@@ -420,13 +423,14 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
             switch (position){
 
                 case 0:
-                    f = new PesoListaFragment();
+                    f = new CinturaListaFragment();
                     ordenSelectorListener = (OrdenSelectorListener) f;
-                    pesoViewInterface = (PesoViewInterface) f;
+                    viewInterface = (InterfaceCinturaView) f;
                     break;
                 case 1:
-                    f = new PesoGraficaFragment();
+                    f = new CinturaGraficaFragment();
                     GrafOrderListener = (OrdenSelectorListener.OrdenGraficaListener) f;
+                    viewInterfaceGrafica = (InterfaceCinturaView) f;
                     break;
                 default:
                     f = new lolFragment();
@@ -446,7 +450,7 @@ public class CinturaActivity extends AppCompatActivity implements PesoViewInterf
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override

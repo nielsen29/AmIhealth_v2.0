@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -65,6 +66,9 @@ public interface ServiceRetrofit {
     @Multipart
     @POST(Configuracion.URL_UpdateProfile)
     Call<User> update_profile(@Part MultipartBody.Part img, @PartMap Map<String, RequestBody> map);
+
+    @POST(Configuracion.URL_verificaremail)
+   Observable<Response<JsonObject>> getEmail(@Query("email")  String email);
 
 
     /********************************************************************

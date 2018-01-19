@@ -1,4 +1,5 @@
-package com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments;
+package com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,44 +16,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amihealth.amihealth.Adaptadores.AdapterMedidasList;
+import com.amihealth.amihealth.Adaptadores.AdapterMedidasCintura;
 import com.amihealth.amihealth.Adaptadores.AdapterMedidasPeso;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
+import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.Peso;
-import com.amihealth.amihealth.Models.MedidasHTAList;
-import com.amihealth.amihealth.Models.Peso;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.CinturaPresenterIMP;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.InterfaceCinturaPresenter;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Utils.MedidasCinturaList;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.Utils.MedidasPesoList;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresenterInterface;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoListaFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentrerIMP;
 import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
-import com.amihealth.amihealth.ModuloHTA.view.presenter.ImpPresenterHta;
 import com.amihealth.amihealth.R;
 
 import java.util.ArrayList;
 
-import io.realm.OrderedCollectionChangeSet;
-import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PesoListaFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  */
+public class CinturaListaFragment extends Fragment implements InterfaceCinturaView, OrdenSelectorListener {
 
-
-public class PesoListaFragment extends Fragment implements PesoViewInterface, OrdenSelectorListener {
-
-    private OnFragmentInteractionListener mListener;
-    private PesoPresenterInterface pesoPresenterInterface;
+    private CinturaListaFragment.OnFragmentInteractionListener mListener;
+    private InterfaceCinturaPresenter cinturaPresenter;
 
 
 
@@ -61,32 +53,32 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
      *          DEF OBJETOS DE VISTA                                    *
      ********************************************************************/
 
-    private RecyclerView        recyclerView;
-    private SwipeRefreshLayout  swipeRefreshLayout;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private String              where;
-    private LinearLayout        linearLayout_progress;
-    private ProgressBar         progressBar;
+    private LinearLayout linearLayout_progress;
+    private ProgressBar progressBar;
     private LinearLayout        linearLayout_error_conection;
     private LinearLayout        linearLayout_error_empty;
     private AlertDialog dialog;
     private Realm realm;
-    private ArrayList<MedidasPesoList> medidasPesoList;
-    private AdapterMedidasPeso adapter;
+    private ArrayList<MedidasCinturaList> medidasPesoList;
+    private AdapterMedidasCintura adapter;
     private SessionManager sessionManager;
     private Intent intent;
-    private RealmResults<Peso> realmResults;
+    private RealmResults<Cintura> realmResults;
     private int ORDEN = 0;
-    private PesoViewInterface mListenerViewActivity;
+    private InterfaceCinturaView mListenerViewActivity;
 
 
-    public PesoListaFragment() {
+    public CinturaListaFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.pesoPresenterInterface = new PesoPresentrerIMP(getContext(),this);
+        this.cinturaPresenter = new CinturaPresenterIMP(this, getContext());
 
         sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
@@ -108,7 +100,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         linearLayout_error_conection = (LinearLayout) view.findViewById(R.id.error_layout_hta);
         linearLayout_error_empty = (LinearLayout) view.findViewById(R.id.errorEmpty_layout_hta);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_hta_frag);
-        pesoPresenterInterface.RequestGetAll();
+        cinturaPresenter.RequestGetAll();
         setupRecyclerView();
         //setupSwipeRefresh();
 
@@ -136,7 +128,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         registerForContextMenu(recyclerView);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AdapterMedidasPeso(getActivity(),this,medidasPesoList);
+        adapter = new AdapterMedidasCintura(getActivity(),this,medidasPesoList);
         recyclerView.setAdapter(adapter);
         //presenterHta.getMedidas(0);
 
@@ -155,7 +147,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         //Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
         realm = Realm.getDefaultInstance();
 
-        RealmResults<Peso> realmResults = realm.where(Peso.class).findAll();
+        RealmResults<Cintura> realmResults = realm.where(Cintura.class).findAll();
         if(realmResults.isEmpty()){
             linearLayout_error_empty.setVisibility(View.VISIBLE);
         }else{
@@ -210,19 +202,19 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     public void ordenarARRAY(int order){
         realm = Realm.getDefaultInstance();
         medidasPesoList.clear();
-        RealmResults<Peso> lol;
+        RealmResults<Cintura> lol;
         switch (order){
             case 0:
-                lol = realm.where(Peso.class).distinct("week").sort("week", Sort.DESCENDING);
+                lol = realm.where(Cintura.class).distinct("week").sort("week", Sort.DESCENDING);
                 break;
             case 1:
-                lol = realm.where(Peso.class).distinct("month").sort("month",Sort.DESCENDING);
+                lol = realm.where(Cintura.class).distinct("month").sort("month",Sort.DESCENDING);
                 break;
             case 2:
-                lol = realm.where(Peso.class).distinct("year").sort("year",Sort.DESCENDING);
+                lol = realm.where(Cintura.class).distinct("year").sort("year",Sort.DESCENDING);
                 break;
             default:
-                lol = realm.where(Peso.class).distinct("year").sort("year",Sort.DESCENDING);
+                lol = realm.where(Cintura.class).distinct("year").sort("year",Sort.DESCENDING);
                 break;
         }
         lol = lol.sort("year",Sort.DESCENDING);
@@ -230,28 +222,28 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         for (int i = 0; i < lol.size() ; i++) {
             switch (order){
                 case 0:
-                    medidasPesoList.add(new MedidasPesoList(
-                            "SEMANA",realm.where(Peso.class).equalTo("week",lol.get(i).getWeek()).findAll(),lol.get(i).getWeek()
+                    medidasPesoList.add(new MedidasCinturaList(
+                            "SEMANA",realm.where(Cintura.class).equalTo("week",lol.get(i).getWeek()).findAll(),lol.get(i).getWeek()
                     ));
                     break;
                 case 1:
-                    medidasPesoList.add(new MedidasPesoList(
-                            "MES",realm.where(Peso.class).equalTo("month",lol.get(i).getMonth()).findAll(),lol.get(i).getMonth()
+                    medidasPesoList.add(new MedidasCinturaList(
+                            "MES",realm.where(Cintura.class).equalTo("month",lol.get(i).getMonth()).findAll(),lol.get(i).getMonth()
                     ));
                     break;
                 case 2:
-                    medidasPesoList.add(new MedidasPesoList(
-                            "YEAR",realm.where(Peso.class).equalTo("year",lol.get(i).getYear()).findAll(),lol.get(i).getYear()
+                    medidasPesoList.add(new MedidasCinturaList(
+                            "YEAR",realm.where(Cintura.class).equalTo("year",lol.get(i).getYear()).findAll(),lol.get(i).getYear()
                     ));
                     break;
                 default:
-                    medidasPesoList.add(new MedidasPesoList(
-                            "lol",realm.where(Peso.class).equalTo("month",lol.get(i).getMonth()).findAll(),lol.get(i).getMonth()
+                    medidasPesoList.add(new MedidasCinturaList(
+                            "lol",realm.where(Cintura.class).equalTo("month",lol.get(i).getMonth()).findAll(),lol.get(i).getMonth()
                     ));
                     break;
             }
         }
-        recyclerView.setAdapter(new AdapterMedidasPeso(getActivity(),this,medidasPesoList));
+        recyclerView.setAdapter(new AdapterMedidasCintura(getActivity(),this,medidasPesoList));
         recyclerView.getAdapter().notifyDataSetChanged();
         realm.close();
     }
@@ -277,13 +269,13 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+            mListener = (CinturaListaFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-        if (context instanceof PesoViewInterface) {
-            mListenerViewActivity = (PesoViewInterface) context;
+        if (context instanceof InterfaceCinturaView) {
+            mListenerViewActivity = (InterfaceCinturaView) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -323,6 +315,9 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         void onFragmentInteraction(Uri uri);
         void onErrorMSG(String error);
     }
+
+
+
 
 
 

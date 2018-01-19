@@ -9,7 +9,7 @@ import com.amihealth.amihealth.Models.Cintura;
 public interface InterfaceCinturaRepo {
 
     void RequestGetAll();
-    void RequestInsertPeso(Cintura cintura);
-    void RequestUpdatePeso(Cintura cintura);
-    void RequestDeletePeso(Cintura cintura);
+    void RequestInsert(Cintura cintura);
+    void RequestUpdate(Cintura cintura);
+    void RequestDelete(Cintura cintura);
 }
