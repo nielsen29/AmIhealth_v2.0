@@ -81,6 +81,7 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
         view.peso.setText(String.valueOf(peso.getPeso()));
         view.view.setBackgroundColor(Color.parseColor(peso.getRgb()));
         view.imc.setText(String.valueOf(peso.getImc()));
+        view.descrip.setText(peso.getDescrip());
 
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -141,6 +142,9 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
         private TextView peso;
         private TextView imc;
         private TextView date;
+        private TextView descrip;
+        private TextView txt_kg;
+        private TextView txt_imc;
         private LinearLayout imcColor;
         private Peso mItem;
 
@@ -151,6 +155,9 @@ public class AdapterPeso extends RealmRecyclerViewAdapter {
             peso = (TextView) v.findViewById(R.id.peso_txt_item);
             imc = (TextView) v.findViewById(R.id.peso_imc_item);
             date = (TextView) v.findViewById(R.id.peso_fecha_item);
+            descrip = (TextView) v.findViewById(R.id.peso_descrip_item);
+            txt_kg = (TextView) v.findViewById(R.id.text_kg_item);
+            txt_imc = (TextView) v.findViewById(R.id.text_imc_item);
             imcColor = (LinearLayout) v.findViewById(R.id.lin_imc_color);
             menuBoton = (ImageButton) v.findViewById(R.id.menupopup1);
             menuBoton.setOnClickListener(new View.OnClickListener() {

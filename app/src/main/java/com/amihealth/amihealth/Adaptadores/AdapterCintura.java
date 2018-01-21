@@ -74,6 +74,9 @@ public class AdapterCintura extends RealmRecyclerViewAdapter {
         view.peso.setText(String.valueOf(cintura.getCintura()));
         view.view.setBackgroundColor(Color.parseColor(cintura.getRgb()));
         view.imc.setText(String.valueOf(cintura.getIca()));
+        view.descrip.setText(cintura.getDescrip());
+        view.txt_imc.setText("ICA");
+        view.txt_kg.setText("cm");
 
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -134,6 +137,9 @@ public class AdapterCintura extends RealmRecyclerViewAdapter {
         private TextView peso;
         private TextView imc;
         private TextView date;
+        private TextView descrip;
+        private TextView txt_kg;
+        private TextView txt_imc;
         private LinearLayout imcColor;
         private Cintura mItem;
 
@@ -145,6 +151,9 @@ public class AdapterCintura extends RealmRecyclerViewAdapter {
             imc = (TextView) v.findViewById(R.id.peso_imc_item);
             date = (TextView) v.findViewById(R.id.peso_fecha_item);
             imcColor = (LinearLayout) v.findViewById(R.id.lin_imc_color);
+            descrip = (TextView) v.findViewById(R.id.peso_descrip_item);
+            txt_kg = (TextView) v.findViewById(R.id.text_kg_item);
+            txt_imc = (TextView) v.findViewById(R.id.text_imc_item);
             menuBoton = (ImageButton) v.findViewById(R.id.menupopup1);
             menuBoton.setOnClickListener(new View.OnClickListener() {
                 @Override

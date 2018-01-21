@@ -90,6 +90,7 @@ public class AdapterMedidasHTA extends RealmRecyclerViewAdapter{
         //thisHolder.aSwitch.setChecked((thisHolder.mItem.getSync() == 1));
 
         thisHolder.color.setBackgroundColor(Color.parseColor(((MedidaHTA)getData().get(position)).getRgb().substring(0)));
+        thisHolder.descrip.setText(((MedidaHTA)getData().get(position)).getDescripcion());
 
 
 
@@ -163,6 +164,7 @@ public class AdapterMedidasHTA extends RealmRecyclerViewAdapter{
         private LinearLayout menu;
         private ImageButton menuBoton;
         private Switch aSwitch;
+        private TextView descrip;
 
 
 
@@ -196,6 +198,8 @@ public class AdapterMedidasHTA extends RealmRecyclerViewAdapter{
             pulso = (TextView) mView.findViewById(R.id.txtMedidas_pls);
             fecha = (TextView) mView.findViewById(R.id.txtMedidas_fecha);
             color = (LinearLayout) mView.findViewById(R.id.medidasColor);
+            descrip = (TextView) mView.findViewById(R.id.medidas_descrip);
+
 
         }
 

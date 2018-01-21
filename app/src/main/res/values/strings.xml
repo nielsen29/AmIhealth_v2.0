@@ -178,4 +178,7 @@
     <string name="action_reply">Reply</string>
     <string name="nuevo_WebTerminos_titulo">Términos y Condiciones</string>
     <string name="accept">Acepto</string>
+    <string name="semena">Semana</string>
+    <string name="mes">Mes</string>
+    <string name="year">Año</string>
 </resources>

@@ -84,7 +84,6 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-
 // Create a new Pusher instance
 
 
@@ -201,9 +200,6 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
-
-
 
         }else if (id == R.id.btn_logout){
             sessionManager.logoutUser();

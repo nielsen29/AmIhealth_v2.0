@@ -20,10 +20,8 @@
             <Spinner
                 android:id="@+id/sp_actionbar"
                 android:layout_gravity="right|center"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
 
                 ></Spinner>
 

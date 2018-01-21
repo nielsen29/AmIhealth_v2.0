@@ -1,37 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_list_c"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ModuloHTA.HTAhomeActivity"
-    android:orientation="vertical"
-    android:layout_margin="8dp"
-    app:cardElevation="@dimen/cardview_default_elevation"
-
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/text_order_list"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_weight="0.2"
+                android:id="@+id/medidas_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Semana:"
+                android:textStyle="bold"
+                android:textSize="@dimen/global_text_size"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                />
+            <TextView
+                android:layout_weight="0.8"
+                android:id="@+id/text_order_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                />
+        </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_list_c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/card_titulo"
-            android:layout_margin="8dp"
-            />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/htaRecycler_medidas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            app:cardElevation="@dimen/cardview_default_elevation"
             >
 
-        </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/htaRecycler_medidas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
-</android.support.v7.widget.CardView>
+
+
+</android.support.design.widget.CoordinatorLayout>
 

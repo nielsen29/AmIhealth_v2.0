@@ -16,7 +16,12 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Utils.Medid
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.Utils.MedidasPesoList;
 import com.amihealth.amihealth.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -48,11 +53,74 @@ public class AdapterMedidasCintura extends RecyclerView.Adapter<AdapterMedidasCi
 
     @Override
     public void onBindViewHolder(ViewListHolder holder, int position){
-        final String titulo=listItem.get(position).toString();
+        String titulo = "";
+        String label = "";
+
+
+        switch(listItem.get(position).getNombre().toString()){
+
+            case "SEMANA":
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date date= new Date();
+                try {
+                    date = df.parse(listItem.get(position).getRealmResults().get(0).getDatetime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                //int weekofmonth = calendar.getWeekYear();
+                SimpleDateFormat f = new SimpleDateFormat("E d, MMM, ''yy");
+
+                Calendar diaSemana = Calendar.getInstance();
+                diaSemana.setTime(date);
+                diaSemana.set(Calendar.DAY_OF_WEEK,1);
+                diaSemana.clear(Calendar.HOUR);
+                diaSemana.clear(Calendar.MINUTE);
+                diaSemana.clear(Calendar.SECOND);
+                diaSemana.clear(Calendar.MILLISECOND);
+                diaSemana.clear(Calendar.HOUR_OF_DAY);
+
+                Calendar endSemena = Calendar.getInstance();
+                endSemena.setTime(diaSemana.getTime());
+                endSemena.set(Calendar.DATE,diaSemana.get(Calendar.DAY_OF_MONTH)+6);
+
+                titulo = f.format(diaSemana.getTime())
+                        +" al "+ f.format(endSemena.getTime());
+                label = activity.getString(R.string.semena) + ":"
+                ;
+                break;
+            case "MES":
+                DateFormat md = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date mDate= new Date();
+                try {
+                    mDate = md.parse(listItem.get(position).getRealmResults().get(0).getDatetime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar cd = Calendar.getInstance();
+                cd.setTime(mDate);
+                //int weekofmonth = calendar.getWeekYear();
+                SimpleDateFormat m = new SimpleDateFormat("MMMM, ''yy");
+
+
+                titulo = m.format(cd.getTime());
+                label = activity.getString(R.string.mes) + ":";
+                break;
+            default:
+                titulo = String.valueOf(listItem.get(position).getRealmResults().get(0).getYear());
+                label = activity.getString(R.string.year) + ":";
+
+
+
+        }
+
+        //final String titulo=listItem.get(position).toString();
         final RealmResults<Cintura> results=listItem.get(position).getRealmResults();
         //AdapterMedidasHTA adapterMedidasHTA=new AdapterMedidasHTA(results.sort("Date", Sort.DESCENDING),true,activity);
         AdapterCintura adapterPeso = new AdapterCintura(this.viewInterface,results.sort("datetime", Sort.DESCENDING), true, activity );
         holder.textView.setText(titulo);
+        holder.label.setText(label);
         holder.recyclerView.setHasFixedSize(false);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         holder.recyclerView.setAdapter(adapterPeso);
@@ -80,6 +148,7 @@ public class AdapterMedidasCintura extends RecyclerView.Adapter<AdapterMedidasCi
         private CardView cardView;
         private RecyclerView recyclerView;
         private TextView textView;
+        private TextView label;
 
 
         public ViewListHolder(View itemView) {
@@ -87,6 +156,7 @@ public class AdapterMedidasCintura extends RecyclerView.Adapter<AdapterMedidasCi
             textView = (TextView) itemView.findViewById(R.id.text_order_list);
             cardView = (CardView) itemView.findViewById(R.id.card_list_c);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.htaRecycler_medidas);
+            label = (TextView) itemView.findViewById(R.id.medidas_label);
         }
     }
 }

@@ -93,7 +93,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
         layoutInflater = LayoutInflater.from(getApplicationContext());
 
-        showtoolbar(getResources().getString(R.string.title_pesoActivity),true);
+        showtoolbar(getResources().getString(R.string.text_launch_peso),true);
         setTabLayout();
         setViewPager();
 

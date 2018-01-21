@@ -27,7 +27,7 @@
             tools:layout_editor_absoluteY="0dp">
             <LinearLayout
                 android:id="@+id/medidasColor"
-                android:layout_width="5dp"
+                android:layout_width="150dp"
                 android:layout_height="124dp"
                 android:background="@color/accBlue"
                 android:layout_marginEnd="16dp"
@@ -39,60 +39,61 @@
                 android:layout_marginLeft="0dp"
                 app:layout_constraintLeft_toLeftOf="parent">
 
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/medidas_lb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:text="@string/lb_medidas"
+                        android:textColor="@color/ms_white"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtMedidas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="XXX / XXX"
+                        android:textSize="24sp"
+                        android:textColor="@color/ms_white"
+                        />
+
+                    <TextView
+                        android:id="@+id/medidas_lb_mmhg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/lb_medidas_mmhg"
+                        android:textColor="@color/ms_white"/>
+                </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/medidasColor"
-                android:layout_marginLeft="32dp">
-
-
-                <TextView
-                    android:id="@+id/medidas_lb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center"
-                    android:text="@string/lb_medidas" />
-
-                <TextView
-                    android:id="@+id/txtMedidas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="XXX / XXX"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/medidas_lb_mmhg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/lb_medidas_mmhg" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.511"
-                app:layout_constraintRight_toLeftOf="@+id/ly_fecha"
-                android:layout_marginRight="16dp"
                 app:layout_constraintLeft_toRightOf="@+id/linearLayout"
-                android:layout_marginLeft="16dp">
+                app:layout_constraintStart_toEndOf="@+id/medidasColor"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511">
 
                 <TextView
                     android:id="@+id/medidas_pls_lb"
@@ -119,16 +120,26 @@
 
             <LinearLayout
                 android:id="@+id/ly_fecha"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center"
                 android:orientation="vertical"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/menuItem"
-                android:layout_marginRight="32dp">
+                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/medidas_descrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="textMultiLine"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/medidas_fecha_lb"
@@ -141,9 +152,10 @@
 
                 <TextView
                     android:id="@+id/txtMedidas_fecha"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
+                    android:gravity="center"
                     android:text="XXX"
                     android:textSize="8sp" />
 
