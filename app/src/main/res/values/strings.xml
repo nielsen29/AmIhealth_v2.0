@@ -188,4 +188,5 @@
     <string name="nuevo_ICA_titulo">Nueva Medida de Cintura</string>
     <string name="info_nueva_medida_cintura">Ingresar su medida de cintura en centímetros</string>
     <string name="editar_Cintura_title">Editar Medida de Cintura</string>
+    <string name="title_notification_item">Nueva notificación</string>
 </resources>

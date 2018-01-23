@@ -79,12 +79,15 @@ public class HomeActivity extends AppCompatActivity
         if(sessionManager.isLoggedIn()){
             realm = Realm.getDefaultInstance();
             user = realm.where(User.class).equalTo("id_InServer", sessionManager.getUserLogin().get(SessionManager.KEY).toString()).findFirst();
+
         }
         if(user == null){
             sessionManager.logoutUser();
         }else{
             startService(new Intent(this,MyPusherService.class));
         }
+
+       // startService(new Intent(this,MyPusherService.class));
 
 
 

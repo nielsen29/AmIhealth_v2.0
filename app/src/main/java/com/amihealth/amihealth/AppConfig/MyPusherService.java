@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -77,9 +78,13 @@ public class MyPusherService extends Service {
             public void onEvent(String channel, String event, String data) {
                 //System.out.println("Received event with data: " + data);
                 //JSONObject jdo = new JSONObject(data).getJSONObject()
+
                 Gson gson = new Gson();
                 AmIHealthNotificacion notificacion = gson.fromJson(data, AmIHealthNotificacion.class);
-               // showNotification(notificacion);
+                Log.v("SERVICIO_NOTIFY", "llego el evento para: "+notificacion.getTo());
+                //showNotification(notificacion);
+                //newNotify(notificacion);
+                NewMessageNotification.notify(getApplicationContext(),event.toString(), 1);
 
             }
         });
@@ -89,6 +94,11 @@ public class MyPusherService extends Service {
         pusher.connect();
 // The state change listener is notified when the connection has been re-established,
 // the subscription to "my-channel" and binding on "my-event" still exist.
+    }
+
+
+    private void newNotify(AmIHealthNotificacion notificacion){
+         NewMessageNotification.notify(getApplicationContext(),notificacion.toString(),1);
     }
 
 
