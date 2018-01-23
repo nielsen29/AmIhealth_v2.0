@@ -12,6 +12,7 @@ import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
 import com.amihealth.amihealth.R;
 import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntro2Fragment;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
 import io.realm.Realm;
@@ -42,21 +43,35 @@ public class IntroAddMedidas extends AppIntro {
         addSlide(AppIntroFragment
                 .newInstance(
                         "Consejos",
-                        "Medir siempre a la misma hora. Puesto que las personas tienen aproximadamente 100.000 niveles diferentes de presión arterial cada día, las mediciones aisladas no son válidas. Únicamente las mediciones regulares a las mismas horas del día a lo largo de un periodo prolongado de tiempo permiten evaluar razonablemente la presión arterial.",
+                        "Medir siempre a la misma hora. Puesto que las personas tienen aproximadamente 100.000 niveles diferentes de presión arterial cada día,\n"+
+                                " las mediciones aisladas no son válidas. Únicamente las mediciones regulares a las mismas horas del día a lo largo de un periodo prolongado \n"+
+                                "de tiempo permiten evaluar razonablemente la presión arterial.",
                         R.drawable.ic_reco_img1,
                         ContextCompat.getColor(getApplicationContext(),R.color.celesteBR)
                 ));
         addSlide(AppIntroFragment
                 .newInstance(
                         "Tiempo para Medidas",
-                        "",
+                        "Tomarla tras cinco minutos de reposo por lo menos.\n" +
+                                "La persona debe estar relajada y no tener prisa.\n" +
+                                "Tampoco debe haber comido, bebido sustancias excitantes (café, té) ni fumado durante la media hora previa a la medición.\n"
+                        ,R.drawable.ic_reco_img_actividad_02,
+                        ContextCompat.getColor(getApplicationContext(),R.color.dark_celesteBR)
+                ));
+        addSlide(AppIntroFragment
+                .newInstance(
+                        "Tiempo para Medidas",
+                                "La posición del cuerpo debe ser sentado, no estirado, con la espalda bien apoyada en el respaldo de la silla. Las piernas deben estar tocando el suelo, no cruzadas, y la mano relajada, sin apretar y en posición de descanso.\n" +
+                                "Brazo de referencia o dominante apoyado más o menos a la altura del corazón, mano relajada. El brazo de referencia o dominante es aquel en el que la TA es más alta.",
                         R.drawable.ic_reco_img_actividad_02,
                         ContextCompat.getColor(getApplicationContext(),R.color.dark_celesteBR)
                 ));
         addSlide(AppIntroFragment
                 .newInstance(
                         "Medidas",
-                        "",
+                        "Si se observan valores que están fuera de los límites aceptables:\n" +
+                                "Hacer 3 tomas separadas al menos 5 minutos y hacer la media.\n" +
+                                "En caso de cifras mantenidas altas, es importante acudir al médico.",
                         R.drawable.ic_reco_img1,
                         ContextCompat.getColor(getApplicationContext(),R.color.dark2_celesteBR)
                 ));

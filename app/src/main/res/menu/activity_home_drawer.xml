@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:icon="@drawable/ic_blood_presure"
+            android:title="@string/text_launch_hta" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/ic_peso"
+            android:title="@string/text_launch_peso" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:icon="@drawable/ms_ic_chevron_end"
+            android:title="@string/text_launch_cintura" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/ic_user"
+            android:title="@string/text_launch_user" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/title_ayuda">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:icon="@drawable/ms_ic_chevron_end"
+                android:title="@string/title_terminos" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@drawable/ms_ic_chevron_end"
+                android:title="@string/title_politica" />
+            <item
+                android:id="@+id/nav_discl"
+                android:icon="@drawable/ms_ic_chevron_end"
+                android:title="@string/title_disclaimer" />
         </menu>
     </item>
     <item

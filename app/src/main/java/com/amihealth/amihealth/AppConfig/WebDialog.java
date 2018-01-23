@@ -34,6 +34,7 @@ public class WebDialog extends DialogFragment {
     private String datoPeso = "";
     private EditText peso;
     private Spinner sp_kg;
+    private String url;
 
 
     public WebDialog() {
@@ -41,20 +42,32 @@ public class WebDialog extends DialogFragment {
     }
 
 
+   public static WebDialog newInstance(String url) {
+        WebDialog f = new WebDialog();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putString("URL", url);
+        f.setArguments(args);
+
+        return f;
+    }
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        return crearDialogo();
+        return crearDialogo(getArguments().getString("URL"));
 
     }
 
-    public AlertDialog crearDialogo() {
+    public AlertDialog crearDialogo(String url) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.web_view, null);
         WebView webView = (WebView) v.findViewById(R.id.webview);
-        webView.loadUrl("https://saludmovil.utp.ac.pa/terms-and-conditions");
+        webView.loadUrl(url);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -66,13 +79,12 @@ public class WebDialog extends DialogFragment {
         builder.setPositiveButton(getActivity().getString(R.string.accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onDialogPositiveClick();
+
             }
         });
         builder.setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onDialogNegativeClick();
             }
         });
 

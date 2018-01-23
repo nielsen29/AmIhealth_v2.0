@@ -25,8 +25,10 @@ import android.widget.Spinner;
 
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Cintura;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.AddCinturaDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.CinturaGraficaFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.CinturaListaFragment;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.EditCinturaDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.InterfaceCinturaView;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.CinturaPresenterIMP;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.InterfaceCinturaPresenter;
@@ -42,7 +44,7 @@ import com.amihealth.amihealth.R;
 import io.realm.Realm;
 
 //activity_cintura
-public class CinturaActivity extends AppCompatActivity implements InterfaceCinturaView, CinturaListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener {
+public class CinturaActivity extends AppCompatActivity implements InterfaceCinturaView, CinturaListaFragment.OnFragmentInteractionListener, AddCinturaDialogFragment.AddPesoDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -207,12 +209,12 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     public void showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
-        DialogFragment dialog = new AddPesoDialogFragment();
+        DialogFragment dialog = new AddCinturaDialogFragment();
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
     public void showNoticeDialog(String id) {
         // Create an instance of the dialog fragment and show it
-        DialogFragment dialog = EditPesoDialogFragment.getInstance(id);
+        DialogFragment dialog = EditCinturaDialogFragment.getInstance(id);
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragmentEdit");
     }
 

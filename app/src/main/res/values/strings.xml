@@ -181,4 +181,11 @@
     <string name="semena">Semana</string>
     <string name="mes">Mes</string>
     <string name="year">Año</string>
+    <string name="title_terminos">Términos y Condiciones</string>
+    <string name="title_politica">Política de Privacidad</string>
+    <string name="title_disclaimer">Disclaimer</string>
+    <string name="title_ayuda">Ayuda</string>
+    <string name="nuevo_ICA_titulo">Nueva Medida de Cintura</string>
+    <string name="info_nueva_medida_cintura">Ingresar su medida de cintura en centímetros</string>
+    <string name="editar_Cintura_title">Editar Medida de Cintura</string>
 </resources>

@@ -2,12 +2,14 @@ package com.amihealth.amihealth.Home;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.transition.Explode;
 import android.transition.TransitionSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -190,17 +195,29 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            Intent i = new Intent(getApplicationContext(), HTAhomeActivity.class);
+            startActivity(i);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            Intent i = new Intent(getApplicationContext(), MedAntroMainActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_slideshow) {
+            Intent i = new Intent(getApplicationContext(), CinturaActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_manage) {
+            Intent i = new Intent(getApplicationContext(), UserActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_share) {
+            showTerminos("https://saludmovil.utp.ac.pa/terms-and-conditions");
 
         } else if (id == R.id.nav_send) {
+            showTerminos("https://saludmovil.utp.ac.pa/privicy-policy");
 
+        }else if (id == R.id.nav_discl) {
+            showTerminos("https://saludmovil.utp.ac.pa/disclaimer");
         }else if (id == R.id.btn_logout){
             sessionManager.logoutUser();
         }
@@ -252,5 +269,10 @@ public class HomeActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         getUser();
+    }
+
+    public void showTerminos(String url){
+        WebDialog webDialog =  WebDialog.newInstance(url);
+        webDialog.show(getSupportFragmentManager(),"WEBDIALOG");
     }
 }

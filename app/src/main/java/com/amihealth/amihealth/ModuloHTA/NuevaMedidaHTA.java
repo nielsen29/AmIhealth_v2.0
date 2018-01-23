@@ -110,7 +110,7 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
         setSupportActionBar(toolbar);
         getSupportActionBar()   .setTitle(titulo);
         getSupportActionBar()   .setDisplayHomeAsUpEnabled(mUpbtn);
-        toolbar.setTitleTextColor(Color.WHITE);
+
     }
 
     public void instanciaCampos(){
