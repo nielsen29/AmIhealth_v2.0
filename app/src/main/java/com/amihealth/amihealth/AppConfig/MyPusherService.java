@@ -5,22 +5,16 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
+import com.amihealth.amihealth.AppConfig.notification.NewMessageNotification;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Home.HomeActivity;
 import com.amihealth.amihealth.Models.AmIHealthNotificacion;
-import com.amihealth.amihealth.Models.User;
 import com.amihealth.amihealth.R;
 import com.google.gson.Gson;
 import com.pusher.client.Pusher;
@@ -30,8 +24,6 @@ import com.pusher.client.channel.SubscriptionEventListener;
 import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
-
-import io.realm.Realm;
 
 public class MyPusherService extends Service {
 
@@ -84,7 +76,7 @@ public class MyPusherService extends Service {
                 Log.v("SERVICIO_NOTIFY", "llego el evento para: "+notificacion.getTo());
                 //showNotification(notificacion);
                 //newNotify(notificacion);
-                NewMessageNotification.notify(getApplicationContext(),event.toString(), 1);
+                NewMessageNotification.notify(getApplicationContext(),notificacion, 1);
 
             }
         });
@@ -98,7 +90,7 @@ public class MyPusherService extends Service {
 
 
     private void newNotify(AmIHealthNotificacion notificacion){
-         NewMessageNotification.notify(getApplicationContext(),notificacion.toString(),1);
+         NewMessageNotification.notify(getApplicationContext(),notificacion,1);
     }
 
 

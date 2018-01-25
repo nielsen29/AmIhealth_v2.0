@@ -3,13 +3,20 @@ package com.amihealth.amihealth.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by GITCE on 01/16/18.
  */
 
-public class AmIHealthNotificacion {
+public class AmIHealthNotificacion extends RealmObject{
+
+
+    @PrimaryKey
+    @SerializedName("id")
+    @Expose
+    private String id;
 
     @SerializedName("title")
     @Expose
@@ -35,17 +42,41 @@ public class AmIHealthNotificacion {
     @Expose
     private String value;
 
-    public AmIHealthNotificacion(String title, String body, String icon, String to, String from, String value) {
+    @SerializedName("created_at")
+    @Expose
+    private String created_at;
+
+    @SerializedName("count")
+    @Expose
+    private int count;
+
+
+
+
+    public AmIHealthNotificacion() {
+    }
+
+    public AmIHealthNotificacion(String id, String title, String body, String icon, String to, String from, String value, String created_at, int count) {
+        this.id = id;
         this.title = title;
         this.body = body;
         this.icon = icon;
         this.to = to;
         this.from = from;
         this.value = value;
+        this.created_at = created_at;
+        this.count = count;
     }
 
-    public AmIHealthNotificacion() {
+    public int getCount() {
+        return count;
     }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+
 
     public String getTitle() {
         return title;
@@ -93,5 +124,21 @@ public class AmIHealthNotificacion {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }

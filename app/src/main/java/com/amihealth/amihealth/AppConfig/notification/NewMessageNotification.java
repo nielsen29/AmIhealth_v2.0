@@ -1,4 +1,4 @@
-package com.amihealth.amihealth.AppConfig;
+package com.amihealth.amihealth.AppConfig.notification;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
+import com.amihealth.amihealth.Models.AmIHealthNotificacion;
 import com.amihealth.amihealth.R;
 
 /**
@@ -44,7 +45,7 @@ public class NewMessageNotification {
      * @see #cancel(Context)
      */
     public static void notify(final Context context,
-                              final String exampleString, final int number) {
+                              final AmIHealthNotificacion notificacion, final int number) {
         final Resources res = context.getResources();
 
         // This image is used as the notification's large icon (thumbnail).
@@ -52,11 +53,9 @@ public class NewMessageNotification {
         final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
 
 
-        final String ticker = exampleString;
-        final String title = res.getString(
-                R.string.new_message_notification_title_template, exampleString);
-        final String text = res.getString(
-                R.string.new_message_notification_placeholder_text_template, exampleString);
+        final String ticker = notificacion.getBody();
+        final String title = notificacion.getTitle();
+        final String text = notificacion.getBody();
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
 
@@ -85,7 +84,7 @@ public class NewMessageNotification {
 
                 // Show a number. This is useful when stacking notifications of
                 // a single type.
-                .setNumber(number)
+                .setNumber(notificacion.getCount())
 
                 // If this notification relates to a past or upcoming event, you
                 // should set the relevant time information using the setWhen
@@ -110,30 +109,34 @@ public class NewMessageNotification {
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(text)
                         .setBigContentTitle(title)
-                        .setSummaryText("Dummy summary text"))
+                        .setSummaryText(notificacion.getValue()))
 
                 // Example additional actions for this notification. These will
                 // only show on devices running Android 4.1 or later, so you
                 // should ensure that the activity in this notification's
                 // content intent provides access to the same actions in
                 // another way.
-                .addAction(
-                        R.drawable.ic_action_stat_share,
-                        res.getString(R.string.action_share),
-                        PendingIntent.getActivity(
-                                context,
-                                0,
-                                Intent.createChooser(new Intent(Intent.ACTION_SEND)
-                                        .setType("text/plain")
-                                        .putExtra(Intent.EXTRA_TEXT, "Dummy text"), "Dummy title"),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
-                .addAction(
-                        R.drawable.ic_action_stat_reply,
-                        res.getString(R.string.action_reply),
-                        null)
+
 
                 // Automatically dismiss the notification when it is touched.
                 .setAutoCancel(true);
+        if(notificacion.getCount() == 1){
+            builder
+                    .addAction(
+                            R.drawable.ic_action_stat_share,
+                            res.getString(R.string.action_share),
+                            PendingIntent.getActivity(
+                                    context,
+                                    0,
+                                    Intent.createChooser(new Intent(Intent.ACTION_SEND)
+                                            .setType("text/plain")
+                                            .putExtra(Intent.EXTRA_TEXT, "Dummy text"), "Dummy title"),
+                                    PendingIntent.FLAG_UPDATE_CURRENT))
+                    .addAction(
+                            R.drawable.ic_action_stat_reply,
+                            res.getString(R.string.action_reply),
+                            null);
+        }
 
         notify(context, builder.build());
     }
@@ -151,7 +154,7 @@ public class NewMessageNotification {
 
     /**
      * Cancels any notifications of this type previously shown using
-     * {@link #notify(Context, String, int)}.
+     * {@link #notify(Context, AmIHealthNotificacion, int)}.
      */
     @TargetApi(Build.VERSION_CODES.ECLAIR)
     public static void cancel(final Context context) {

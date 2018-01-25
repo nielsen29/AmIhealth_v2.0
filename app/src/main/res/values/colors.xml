@@ -78,6 +78,8 @@
     <color name="disgradientend">#a6e9f1</color>
     <color name="disgradient">#a6e9f1</color>
     <color name="grafIndicador_text">#ccd4e2</color>
+    <color name="verde_bootstrap">#28a745</color>
+    <color name="danger_bootstrap">#dc3545</color>
 
 
 </resources>
