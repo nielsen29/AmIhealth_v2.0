@@ -83,6 +83,18 @@ public class AdapterNotification extends RealmRecyclerViewAdapter{
             mensaje_notify = (TextView) itemView.findViewById(R.id.message_notify);
             btn_ok = (Button) itemView.findViewById(R.id.btn_ok);
             btn_decline = (Button) itemView.findViewById(R.id.btn_decline);
+            btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notificationAction.aceptar(notificacion.getId());
+                }
+            });
+            btn_decline.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notificationAction.declinar(notificacion.getId());
+                }
+            });
 
 
         }

@@ -1,5 +1,7 @@
 package com.amihealth.amihealth.Models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -49,6 +51,10 @@ public class AmIHealthNotificacion extends RealmObject{
     @SerializedName("count")
     @Expose
     private int count;
+
+    @SerializedName("medico")
+    @Expose
+    private Medico medico;
 
 
 
@@ -140,5 +146,19 @@ public class AmIHealthNotificacion extends RealmObject{
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public static Medico parseJSON(String response){
+        Gson gson = new GsonBuilder().create();
+        Medico medico = gson.fromJson(response,Medico.class);
+        return medico;
     }
 }

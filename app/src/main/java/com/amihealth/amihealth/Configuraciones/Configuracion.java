@@ -38,7 +38,7 @@ public class Configuracion {
     public static final String URL_GETEMAIL = SERVER + "getEmail";
     public static final String URL_GETUSER = SERVER + "getUser";
     public static final String URL_GETCAT = SERVER + "getCAT";
-   public static final String URL_GETCOLORS = SERVER + "getColors";
+    public static final String URL_GETCOLORS = SERVER + "getColors";
    //public static final String URL_UpdateHTA = SERVER + "updatehta";
 
    public static final String URL_IMG_ROOT = ROOT_SERVER + "uploads/avatars/";
@@ -77,4 +77,5 @@ public class Configuracion {
     public static final  String URL_verificaremail = "getEmailUser";
 
 
+    public static final String URL_GET_NOTIFICATION = "get_notification";
 }

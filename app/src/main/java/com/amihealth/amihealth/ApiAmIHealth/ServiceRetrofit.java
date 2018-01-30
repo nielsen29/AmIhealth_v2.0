@@ -1,6 +1,7 @@
 package com.amihealth.amihealth.ApiAmIHealth;
 
 import com.amihealth.amihealth.Configuraciones.Configuracion;
+import com.amihealth.amihealth.Models.AmIHealthNotificacion;
 import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.Models.Peso;
@@ -105,6 +106,13 @@ public interface ServiceRetrofit {
     @POST(Configuracion.URL_DELETE_CINTURA)
     Observable<Response<Cintura>> delete_Cintura(@Body Cintura cintura);
 
+
+    /********************************************************************
+     *          METODOS DE ACCESO A DATOS DE NOTIFICACIONES
+     ********************************************************************/
+
+    @GET(Configuracion.URL_GET_NOTIFICATION)
+    Observable<Response<ArrayList<AmIHealthNotificacion>>> get_notification();
 
 
 

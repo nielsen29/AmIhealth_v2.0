@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
 import com.amihealth.amihealth.AppConfig.MyPusherService;
 import com.amihealth.amihealth.AppConfig.WebDialog;
+import com.amihealth.amihealth.AppConfig.notification.NotificationActivity;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.User;
@@ -223,6 +224,9 @@ public class HomeActivity extends AppCompatActivity
             showTerminos("https://saludmovil.utp.ac.pa/disclaimer");
         }else if (id == R.id.btn_logout){
             sessionManager.logoutUser();
+        }else if (id == R.id.nav_notification){
+            Intent i = new Intent(getApplicationContext(), NotificationActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
