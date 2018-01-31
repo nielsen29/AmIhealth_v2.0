@@ -29,6 +29,7 @@ import io.realm.Realm;
 
 public class MyPusherService extends Service {
 
+    private SessionManager sessionManager;
 
 
 
@@ -47,53 +48,56 @@ public class MyPusherService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        PusherOptions options = new PusherOptions().setCluster("mt1");
-        Pusher pusher = new Pusher("c3d7a44ab3e34582316d", options);
+        sessionManager = new SessionManager(getApplicationContext());
+        if(sessionManager.isLoggedIn()){
+            PusherOptions options = new PusherOptions().setCluster("mt1");
+            Pusher pusher = new Pusher("c3d7a44ab3e34582316d", options);
 
-        pusher.connect(new ConnectionEventListener() {
-            @Override
-            public void onConnectionStateChange(ConnectionStateChange change) {
-                System.out.println("State changed to " + change.getCurrentState() +
-                        " from " + change.getPreviousState());
-            }
+            pusher.connect(new ConnectionEventListener() {
+                @Override
+                public void onConnectionStateChange(ConnectionStateChange change) {
+                    System.out.println("State changed to " + change.getCurrentState() +
+                            " from " + change.getPreviousState());
+                }
 
-            @Override
-            public void onError(String message, String code, Exception e) {
-                System.out.println("There was a problem connecting!");
-            }
-        }, ConnectionState.ALL);
+                @Override
+                public void onError(String message, String code, Exception e) {
+                    System.out.println("There was a problem connecting!");
+                }
+            }, ConnectionState.ALL);
 
 // Subscribe to a channel
-        Channel channel = pusher.subscribe("user."+ new SessionManager(getApplicationContext()).getUserLogin().get(SessionManager.KEY).toString());
+            Channel channel = pusher.subscribe("user."+ new SessionManager(getApplicationContext()).getUserLogin().get(SessionManager.KEY).toString());
 
 // Bind to listen for events called "my-event" sent to "my-channel"
-        channel.bind("new-notification", new SubscriptionEventListener() {
-            @Override
-            public void onEvent(String channel, String event, String data) {
-                //System.out.println("Received event with data: " + data);
-                //JSONObject jdo = new JSONObject(data).getJSONObject()
+            channel.bind("new-notification", new SubscriptionEventListener() {
+                @Override
+                public void onEvent(String channel, String event, String data) {
+                    //System.out.println("Received event with data: " + data);
+                    //JSONObject jdo = new JSONObject(data).getJSONObject()
 
-                Gson gson = new Gson();
-                AmIHealthNotificacion notificacion = gson.fromJson(data, AmIHealthNotificacion.class);
-                Log.v("SERVICIO_NOTIFY", "llego el evento para: "+notificacion.getTo());
-                //showNotification(notificacion);
-                //newNotify(notificacion);
-                NewMessageNotification.notify(getApplicationContext(),notificacion, 1);
-                Realm realm = Realm.getDefaultInstance();
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.insertOrUpdate(notificacion);
-                    }
-                });
-                realm.close();
+                    Gson gson = new Gson();
+                    AmIHealthNotificacion notificacion = gson.fromJson(data, AmIHealthNotificacion.class);
+                    Log.v("SERVICIO_NOTIFY", "llego el evento para: "+notificacion.getTo());
+                    //showNotification(notificacion);
+                    //newNotify(notificacion);
+                    NewMessageNotification.notify(getApplicationContext(),notificacion, 1);
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.insertOrUpdate(notificacion);
+                        }
+                    });
+                    realm.close();
 
-            }
-        });
+                }
+            });
 
 
 // Reconnect, with all channel subscriptions and event bindings automatically recreated
-        pusher.connect();
+            pusher.connect();
+        }
 // The state change listener is notified when the connection has been re-established,
 // the subscription to "my-channel" and binding on "my-event" still exist.
     }
