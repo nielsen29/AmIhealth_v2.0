@@ -140,9 +140,11 @@
             android:exported="false" />
 
         <activity android:name=".AppConfig.notification.NotificationActivity"
-            android:theme="@style/AlertDialog.AppCompat.Light"
+            android:parentActivityName=".Home.HomeActivity"
             >
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.Home.HomeActivity" />
         </activity>
     </application>
 

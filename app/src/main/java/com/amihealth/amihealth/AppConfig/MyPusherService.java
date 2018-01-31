@@ -25,6 +25,8 @@ import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
 
+import io.realm.Realm;
+
 public class MyPusherService extends Service {
 
 
@@ -77,6 +79,14 @@ public class MyPusherService extends Service {
                 //showNotification(notificacion);
                 //newNotify(notificacion);
                 NewMessageNotification.notify(getApplicationContext(),notificacion, 1);
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.insertOrUpdate(notificacion);
+                    }
+                });
+                realm.close();
 
             }
         });
