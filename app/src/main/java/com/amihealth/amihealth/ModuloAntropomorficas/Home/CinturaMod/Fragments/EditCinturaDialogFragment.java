@@ -80,7 +80,21 @@ public class EditCinturaDialogFragment extends DialogFragment {
         builder.setPositiveButton(getContext().getString(R.string.update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
+                if(peso.getText().length() <= 0){
+                    peso.setError("Este campo no puede estar vacio");
+                    peso.setText("0");
+                    mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
+
+                    //mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                    dialogInterface.cancel();
+
+                }else{
+                    mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
+
+                    //mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                    dismiss();
+
+                }
             }
         });
         builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {

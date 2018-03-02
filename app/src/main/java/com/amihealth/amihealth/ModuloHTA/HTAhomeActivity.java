@@ -11,9 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,18 +25,34 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.amihealth.amihealth.AppConfig.OnDialogResponse;
+import com.amihealth.amihealth.AppConfig.StaticError;
+import com.amihealth.amihealth.AppConfig.notification.NewMessageNotification;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
+import com.amihealth.amihealth.Home.HomeActivity;
+import com.amihealth.amihealth.Models.AmIHealthNotificacion;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.OnStaticErrorAlarm;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.HTAGraficasFragment;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.HTAListFragment;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.IntroAddMedidas;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.lolFragment;
 import com.amihealth.amihealth.R;
+import com.google.gson.Gson;
+import com.pusher.client.Pusher;
+import com.pusher.client.PusherOptions;
+import com.pusher.client.channel.Channel;
+import com.pusher.client.channel.SubscriptionEventListener;
+import com.pusher.client.connection.ConnectionEventListener;
+import com.pusher.client.connection.ConnectionState;
+import com.pusher.client.connection.ConnectionStateChange;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HTAhomeActivity extends AppCompatActivity implements HTAListFragment.OnFragmentInteractionListener, HTAGraficasFragment.OnFragmentInteractionListener {
+import io.realm.Realm;
+
+public class HTAhomeActivity extends AppCompatActivity implements HTAListFragment.OnFragmentInteractionListener, HTAGraficasFragment.OnFragmentInteractionListener, OnDialogResponse, OnStaticErrorAlarm {
 
 
     private ViewPager viewPager;
@@ -70,15 +88,28 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
         GrafOrderListener = grafOrderListener;
     }
 
+
+
+    private StaticError staticError;
+    private AlertDialog alertDialog;
+
+    private static final String EXTRA_ALERTA = "alerta";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_htahome);
+
+
         listaOrdenArray = new ArrayList<>();
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
         list = new ArrayList<>();
         htaListFragment = new HTAListFragment();
+        staticError = new StaticError(this);
+        alertDialog = staticError.getErrorDialogAlert(this,StaticError.ESPERA);
+        alertDialog.setCancelable(false);
         //setOrderListener((OrdenSelectorListener) htaListFragment);
         showtoolbar(getResources().getString(R.string.title_presionarterial),true);
         setTabLayout();
@@ -89,10 +120,18 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
             public void onClick(View view) {
 
                 goNuevaMedidad();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
+
+        alertDialog.show();
+        if(getIntent() != null){
+
+        }
+
+
+
+
 
     }
 
@@ -109,10 +148,20 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
         //listaOrdenArray.get(savedInstanceState.getInt("tabPos")).orderListener(savedInstanceState.getInt("spPos"));
     }
 
-    private void goNuevaMedidad(){
+    private void setAlarmCase(){
 
-        Intent intent = new Intent(this,IntroAddMedidas.class);
-        startActivity(intent);
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                StaticError staticError = new StaticError();
+                staticError.getError(getApplicationContext(),StaticError.CONEXION);
+            }
+        });
+
+    }
+
+    private void goNuevaMedidad(){
+        Intent intent = new Intent(this,NuevaMedidaHTA.class);
+        startActivityForResult(intent, 1);
     }
 
 
@@ -274,6 +323,7 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
     @Override
     protected void onRestart() {
         super.onRestart();
+        OnProgressOn();
         //Toast.makeText(getApplicationContext(),"ON_RESTAR", Toast.LENGTH_LONG).show();
         //setOrderListener((OrdenSelectorListener) getSupportFragmentManager().getFragments().get(tabLayout.getSelectedTabPosition()));
     }
@@ -294,7 +344,7 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
     @Override
     protected void onStart() {
         super.onStart();
-       // Toast.makeText(getApplicationContext(),"ONSTAR", Toast.LENGTH_LONG).show();
+       //Toast.makeText(getApplicationContext(),"ONSTAR", Toast.LENGTH_LONG).show();
 
     }
 
@@ -308,6 +358,42 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
 
     }
 
+    @Override
+    public void retryConection() {
+
+        staticError.getErrorD(this,StaticError.CONEXION);
+
+    }
+
+    @Override
+    public void retryBusqueda() {
+
+    }
+
+    @Override
+    public void declineBusqueda() {
+
+    }
+
+    @Override
+    public void OnProgressOn() {
+        alertDialog.show();
+    }
+
+    @Override
+    public void OnProgressOff() {
+        alertDialog.cancel();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (!data.getStringExtra(EXTRA_ALERTA).isEmpty()){
+            if(data.getStringExtra(EXTRA_ALERTA).equals(StaticError.ALARMA_HTA)){
+                staticError.getErrorD(this,StaticError.ALARMA_HTA);
+            }
+        }
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

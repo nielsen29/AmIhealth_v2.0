@@ -36,7 +36,7 @@ public class CinturaPresenterIMP implements InterfaceCinturaPresenter {
 
     @Override
     public void OnDeleteResponse() {
-
+        cinturaView.OnDeleteResponse();
     }
 
     @Override

@@ -171,7 +171,7 @@ public class HTAGraficasFragment extends Fragment implements OrdenSelectorListen
         if (listo == 1){
             ordenarARRAY(order);
         }
-        Toast.makeText(getActivity(),String.valueOf(order).toString(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(),String.valueOf(order).toString(),Toast.LENGTH_LONG).show();
     }
 
 

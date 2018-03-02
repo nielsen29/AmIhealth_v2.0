@@ -101,10 +101,32 @@ public class AddCinturaDialogFragment extends DialogFragment {
 
             }
         });
+        peso.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(peso.getText().length() <= 0){
+                    peso.setError("Este campo no puede estar vacio");
+
+                }
+            }
+        });
+
+
         builder.setPositiveButton(getContext().getString(R.string.btn_guardar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                if(peso.getText().length() <= 0){
+                    peso.setError("Este campo no puede estar vacio");
+                    peso.setText("0");
+                    mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                    dialogInterface.cancel();
+
+                }else{
+                    mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                    dismiss();
+
+                }
+
             }
         });
         builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -132,7 +154,11 @@ public class AddCinturaDialogFragment extends DialogFragment {
         builder.setPositiveButton(getContext().getString(R.string.update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
+                if(peso.getText().length() <= 0){
+                    peso.setError("Este campo no puede estar vacio");
+                }else{
+                    mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
+                }
             }
         });
         builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {

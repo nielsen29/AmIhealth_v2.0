@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.Peso;
@@ -52,7 +53,7 @@ public class CinturaRepoIMP implements InterfaceCinturaRepo {
                     }
                 }, throwable -> {
                     Log.i("ERROR", "RxJava2, HTTP Error: " + throwable.getMessage());
-                    cinturaPresenter.OnErrorResponse(throwable.getMessage());
+                    cinturaPresenter.OnErrorResponse(StaticError.CONEXION);
 
                 });
 
@@ -120,6 +121,7 @@ public class CinturaRepoIMP implements InterfaceCinturaRepo {
                                     }
                                 });
                                 realm.close();
+                                cinturaPresenter.OnDeleteResponse();
                             }else {
                                 cinturaPresenter.OnErrorResponse(cinturaResponse.errorBody().string());
                             }

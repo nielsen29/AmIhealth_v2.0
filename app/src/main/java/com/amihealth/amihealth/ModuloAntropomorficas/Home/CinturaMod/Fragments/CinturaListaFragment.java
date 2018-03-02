@@ -18,16 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.amihealth.amihealth.Adaptadores.AdapterMedidasCintura;
-import com.amihealth.amihealth.Adaptadores.AdapterMedidasPeso;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Cintura;
-import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.CinturaPresenterIMP;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.InterfaceCinturaPresenter;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Utils.MedidasCinturaList;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoListaFragment;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresentrerIMP;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.OnStaticErrorAlarm;
 import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
 import com.amihealth.amihealth.R;
@@ -62,13 +58,14 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
     private LinearLayout        linearLayout_error_empty;
     private AlertDialog dialog;
     private Realm realm;
-    private ArrayList<MedidasCinturaList> medidasPesoList;
+    private ArrayList<MedidasCinturaList> medidasCinturaLists;
     private AdapterMedidasCintura adapter;
     private SessionManager sessionManager;
     private Intent intent;
     private RealmResults<Cintura> realmResults;
     private int ORDEN = 0;
     private InterfaceCinturaView mListenerViewActivity;
+    private OnStaticErrorAlarm mListenerErrorActivity;
 
 
     public CinturaListaFragment() {
@@ -83,7 +80,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
 
-        medidasPesoList = new ArrayList<>();
+        medidasCinturaLists = new ArrayList<>();
         intent = new Intent(getActivity(),NuevaMedidaHTA.class);
 
         assert recyclerView != null;
@@ -102,7 +99,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         progressBar = (ProgressBar) view.findViewById(R.id.progress_hta_frag);
         cinturaPresenter.RequestGetAll();
         setupRecyclerView();
-        //setupSwipeRefresh();
+        setupSwipeRefresh();
 
         return view;
     }
@@ -112,7 +109,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
             @Override
             public void onRefresh() {
 
-                medidasPesoList.clear();
+                medidasCinturaLists.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
                 OnGetAllResponse();
                 //presenterHta.getMedidas(0);
@@ -128,7 +125,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         registerForContextMenu(recyclerView);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AdapterMedidasCintura(getActivity(),this,medidasPesoList);
+        adapter = new AdapterMedidasCintura(getActivity(),this, medidasCinturaLists);
         recyclerView.setAdapter(adapter);
         //presenterHta.getMedidas(0);
 
@@ -144,6 +141,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
 
     @Override
     public void OnGetAllResponse() {
+        mListenerErrorActivity.OnProgressOn();
         //Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
         realm = Realm.getDefaultInstance();
 
@@ -158,6 +156,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         ordenarARRAY(ORDEN);
         //listo = 1;
         swipeRefreshLayout.setRefreshing(false);
+        mListenerErrorActivity.OnProgressOff();
 
     }
 
@@ -201,7 +200,7 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
 
     public void ordenarARRAY(int order){
         realm = Realm.getDefaultInstance();
-        medidasPesoList.clear();
+        medidasCinturaLists.clear();
         RealmResults<Cintura> lol;
         switch (order){
             case 0:
@@ -222,28 +221,28 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         for (int i = 0; i < lol.size() ; i++) {
             switch (order){
                 case 0:
-                    medidasPesoList.add(new MedidasCinturaList(
+                    medidasCinturaLists.add(new MedidasCinturaList(
                             "SEMANA",realm.where(Cintura.class).equalTo("week",lol.get(i).getWeek()).findAll(),lol.get(i).getWeek()
                     ));
                     break;
                 case 1:
-                    medidasPesoList.add(new MedidasCinturaList(
+                    medidasCinturaLists.add(new MedidasCinturaList(
                             "MES",realm.where(Cintura.class).equalTo("month",lol.get(i).getMonth()).findAll(),lol.get(i).getMonth()
                     ));
                     break;
                 case 2:
-                    medidasPesoList.add(new MedidasCinturaList(
+                    medidasCinturaLists.add(new MedidasCinturaList(
                             "YEAR",realm.where(Cintura.class).equalTo("year",lol.get(i).getYear()).findAll(),lol.get(i).getYear()
                     ));
                     break;
                 default:
-                    medidasPesoList.add(new MedidasCinturaList(
+                    medidasCinturaLists.add(new MedidasCinturaList(
                             "lol",realm.where(Cintura.class).equalTo("month",lol.get(i).getMonth()).findAll(),lol.get(i).getMonth()
                     ));
                     break;
             }
         }
-        recyclerView.setAdapter(new AdapterMedidasCintura(getActivity(),this,medidasPesoList));
+        recyclerView.setAdapter(new AdapterMedidasCintura(getActivity(),this, medidasCinturaLists));
         recyclerView.getAdapter().notifyDataSetChanged();
         realm.close();
     }
@@ -276,6 +275,12 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         }
         if (context instanceof InterfaceCinturaView) {
             mListenerViewActivity = (InterfaceCinturaView) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+        if (context instanceof OnStaticErrorAlarm) {
+            mListenerErrorActivity = (OnStaticErrorAlarm) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

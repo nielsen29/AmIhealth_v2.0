@@ -58,7 +58,7 @@ public class CustomHTAMarkerView extends MarkerView{
         color.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"AKI click",Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,"AKI click",Toast.LENGTH_LONG).show();
             }
         });
 

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +28,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.OnDialogResponse;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.AddPesoDialogFragment;
@@ -50,7 +54,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import retrofit2.Response;
 
-public class MedAntroMainActivity extends AppCompatActivity implements PesoViewInterface, PesoListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener {
+public class MedAntroMainActivity extends AppCompatActivity implements PesoViewInterface, PesoListaFragment.OnFragmentInteractionListener, AddPesoDialogFragment.AddPesoDialogListener, OnDialogResponse, OnStaticErrorAlarm{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -82,6 +86,11 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     private OrdenSelectorListener.OrdenGraficaListener GrafOrderListener;
     private PesoViewInterface pesoGrafViewInterface;
 
+
+    //DIALOG ERROR
+    private StaticError staticError;
+    private AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +114,11 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
             }
         });
 
+        staticError = new StaticError(this);
+        alertDialog = staticError.getErrorDialogAlert(this, StaticError.ESPERA);
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+
     }
 
     public void showtoolbar(String titulo, boolean mUpbtn){
@@ -118,6 +132,8 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
         spinnerAction.setAdapter(adapter);
 
     }
+
+
 
     public void setTabLayout(){
         this.tabLayout = (TabLayout) findViewById(R.id.tabsLayout);
@@ -216,11 +232,13 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     public void showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
         DialogFragment dialog = new AddPesoDialogFragment();
+        dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
     public void showNoticeDialog(String id) {
         // Create an instance of the dialog fragment and show it
         DialogFragment dialog = EditPesoDialogFragment.getInstance(id);
+        dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragmentEdit");
     }
 
@@ -255,7 +273,9 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void onErrorMSG(String error) {
-        Snackbar.make(viewPager,error,Snackbar.LENGTH_LONG).show();
+
+
+        //Snackbar.make(viewPager,error,Snackbar.LENGTH_LONG).show();
         /*
         Snackbar bar = Snackbar.make(viewPager, error, Snackbar.LENGTH_INDEFINITE);
 
@@ -296,9 +316,10 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     @Override
     protected void onResume() {
         super.onResume();
+        //OnGetAllResponse();
         pesoPresenterInterface.RequestGetAll();
         //listaOrdenArray = new ArrayList<>();
-        //Toast.makeText(getApplicationContext(),"ONRESUME", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),"ONRESUME", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -310,7 +331,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
     @Override
     protected void onStart() {
         super.onStart();
-        // Toast.makeText(getApplicationContext(),"ONSTAR", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"ONSTAR", Toast.LENGTH_LONG).show();
 
     }
 
@@ -321,9 +342,14 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, double value) {
-        Peso peso = new Peso();
-        peso.setPeso(String.valueOf(value));
-       pesoPresenterInterface.RequestInsertPeso(peso);
+        if(value > 0) {
+            Peso peso = new Peso();
+            peso.setPeso(String.valueOf(value));
+            alertDialog.show();
+            pesoPresenterInterface.RequestInsertPeso(peso);
+        }else {
+            staticError.getErrorD(getApplicationContext(),StaticError.VACIO);
+        }
 
 
          /*RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
@@ -340,10 +366,15 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void onDialogPositiveEdit(String id, double value) {
-        Peso peso = new Peso();
-        peso.setId(id);
-        peso.setPeso(String.valueOf(value));
-        pesoPresenterInterface.RequestUpdatePeso(peso);
+        if(value > 0){
+            Peso peso = new Peso();
+            peso.setId(id);
+            peso.setPeso(String.valueOf(value));
+            alertDialog.show();
+            pesoPresenterInterface.RequestUpdatePeso(peso);
+        }else{
+            staticError.getErrorD(getApplicationContext(),StaticError.VACIO);
+        }
     }
 
     @Override
@@ -353,9 +384,11 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnGetAllResponse() {
+        //alertDialog.show();
         pesoViewInterface.OnGetAllResponse();
         pesoGrafViewInterface.OnGetAllResponse();
         pesoViewInterface.RespuestaActivity(2);
+        alertDialog.cancel();
     }
 
     @Override
@@ -365,7 +398,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnDeleteResponse() {
-
+        alertDialog.cancel();
     }
 
     @Override
@@ -375,7 +408,10 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
 
     @Override
     public void OnErrorResponse(String error) {
-        onErrorMSG(error);
+        if(error.equals(StaticError.ALARMA)){
+            staticError.getErrorD(getApplicationContext(),error);
+        }
+        //onErrorMSG(error);
     }
 
     @Override
@@ -399,6 +435,7 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
                         Peso peso = new Peso();
                         Realm realm = Realm.getDefaultInstance();
                         peso.setId(realm.where(Peso.class).equalTo("id",id).findFirst().getId());
+                        alertDialog.show();
                         pesoPresenterInterface.RequestDeletePeso(peso);
                     }
                 }).setActionTextColor(getResources().getColor(R.color.ms_white));
@@ -406,6 +443,31 @@ public class MedAntroMainActivity extends AppCompatActivity implements PesoViewI
             snackbar.getView().setElevation(16);
         }
         snackbar.show();
+    }
+
+    @Override
+    public void retryConection() {
+
+    }
+
+    @Override
+    public void retryBusqueda() {
+
+    }
+
+    @Override
+    public void declineBusqueda() {
+
+    }
+
+    @Override
+    public void OnProgressOn() {
+        alertDialog.show();
+    }
+
+    @Override
+    public void OnProgressOff() {
+        alertDialog.cancel();
     }
 
     /**

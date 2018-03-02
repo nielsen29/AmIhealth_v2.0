@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.amihealth.amihealth.ApiAmIHealth.InternetConnection;
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
+import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.view.iteractor.IteractorHta;
 import com.amihealth.amihealth.ModuloHTA.view.presenter.PresenterHta;
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -104,13 +109,33 @@ public class ImpRepoHta implements RepositorioHta {
 
     @Override
     public void insertar(final MedidaHTA medidaHTA) {
+
         RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
+        io.reactivex.Observable<Response<MedidaHTA>> observable = retrofitAdapter.getClientService(token).OBSERVABLEnuevaHTA(medidaHTA);
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        medidaHTAResponse -> {
+                            if (medidaHTAResponse.isSuccessful()){
+                                realmFromServer(medidaHTAResponse.body());
+                            }else {
+                                //cinturaPresenter.OnErrorResponse(cinturaResponse.errorBody().string());
+                            }
+                        },
+                        t -> {
+                            Log.i("ERROR", "RxJava2, HTTP Error: " + t.getMessage());
+                            //cinturaPresenter.OnErrorResponse(t.getMessage());
+                        }
+                );
+
+        /*RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
         Call<MedidaHTA> call = retrofitAdapter.getClientService(token).nuevaHTA(medidaHTA);
         call.enqueue(new Callback<MedidaHTA>() {
             @Override
             public void onResponse(Call<MedidaHTA> call, Response<MedidaHTA> response) {
                 if(response.isSuccessful()){
                     realmFromServer(response.body());
+
                 }else{
                     realmFromServer(medidaHTA);
                 }
@@ -123,7 +148,7 @@ public class ImpRepoHta implements RepositorioHta {
 
             }
         });
-        presenterHta.showAll(getAllFROMrealm());
+        presenterHta.showAll(getAllFROMrealm());*/
     }
 
     @Override
@@ -199,7 +224,7 @@ public class ImpRepoHta implements RepositorioHta {
             @Override
             public void onResponse(Call<MedidaHTA> call, Response<MedidaHTA> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(context,"aki listoooooo",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context,"aki listoooooo",Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(context,response.message(),Toast.LENGTH_LONG).show();
 
@@ -288,6 +313,12 @@ public class ImpRepoHta implements RepositorioHta {
             }
         });
         realm.close();
+        if(medidaHTA.getDescripcion().equals("Hipertensión grado 1") || medidaHTA.getDescripcion().equals("Hipertensión grado 2") || medidaHTA.getDescripcion().equals("Hipertensión grado 3") ){
+            presenterHta.response(StaticError.ALARMA_HTA);
+        }else{
+            presenterHta.showAll(getAllFROMrealm());
+        }
+        //presenterHta.response();
     }
 
     public RealmResults<MedidaHTA> getAllFROMrealm(){

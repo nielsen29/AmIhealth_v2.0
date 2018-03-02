@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -36,6 +38,10 @@ public class AddPesoDialogFragment extends DialogFragment {
     private String datoPeso = "";
     private EditText peso;
     private Spinner sp_kg;
+    private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+
+    private double medida = 0;
+    private int pos;
 
 
     public AddPesoDialogFragment() {
@@ -73,6 +79,20 @@ public class AddPesoDialogFragment extends DialogFragment {
         sp_kg.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item,s));
         builder.setView(v);
 
+        sp_kg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                pos = i;
+                setTXT(medida);
+                transformar();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         peso.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,22 +101,24 @@ public class AddPesoDialogFragment extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               /* if(!(s < 0)){
+                if((s.length() > 0)){
                     if(!peso.getText().equals("") && peso != null){
                         if(sp_kg.getSelectedItemId() != 0){
                             if(Double.valueOf(peso.getText().toString()) > 0 ){
-                                double a = Double.valueOf(peso.getText().toString())/2.20462;
-                                peso.setError(String.valueOf(a) + "|| Kg");
+                                transformar();
+                                //double a = Double.valueOf(peso.getText().toString())/2.20462;
+                                peso.setError(String.valueOf(decimalFormat.format(medida)) + " en Kg");
                             }
                         }else{
                             if(Double.valueOf(peso.getText().toString()) > 0 ){
-                                double a = Double.valueOf(peso.getText().toString())/0.453592;
-                                peso.setError(String.valueOf(a) + "|| Lb");
+                                transformar();
+                                //double a = Double.valueOf(peso.getText().toString())/0.453592;
+                                peso.setError(String.valueOf(decimalFormat.format(medida)) + "en Lb");
                             }
                         }
                     }
                 }
-                */
+
             }
 
             @Override
@@ -107,7 +129,16 @@ public class AddPesoDialogFragment extends DialogFragment {
         builder.setPositiveButton(getContext().getString(R.string.btn_guardar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onDialogPositiveClick(AddPesoDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                if(peso.getText().length() <= 0){
+                    peso.setText("0");
+                    mListener.onDialogPositiveClick(AddPesoDialogFragment.this,Double.valueOf(peso.getText().toString()));
+
+                }else{
+                    if(pos == 1){
+                        peso.setText(String.valueOf(medida));
+                    }
+                    mListener.onDialogPositiveClick(AddPesoDialogFragment.this,Double.valueOf(peso.getText().toString()));
+                }
             }
         });
         builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -122,6 +153,32 @@ public class AddPesoDialogFragment extends DialogFragment {
 
         return builder.create();
 
+    }
+
+    public void transformar(){
+
+        if(peso.getText().length() > 0){
+            if(sp_kg.getSelectedItemId() != 0){
+
+                   if(Double.valueOf(peso.getText().toString()) > 0 ){
+                       double a = Double.valueOf(peso.getText().toString())/2.20462;
+                       medida = a;
+                       peso.setError(String.valueOf(decimalFormat.format(medida)) + "|| Kg");
+                   }
+            }else{
+                if(Double.valueOf(peso.getText().toString()) > 0 ){
+                    double a = Double.valueOf(peso.getText().toString())/0.453592;
+                    medida = a;
+                    peso.setError(String.valueOf(decimalFormat.format(medida)) + "|| Lb");
+                }
+            }
+        }
+
+    }
+    public void setTXT(double a){
+        if(medida != 0){
+            peso.setText(String.valueOf(decimalFormat.format(medida)));
+        }
     }
     public AlertDialog crearDialogo(String id){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

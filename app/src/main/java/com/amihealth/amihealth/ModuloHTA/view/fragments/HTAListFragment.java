@@ -31,9 +31,11 @@ import android.widget.Toast;
 import com.amihealth.amihealth.Adaptadores.AdapterMedidasHTA;
 import com.amihealth.amihealth.Adaptadores.AdapterMedidasList;
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.Models.MedidasHTAList;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.OnStaticErrorAlarm;
 import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.adapter.AdapterMedHTA;
 import com.amihealth.amihealth.ModuloHTA.presenter.ImplementPresenterHTA;
@@ -103,11 +105,7 @@ public class HTAListFragment extends Fragment implements OrdenSelectorListener, 
     private Intent intent;
     private int listo = 0;
     private int ORDEN;
-
-
-
-
-
+    private OnStaticErrorAlarm mListenerALERTactivity;
 
 
     public HTAListFragment() {
@@ -162,6 +160,7 @@ public class HTAListFragment extends Fragment implements OrdenSelectorListener, 
         linearLayout_error_empty = (LinearLayout) view.findViewById(R.id.errorEmpty_layout_hta);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_hta_frag);
         showLoad();
+        mListenerALERTactivity.OnProgressOn();
         setupRecyclerView();
         setupSwipeRefresh();
         //presenterHta.getMedidas(0);
@@ -214,6 +213,13 @@ public class HTAListFragment extends Fragment implements OrdenSelectorListener, 
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+        if (context instanceof OnStaticErrorAlarm) {
+            mListenerALERTactivity = (OnStaticErrorAlarm) context;
 
         } else {
             throw new RuntimeException(context.toString()
@@ -380,8 +386,12 @@ public class HTAListFragment extends Fragment implements OrdenSelectorListener, 
 
     @Override
     public void mensaje(String mensaje) {
-        Snackbar.make(getView(), mensaje, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        if (mensaje.equals(StaticError.ALARMA_HTA)){
+
+        }else {
+            Snackbar.make(getView(), mensaje, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
 
@@ -398,6 +408,7 @@ public class HTAListFragment extends Fragment implements OrdenSelectorListener, 
             linearLayout_error_empty.setVisibility(View.INVISIBLE);
         }
         hiddenLoad();
+        mListenerALERTactivity.OnProgressOff();
         this.realmResults = medidaHTAs;
         ordenarARRAY(ORDEN);
         listo = 1;

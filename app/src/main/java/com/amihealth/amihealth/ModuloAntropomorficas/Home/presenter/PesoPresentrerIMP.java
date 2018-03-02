@@ -41,7 +41,7 @@ public class PesoPresentrerIMP implements PesoPresenterInterface {
 
     @Override
     public void OnDeleteResponse() {
-
+        pesoViewInterface.OnDeleteResponse();
     }
 
     @Override

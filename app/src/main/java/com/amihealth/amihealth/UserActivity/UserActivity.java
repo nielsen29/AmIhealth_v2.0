@@ -39,6 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.OnDialogResponse;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Estatura;
@@ -71,7 +73,7 @@ import retrofit2.Response;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.Manifest.permission_group.CAMERA;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements OnDialogResponse {
 
     private static final String URI_RAIZ = "img_tmp/";
     private static final String URI_NEW_IMG = URI_RAIZ + "tmp";
@@ -101,6 +103,9 @@ public class UserActivity extends AppCompatActivity {
     private ArrayList<String> sp_label = new ArrayList<>();
     private ArrayAdapter<String> sp_sex_adapter;
 
+    private StaticError staticError;
+    private android.support.v7.app.AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +115,8 @@ public class UserActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         showtoolbar("Editar Perfil",true);
+        staticError = new StaticError(this);
+        alertDialog = staticError.getErrorDialogAlert(this,StaticError.ESPERA);
 
         imageView = (CircleImageView) findViewById(R.id.circleImageView);
         nombre = (EditText) findViewById(R.id.profile_name);
@@ -132,7 +139,7 @@ public class UserActivity extends AppCompatActivity {
                     RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
                     cuerpo = MultipartBody.Part.createFormData("img", file.getName(), reqFile);
                     cambios = true;
-                    Toast.makeText(getApplicationContext(),"cambio img",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"cambio img",Toast.LENGTH_LONG).show();
                 }
                 Map<String, RequestBody> requestbody = new HashMap<String, RequestBody>();
 
@@ -140,35 +147,35 @@ public class UserActivity extends AppCompatActivity {
                     RequestBody mNombre = RequestBody.create(MediaType.parse("plain/text"), nombre.getText().toString());
                     requestbody.put("nombre",mNombre);
                     cambios = true;
-                    Toast.makeText(getApplicationContext(),"cambio nom",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"cambio nom",Toast.LENGTH_LONG).show();
 
                 }
                 if( !apellido.getText().toString().equals(user.getApellido())){
                     RequestBody mApellido= RequestBody.create(MediaType.parse("plain/text"), apellido.getText().toString());
                     requestbody.put("apellido",mApellido);
                     cambios = true;
-                    Toast.makeText(getApplicationContext(),"cambio apl",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"cambio apl",Toast.LENGTH_LONG).show();
 
                 }
                 if(!estatura.getText().toString().equals(String.valueOf(user.getPaciente().getEstatura()))){
                     RequestBody mEstatura = RequestBody.create(MediaType.parse("plain/text"),estatura.getText().toString());
                     requestbody.put("estatura",mEstatura);
                     cambios = true;
-                    Toast.makeText(getApplicationContext(),"cambio estat",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"cambio estat",Toast.LENGTH_LONG).show();
 
                 }
                 if(!fecha_nacimiento.getText().toString().equals(user.getPaciente().getFecha_nacimiento())){
                     RequestBody mFechaN = RequestBody.create(MediaType.parse("plain/text"),fecha_nacimiento.getText().toString());
                     requestbody.put("fecha_nacimiento",mFechaN);
                     cambios = true;
-                    Toast.makeText(getApplicationContext(),"cambio fecha",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"cambio fecha",Toast.LENGTH_LONG).show();
 
                 }
                 if(sexo.getSelectedItemId() != user.getPaciente().getSexo()){
                     RequestBody mSexo = RequestBody.create(MediaType.parse("plain/text"),String.valueOf(sexo.getSelectedItemId()));
                     requestbody.put("sexo",mSexo);
                     cambios = true;
-                    Toast.makeText(getApplicationContext(),"cambio fecha",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"cambio fecha",Toast.LENGTH_LONG).show();
 
                 }
 
@@ -181,30 +188,32 @@ public class UserActivity extends AppCompatActivity {
                             .getClientService(sessionManager.getUserLogin()
                                     .get(SessionManager.AUTH))
                             .update_profile(cuerpo, requestbody);
-
-
+                    showAlarm();
 
                     call.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                             if(response.isSuccessful()){
 
                                 actualizarDatosUser(response.body());
 
-                                Toast.makeText(getApplicationContext(),"CARGADO img",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(),"CARGADO img",Toast.LENGTH_LONG).show();
                             }else {
-                                Toast.makeText(getApplicationContext(),response.errorBody().toString(),Toast.LENGTH_LONG).show();
+                                staticError.getErrorD(getApplicationContext(),StaticError.CONEXION);
+                               // Toast.makeText(getApplicationContext(),response.errorBody().toString(),Toast.LENGTH_LONG).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
+                            staticError.getErrorD(getApplicationContext(),StaticError.CONEXION);
 
                         }
                     });
                 }else{
-                    Toast.makeText(getApplicationContext(),"no realizo cambios",Toast.LENGTH_LONG).show();
+
+                    //Toast.makeText(getApplicationContext(),"no realizo cambios",Toast.LENGTH_LONG).show();
                 }
 
 
@@ -215,8 +224,8 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        sp_label.add(0,getString(R.string.h));
-        sp_label.add(1,getString(R.string.m));
+        sp_label.add(0,getString(R.string.m));
+        sp_label.add(1,getString(R.string.h));
         sp_sex_adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,sp_label);
 
         sexo.setAdapter(sp_sex_adapter);
@@ -258,6 +267,14 @@ public class UserActivity extends AppCompatActivity {
 
         }
 
+
+    }
+
+    private void showAlarm() {
+        this.alertDialog.show();
+    }
+    private void cancelAlarm(){
+        this.alertDialog.cancel();
     }
 
     private void actualizarDatosUser(final User body) {
@@ -269,6 +286,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
         realm.close();
+        cancelAlarm();
     }
 
     private void cargarClickListener_img() {
@@ -497,6 +515,18 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void retryConection() {
 
+    }
 
+    @Override
+    public void retryBusqueda() {
+
+    }
+
+    @Override
+    public void declineBusqueda() {
+
+    }
 }

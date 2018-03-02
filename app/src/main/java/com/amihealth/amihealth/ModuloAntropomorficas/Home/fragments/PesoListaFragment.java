@@ -24,6 +24,7 @@ import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.Models.MedidasHTAList;
 import com.amihealth.amihealth.Models.Peso;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.OnStaticErrorAlarm;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.PesoViewInterface;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.Utils.MedidasPesoList;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.presenter.PesoPresenterInterface;
@@ -77,6 +78,7 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
     private RealmResults<Peso> realmResults;
     private int ORDEN = 0;
     private PesoViewInterface mListenerViewActivity;
+    private OnStaticErrorAlarm mListenerErrorActivity;
 
 
     public PesoListaFragment() {
@@ -108,9 +110,10 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         linearLayout_error_conection = (LinearLayout) view.findViewById(R.id.error_layout_hta);
         linearLayout_error_empty = (LinearLayout) view.findViewById(R.id.errorEmpty_layout_hta);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_hta_frag);
+        mListenerErrorActivity.OnProgressOn();
         pesoPresenterInterface.RequestGetAll();
         setupRecyclerView();
-        //setupSwipeRefresh();
+        setupSwipeRefresh();
 
         return view;
     }
@@ -152,6 +155,8 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
 
     @Override
     public void OnGetAllResponse() {
+        mListenerErrorActivity.OnProgressOn();
+
         //Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
         realm = Realm.getDefaultInstance();
 
@@ -166,6 +171,8 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         ordenarARRAY(ORDEN);
         //listo = 1;
         swipeRefreshLayout.setRefreshing(false);
+        mListenerErrorActivity.OnProgressOff();
+        //mListenerViewActivity.OnGetAllResponse();
 
     }
 
@@ -284,6 +291,12 @@ public class PesoListaFragment extends Fragment implements PesoViewInterface, Or
         }
         if (context instanceof PesoViewInterface) {
             mListenerViewActivity = (PesoViewInterface) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+        if (context instanceof OnStaticErrorAlarm) {
+            mListenerErrorActivity = (OnStaticErrorAlarm) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

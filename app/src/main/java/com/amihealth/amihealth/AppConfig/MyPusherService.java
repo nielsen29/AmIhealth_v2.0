@@ -93,6 +93,20 @@ public class MyPusherService extends Service {
 
                 }
             });
+            channel.bind("new-alarm", new SubscriptionEventListener() {
+                @Override
+                public void onEvent(String channel, String event, String data) {
+                    //System.out.println("Received event with data: " + data);
+                    //JSONObject jdo = new JSONObject(data).getJSONObject()
+
+                    Log.v("SERVICIO_NOTIFY", "llego el evento para: ALERTA");
+
+                    StaticError staticError = new StaticError();
+                    staticError.getError(getApplicationContext(),StaticError.CONEXION);
+
+
+                }
+            });
 
 
 // Reconnect, with all channel subscriptions and event bindings automatically recreated

@@ -46,6 +46,10 @@ public interface ServiceRetrofit {
     @POST(Configuracion.URL_NUEVA_MEDIDA)
     Call<MedidaHTA> nuevaHTA(@Body MedidaHTA medidaHTA);
 
+
+    @POST(Configuracion.URL_NUEVA_MEDIDA)
+    Observable<Response<MedidaHTA>> OBSERVABLEnuevaHTA(@Body MedidaHTA medidaHTA);
+
     @GET(Configuracion.URL_USER)
     Call<User> getUser();
 

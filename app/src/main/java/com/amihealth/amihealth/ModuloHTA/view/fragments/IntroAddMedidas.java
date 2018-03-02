@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import com.amihealth.amihealth.AppConfig.OnDialogResponse;
 import com.amihealth.amihealth.Contract.ContractHTA;
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
@@ -24,9 +25,13 @@ import io.realm.Realm;
 public class IntroAddMedidas extends AppIntro {
     public static String ID;
     public boolean hasID = false;
+    private OnDialogResponse startDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         if(getIntent().hasExtra("ID")){
             ID = getIntent().getExtras().getString("ID");
@@ -101,10 +106,19 @@ public class IntroAddMedidas extends AppIntro {
             startActivity(i);
             finish();
         }else{
-            Intent i = new Intent(this, NuevaMedidaHTA.class);
-            startActivity(i);
-            finish();
+            if(getParent() instanceof OnDialogResponse){
+                startDialog = (OnDialogResponse) getParent();
+                startDialog.retryConection();
+                finish();
+            }else{
+                //Intent i = new Intent(this, NuevaMedidaHTA.class);
+                //startActivity(i);
+                finish();
+            }
+
+
         }
+
     }
 
     @Override
@@ -117,9 +131,15 @@ public class IntroAddMedidas extends AppIntro {
             startActivity(i);
             finish();
         }else{
-            Intent i = new Intent(this, NuevaMedidaHTA.class);
-            startActivity(i);
-            finish();
+            if(this.getParent() instanceof OnDialogResponse){
+                startDialog = (OnDialogResponse) getParent();
+                startDialog.retryConection();
+                finish();
+            }else{
+                //Intent i = new Intent(this, NuevaMedidaHTA.class);
+                //startActivity(i);
+                finish();
+            }
         }
     }
 
@@ -128,4 +148,11 @@ public class IntroAddMedidas extends AppIntro {
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
 }

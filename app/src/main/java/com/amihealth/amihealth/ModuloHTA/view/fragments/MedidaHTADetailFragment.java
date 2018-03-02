@@ -294,7 +294,7 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
         //xAxis.setAxisMaximum(fechas.get(position).size());
         xAxis.setAxisMinimum(0f);
        // xAxis.setGranularity(1f);
-        xAxis.setGridColor(Color.WHITE);
+        xAxis.setGridColor(Color.GRAY);
         //xAxis.setAvoidFirstLastClipping(true);
 
         xAxis.setCenterAxisLabels(false);
@@ -317,8 +317,8 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
         yAxis.setXOffset(-30f);
         yAxis.setYOffset(-5f);
         yAxis.setDrawZeroLine(true);
-        yAxis.setGridColor(Color.WHITE);
-        yAxis.setTextColor(Color.WHITE);
+        yAxis.setGridColor(Color.GRAY);
+        yAxis.setTextColor(Color.DKGRAY);
 
 
 
@@ -455,6 +455,9 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
         ArrayList<Entry> DIS = new ArrayList<>();
         ArrayList<Entry> PLS = new ArrayList<>();
 
+        int colorDIS = ContextCompat.getColor(activity,R.color.logoRed_dark);
+        int colorSYS = ContextCompat.getColor(activity,R.color.rojoBR);
+
         ArrayList<BarEntry> fechaBar = new ArrayList<>();
 
 
@@ -487,18 +490,18 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
 
 
         LineDataSet lineSys = new LineDataSet(SYS,activity.getString(R.string.detalle_Sys));
-        lineSys.setCircleColor(ContextCompat.getColor(activity,R.color.ms_white));
-        lineSys.setColor(ContextCompat.getColor(activity,R.color.ms_white));
-        lineSys.setFillColor(Color.parseColor("#ffffff"));
+        lineSys.setCircleColor(colorSYS);
+        lineSys.setColor(colorSYS);
+        lineSys.setFillColor(colorSYS);
         //lineSys.setFillDrawable(ContextCompat.getDrawable(activity,R.drawable.sys_graf_detalle_gradient));
-        lineSys.setFillAlpha(300);
+        lineSys.setFillAlpha(500);
         lineSys.setLineWidth(2f);
         lineSys.setCircleRadius(6f);
         lineSys.setDrawCircleHole(true);
         lineSys.setCircleHoleRadius(4f);
-        lineSys.setCircleColorHole(ContextCompat.getColor(activity,R.color.sysGradientend));
+        lineSys.setCircleColorHole(ContextCompat.getColor(activity,R.color.ms_white));
         lineSys.setValueTextSize(12f);
-        lineSys.setDrawFilled(true);
+        lineSys.setDrawFilled(false);
         lineSys.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineSys.setMode(LineDataSet.Mode.LINEAR);
 
@@ -513,21 +516,21 @@ public class MedidaHTADetailFragment extends Fragment implements InterfaceHta{
 
 
         LineDataSet lineDis = new LineDataSet(DIS,activity.getString(R.string.detalle_Dis));
-        lineDis.setFillAlpha(100);
-        lineDis.setCircleColor(ContextCompat.getColor(activity,R.color.ms_white));
-        lineDis.setFillColor(Color.parseColor("#ffffff"));
-        lineDis.setColor(Color.parseColor("#ffffff"));
+        lineDis.setFillAlpha(500);
+        lineDis.setCircleColor(colorDIS);
+        lineDis.setFillColor(colorDIS);
+        lineDis.setColor(colorDIS);
         lineDis.setLineWidth(2f);
         //lineDis.setFillDrawable(ContextCompat.getDrawable(activity,R.drawable.dis_graf_detalle_gradient));
 
-        lineDis.setCircleColorHole(ContextCompat.getColor(activity,R.color.sysGradientend));
+        lineDis.setCircleColorHole(ContextCompat.getColor(activity,R.color.ms_white));
 
 
         lineDis.setCircleRadius(6f);
         lineDis.setDrawCircleHole(true);
         lineDis.setCircleHoleRadius(3f);
         lineDis.setValueTextSize(12f);
-        lineDis.setDrawFilled(true);
+        lineDis.setDrawFilled(false);
         lineDis.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDis.setMode(LineDataSet.Mode.LINEAR);
         lineDis.setValueFormatter(new IValueFormatter() {

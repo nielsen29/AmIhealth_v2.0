@@ -2,6 +2,7 @@ package com.amihealth.amihealth.ModuloHTA;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.presenter.ImplementPresenterHTA;
 import com.amihealth.amihealth.ModuloHTA.view.InterfaceHta;
 import com.amihealth.amihealth.ModuloHTA.view.ViewHTA;
+import com.amihealth.amihealth.ModuloHTA.view.fragments.IntroAddMedidas;
 import com.amihealth.amihealth.ModuloHTA.view.presenter.ImpPresenterHta;
 import com.amihealth.amihealth.ModuloHTA.view.presenter.PresenterHta;
 import com.amihealth.amihealth.R;
@@ -47,6 +49,7 @@ import io.realm.RealmResults;
 public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
 
     private Button btn;
+    private Button btn_cancel;
     private EditText txtSys;
     private EditText txtDis;
     private EditText txtPls;
@@ -84,9 +87,13 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
             this.medidaHTA = realm.where(MedidaHTA.class).equalTo(ContractHTA._ID,ID).findFirst();
             instanciaCamposTOedit();
         }else{
+
+            Intent i = new Intent(this, IntroAddMedidas.class);
+            startActivity(i);
             //se inicia la instancia del toolbar TITULO/TRUE para mostrar la flecha de back
             showtoolbar(getString(R.string.title_nuevamedida).toString(), true);
             instanciaCampos();
+
         }
 
 
@@ -109,9 +116,10 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
         Toolbar toolbar         = (Toolbar) findViewById(R.id.toolbarInsert);
         setSupportActionBar(toolbar);
         getSupportActionBar()   .setTitle(titulo);
-        getSupportActionBar()   .setDisplayHomeAsUpEnabled(mUpbtn);
+        getSupportActionBar()   .setDisplayHomeAsUpEnabled(false);
 
     }
+
 
     public void instanciaCampos(){
 
@@ -123,6 +131,13 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
 
 
         btn         = (Button) findViewById(R.id.btn_insert_HTA);
+        btn_cancel         = (Button) findViewById(R.id.cancelar);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAll(null);
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +201,7 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
             medidaHTA.setId_paciente(paciente.get(sessionManager.KEY));
             medidaHTA.setSync(0);
             presenterHta.insertar(medidaHTA);
-            finish();
+
         //sessionManager.logoutUser()
 
     }
@@ -210,6 +225,10 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
     @Override
     public void showAll(RealmResults<MedidaHTA> medidaHTAs) {
         dialog.cancel();
+        Intent previousScreen = new Intent(getApplicationContext(), HTAhomeActivity.class);
+        //Sending the data to Activity_A
+        previousScreen.putExtra("alerta","lol");
+        setResult(1, previousScreen);
         finish();
     }
 
@@ -245,6 +264,18 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
 
     @Override
     public void mensaje(String mensaje) {
-
+        Intent previousScreen = new Intent(getApplicationContext(), HTAhomeActivity.class);
+        //Sending the data to Activity_A
+        previousScreen.putExtra("alerta",mensaje);
+        setResult(1, previousScreen);
+        finish();
+        //setResult(1,new Intent(getApplicationContext(),HTAhomeActivity.class));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        showAll(null);
+    }
+
 }

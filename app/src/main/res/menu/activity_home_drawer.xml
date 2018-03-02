@@ -21,8 +21,8 @@
             android:title="@string/text_launch_user" />
         <item
             android:id="@+id/nav_notification"
-            android:icon="@drawable/ic_navigate_next_white"
-            android:title="@string/text_launch_user" />
+            android:icon="@drawable/ms_ic_check"
+            android:title="@string/text_launch_noti" />
     </group>
 
     <item android:title="@string/title_ayuda">
@@ -43,7 +43,7 @@
     </item>
     <item
         android:id="@+id/btn_logout"
-        android:icon="@android:drawable/star_off"
+        android:icon="@android:drawable/ic_lock_power_off"
         android:title="@string/salir"
         />
 

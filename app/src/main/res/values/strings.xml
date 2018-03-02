@@ -160,7 +160,7 @@
     <string name="editar_peso_title">Editar Medida</string>
     <string name="title_medidas_Graficas">Medida en la Tabla de Calificación</string>
     <string name="title_activity_cintura">CinturaActivity</string>
-    <string name="text_launch_cintura">indice Cintura/altura</string>
+    <string name="text_launch_cintura">Cintura/altura</string>
 
     <string name="new_message_notification_title_template">New message: %1$s</string>
 
@@ -189,4 +189,15 @@
     <string name="info_nueva_medida_cintura">Ingresar su medida de cintura en centímetros</string>
     <string name="editar_Cintura_title">Editar Medida de Cintura</string>
     <string name="title_notification_item">Nueva notificación</string>
+    <string name="reintentar">Volver a intentar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="msj_vacio">Campo de entrada vacio</string>
+    <string name="error_title_vacio">Error en Campo de Entrada</string>
+    <string name="ok">OK</string>
+    <string name="error_title_espera">Procesando...</string>
+    <string name="procesando">procesando..</string>
+    <string name="error_title_alarma">ALERTA</string>
+    <string name="msj_alerta">Su medida a rebasado los niveles categorizados como "Normales" es recomendable por favor ponerte en contacto con tu médico.</string>
+    <string name="msj_alerta_hta">Su medida a rebasado los niveles categorizados como “NORMALES” es recomendable por favor ponerte en contacto con tu médico.\n Si eres un paciente medicado y al momento de esta medida debería estar bajo los efectos del medicamento recetado por tu doctor se recomienda hacer la observación a tu médico.</string>
+    <string name="text_launch_noti">Notificaciones</string>
 </resources>

@@ -86,10 +86,10 @@
         </activity>
         <activity
             android:name=".ModuloHTA.view.fragments.IntroAddMedidas"
-            android:parentActivityName=".Home.HomeActivity">
+            android:parentActivityName=".ModuloHTA.HTAhomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.amihealth.amihealth.Home.HomeActivity" />
+                android:value="com.amihealth.amihealth.ModuloHTA.HTAhomeActivity" />
         </activity>
 
         <service

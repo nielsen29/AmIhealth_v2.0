@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.amihealth.amihealth.ApiAmIHealth.ErrorRetrofit;
 import com.amihealth.amihealth.ApiAmIHealth.RetrofitAdapter;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.Models.Peso;
@@ -138,6 +139,7 @@ public class PesoRepoIMP implements PesoRepoInterface {
                                     }
                                 });
                                 realm.close();
+                                pesoPresenterInterface.OnDeleteResponse();
                             }else {
                                 pesoPresenterInterface.OnErrorResponse(pesoResponse.errorBody().string());
                             }
@@ -244,6 +246,9 @@ public class PesoRepoIMP implements PesoRepoInterface {
             }
         });
         realm.close();
+        if(peso.getDescrip().equals("Obesidad grado 1") || peso.getDescrip().equals("Obesidad grado 2") || peso.getDescrip().equals("Obesidad grado 1")){
+            pesoPresenterInterface.OnErrorResponse(StaticError.ALARMA);
+        }
         pesoPresenterInterface.OnGetAllResponse();
     }
 

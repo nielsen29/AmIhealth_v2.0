@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -23,6 +24,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.amihealth.amihealth.AppConfig.OnDialogResponse;
+import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.AddCinturaDialogFragment;
@@ -33,6 +36,7 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.I
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.CinturaPresenterIMP;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.InterfaceCinturaPresenter;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.MedAntroMainActivity;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.OnStaticErrorAlarm;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.AddPesoDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.EditPesoDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.PesoGraficaFragment;
@@ -44,7 +48,7 @@ import com.amihealth.amihealth.R;
 import io.realm.Realm;
 
 //activity_cintura
-public class CinturaActivity extends AppCompatActivity implements InterfaceCinturaView, CinturaListaFragment.OnFragmentInteractionListener, AddCinturaDialogFragment.AddPesoDialogListener {
+public class CinturaActivity extends AppCompatActivity implements InterfaceCinturaView, CinturaListaFragment.OnFragmentInteractionListener, AddCinturaDialogFragment.AddPesoDialogListener, OnDialogResponse, OnStaticErrorAlarm {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -76,6 +80,10 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
     private InterfaceCinturaView viewInterfaceGrafica;
     private OrdenSelectorListener.OrdenGraficaListener GrafOrderListener;
 
+    //DIALOG ERROR
+    private StaticError staticError;
+    private AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +106,10 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
                 showNoticeDialog();
             }
         });
+        staticError = new StaticError(this);
+        alertDialog = staticError.getErrorDialogAlert(this, StaticError.ESPERA);
+        alertDialog.setCancelable(false);
+        alertDialog.show();
 
     }
 
@@ -114,8 +126,8 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
     }
 
     public void setTabLayout(){
-        this.tabLayout = (TabLayout) findViewById(R.id.tabsLayout);
 
+        this.tabLayout = (TabLayout) findViewById(R.id.tabsLayout);
 
     }
 
@@ -210,6 +222,7 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
     public void showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
         DialogFragment dialog = new AddCinturaDialogFragment();
+        dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
     public void showNoticeDialog(String id) {
@@ -249,7 +262,7 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     @Override
     public void onErrorMSG(String error) {
-        Snackbar.make(viewPager,error,Snackbar.LENGTH_LONG).show();
+        //Snackbar.make(viewPager,error,Snackbar.LENGTH_LONG).show();
         /*
         Snackbar bar = Snackbar.make(viewPager, error, Snackbar.LENGTH_INDEFINITE);
 
@@ -315,9 +328,14 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, double value) {
-        Cintura cintura = new Cintura();
-        cintura.setCintura(String.valueOf(value));
-        cinturaPresenter.RequestInsert(cintura);
+        if(value > (double) 0){
+            Cintura cintura = new Cintura();
+            cintura.setCintura(String.valueOf(value));
+            cinturaPresenter.RequestInsert(cintura);
+            alertDialog.show();
+        }else{
+            staticError.getErrorD(getApplicationContext(),StaticError.VACIO);
+        }
 
 
          /*RetrofitAdapter retrofitAdapter = new RetrofitAdapter();
@@ -332,12 +350,21 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     }
 
+
     @Override
     public void onDialogPositiveEdit(String id, double value) {
-        Cintura cintura = new Cintura();
-        cintura.setId(id);
-        cintura.setCintura(String.valueOf(value));
-        cinturaPresenter.RequestUpdate(cintura);
+        if(value > (double) 0){
+            Cintura cintura = new Cintura();
+            cintura.setId(id);
+            cintura.setCintura(String.valueOf(value));
+            alertDialog.show();
+            cinturaPresenter.RequestUpdate(cintura);
+        }else{
+            staticError.getErrorD(getApplicationContext(),StaticError.VACIO);
+        }
+
+
+
     }
 
     @Override
@@ -347,9 +374,11 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     @Override
     public void OnGetAllResponse() {
+        //alertDialog.show();
         viewInterface.OnGetAllResponse();
         viewInterfaceGrafica.OnGetAllResponse();
         viewInterface.RespuestaActivity(2);
+        alertDialog.cancel();
     }
 
     @Override
@@ -359,7 +388,7 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     @Override
     public void OnDeleteResponse() {
-
+        alertDialog.cancel();
     }
 
     @Override
@@ -369,6 +398,8 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
 
     @Override
     public void OnErrorResponse(String error) {
+        alertDialog.cancel();
+        staticError.getErrorD(this,error);
         onErrorMSG(error);
     }
 
@@ -393,6 +424,7 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
                         Cintura cintura = new Cintura();
                         Realm realm = Realm.getDefaultInstance();
                         cintura.setId(realm.where(Cintura.class).equalTo("id",id).findFirst().getId());
+                        alertDialog.show();
                         cinturaPresenter.RequestDelete(cintura);
                     }
                 }).setActionTextColor(getResources().getColor(R.color.ms_white));
@@ -400,6 +432,33 @@ public class CinturaActivity extends AppCompatActivity implements InterfaceCintu
             snackbar.getView().setElevation(16);
         }
         snackbar.show();
+    }
+
+    @Override
+    public void retryConection() {
+
+        cinturaPresenter.RequestGetAll();
+
+    }
+
+    @Override
+    public void retryBusqueda() {
+
+    }
+
+    @Override
+    public void declineBusqueda() {
+
+    }
+
+    @Override
+    public void OnProgressOn() {
+        alertDialog.show();
+    }
+
+    @Override
+    public void OnProgressOff() {
+        alertDialog.cancel();
     }
 
     /**
