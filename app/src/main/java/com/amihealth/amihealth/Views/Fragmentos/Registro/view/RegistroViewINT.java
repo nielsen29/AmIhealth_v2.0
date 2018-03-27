@@ -16,4 +16,6 @@ public interface RegistroViewINT {
     void getDistritos(ArrayList<Distrito> distritos);
     void getCorregimientos(ArrayList<Corregimiento> corregimientos);
     void getEtnias(ArrayList<Etnia> etnias);
+
+    void responseNewUser();
 }

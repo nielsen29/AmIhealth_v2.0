@@ -29,4 +29,6 @@ public interface RegistroPresenterINT {
     void returnDistritos(ArrayList<Distrito> distritos); //view
     void returnCorregimientos(ArrayList<Corregimiento> corregimientos); //view
     void returnEtnias(ArrayList<Etnia> etnias); //view
+
+    void responseNewUser();
 }

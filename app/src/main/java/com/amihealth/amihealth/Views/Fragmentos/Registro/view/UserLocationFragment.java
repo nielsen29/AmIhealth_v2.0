@@ -201,6 +201,11 @@ public class UserLocationFragment extends Fragment implements Step, RegistroView
     }
 
     @Override
+    public void responseNewUser() {
+
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try{

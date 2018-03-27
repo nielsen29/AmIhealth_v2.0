@@ -144,7 +144,7 @@ public class RegistroRepoIMP implements RegistroRepoINT {
                         Toast.makeText(context,error.getLocalizedMessage(),LENGTH_LONG).show();
                         break;
                     default:
-                        Toast.makeText(context,"AKIIIII BUG",LENGTH_LONG).show();
+                        //Toast.makeText(context,"AKIIIII BUG",LENGTH_LONG).show();
                         break;
                 }
 
@@ -181,14 +181,11 @@ public class RegistroRepoIMP implements RegistroRepoINT {
     public void registroCompleto(String response, Context context){
         try{
             JSONObject JsonObj = new JSONObject(response);
-            if(JsonObj.has("error")){
+            if(JsonObj.has("message")){
                 Toast.makeText(context,JsonObj.toString(),LENGTH_LONG).show();
             }else{
-                Toast.makeText(context,"",LENGTH_LONG).show();
-                Intent i = new Intent(context, LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(i);
+                //Toast.makeText(context,"",LENGTH_LONG).show();
+                presenterINT.responseNewUser();
             }
 
         } catch (JSONException e) {

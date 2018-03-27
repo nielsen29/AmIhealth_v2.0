@@ -22,6 +22,7 @@ public class StaticError {
     public static final String ALARMA = "100";
     public static final String PASTILLA = "101";
     public static final String ALARMA_HTA = "HTA";
+    public static final String NEW_USER = "NEW_USER";
 
 
     private Context context;
@@ -190,6 +191,16 @@ public class StaticError {
                 case COINCIDENCIAS:
                     builder.setTitle("Error de Conexion");
                     builder.setMessage("Ocurrio un error de conexion Asegurese de estar conectado a una red wifi o en su defecto que cuente con un plan de datos activos");
+                    return builder.create();
+                case NEW_USER:
+                    builder.setTitle("NUEVO USUARIO");
+                    builder.setMessage("Pronto te enviaremos un correo de activación para culminar con el registro.");
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogResponse.retryBusqueda();
+                        }
+                    });
                     return builder.create();
                 case CAMPO_VACIO:
                     return  null;

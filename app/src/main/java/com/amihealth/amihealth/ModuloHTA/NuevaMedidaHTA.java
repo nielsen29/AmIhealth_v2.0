@@ -267,7 +267,7 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
         Intent previousScreen = new Intent(getApplicationContext(), HTAhomeActivity.class);
         //Sending the data to Activity_A
         previousScreen.putExtra("alerta",mensaje);
-        setResult(1, previousScreen);
+        setResult(Activity.RESULT_OK, previousScreen);
         finish();
         //setResult(1,new Intent(getApplicationContext(),HTAhomeActivity.class));
     }
@@ -278,4 +278,12 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
         showAll(null);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent previousScreen = new Intent(getApplicationContext(), HTAhomeActivity.class);
+        //Sending the data to Activity_A
+        previousScreen.putExtra("alerta","lol");
+        setResult(1, previousScreen);
+    }
 }

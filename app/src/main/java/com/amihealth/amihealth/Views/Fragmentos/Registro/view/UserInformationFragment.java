@@ -37,7 +37,7 @@ import java.util.Locale;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserInformationFragment extends Fragment implements Step, GetFecha, RegistroViewINT {
+public class  UserInformationFragment extends Fragment implements Step, GetFecha, RegistroViewINT {
 
     private EditText nombre;
     private EditText apellido;
@@ -230,6 +230,11 @@ public class UserInformationFragment extends Fragment implements Step, GetFecha,
         this.etnias.clear();
         this.etnias.addAll(etnias);
         this.adapterEtnias.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void responseNewUser() {
 
     }
 

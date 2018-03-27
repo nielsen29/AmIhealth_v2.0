@@ -1,5 +1,6 @@
 package com.amihealth.amihealth.ModuloHTA;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.PersistableBundle;
@@ -161,7 +162,7 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
 
     private void goNuevaMedidad(){
         Intent intent = new Intent(this,NuevaMedidaHTA.class);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 1000);
     }
 
 
@@ -388,10 +389,12 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (!data.getStringExtra(EXTRA_ALERTA).isEmpty()){
-            if(data.getStringExtra(EXTRA_ALERTA).equals(StaticError.ALARMA_HTA)){
-                staticError.getErrorD(this,StaticError.ALARMA_HTA);
-            }
+        switch (requestCode){
+            case 1000:
+                if(resultCode == Activity.RESULT_OK) {
+                    staticError.getErrorD(this, StaticError.ALARMA_HTA);
+                }
+
         }
     }
 

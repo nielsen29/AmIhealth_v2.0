@@ -74,4 +74,9 @@ public class RegistroPresenterIMP implements RegistroPresenterINT {
         viewINT.getEtnias(etnias);
 
     }
+
+    @Override
+    public void responseNewUser() {
+        viewINT.responseNewUser();
+    }
 }

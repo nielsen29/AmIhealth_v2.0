@@ -1,9 +1,11 @@
 package com.amihealth.amihealth.Views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amihealth.amihealth.Adaptadores.AdapterStepRegistro;
+import com.amihealth.amihealth.AppConfig.OnDialogResponse;
+import com.amihealth.amihealth.AppConfig.StaticError;
+import com.amihealth.amihealth.Login.View.LoginActivity;
 import com.amihealth.amihealth.Models.Corregimiento;
 import com.amihealth.amihealth.Models.Distrito;
 import com.amihealth.amihealth.Models.Etnia;
@@ -26,11 +31,13 @@ import com.stepstone.stepper.VerificationError;
 
 import java.util.ArrayList;
 
-public class RegistroActivity extends AppCompatActivity implements StepperLayout.StepperListener, UserRegistroFragment.Textos, RegistroViewINTR, RegistroViewINT {
+public class RegistroActivity extends AppCompatActivity implements StepperLayout.StepperListener, UserRegistroFragment.Textos, RegistroViewINTR, RegistroViewINT, OnDialogResponse {
     private StepperLayout mStepperLayout;
     private EditText et;
     private static Registro registro;
     private RegistroPresenterINT registroPresenterINT;
+    private StaticError staticError;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,11 @@ public class RegistroActivity extends AppCompatActivity implements StepperLayout
         registro                = new Registro();
         registroPresenterINT = new RegistroPresenterIMP(this);
 
+        staticError = new StaticError(this);
+        alertDialog = staticError.getErrorDialogAlert(this,StaticError.ESPERA);
+        alertDialog.setCancelable(false);
+
+
     }
 
     public void showtoolbar(String titulo, boolean mUpbtn){
@@ -55,8 +67,10 @@ public class RegistroActivity extends AppCompatActivity implements StepperLayout
 
     @Override
     public void onCompleted(View completeButton) {
-
+        alertDialog.show();
         Context contextNew = this.getApplicationContext();
+
+
 
         registroPresenterINT.newUser(getApplication().getBaseContext(),registro);
 
@@ -136,6 +150,15 @@ public class RegistroActivity extends AppCompatActivity implements StepperLayout
 
     }
 
+    @Override
+    public void responseNewUser() {
+        alertDialog.cancel();
+        AlertDialog alertDialogr = staticError.getErrorDialogAlert(getApplicationContext(), StaticError.NEW_USER);
+        alertDialogr.setCancelable(false);
+        alertDialogr.show();
+
+    }
+
 
     @Override
     public void getProvincia(ArrayList<Provincia> provincias) {
@@ -197,4 +220,21 @@ public class RegistroActivity extends AppCompatActivity implements StepperLayout
         super.onDestroy();
     }
 
+    @Override
+    public void retryConection() {
+
+    }
+
+    @Override
+    public void retryBusqueda() {
+        Intent i = new Intent(this, LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(i);
+    }
+
+    @Override
+    public void declineBusqueda() {
+
+    }
 }

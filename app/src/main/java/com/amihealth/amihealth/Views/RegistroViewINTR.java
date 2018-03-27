@@ -10,4 +10,6 @@ public interface RegistroViewINTR {
     void getDataLocation(int mProvincia, int mDistrito, int mCorregimiento, String mdireccion, String mMovil);
     void getDataMedica(String mAltura, String mPeso);
     void getError(String responseError);
+
+    void responseNewUser();
 }
