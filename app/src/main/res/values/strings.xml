@@ -4,7 +4,7 @@
     <string name="login_pass">Clave</string>
     <string name="login_q">¿Tienes una cuenta?, </string>
     <string name="login_r">Crea una aquí</string>
-    <string name="login_btn">LOGIN</string>
+    <string name="login_btn">Ingresar</string>
     <string name="toolbar_titulo">Crear Cuenta</string>
     <string name="usercard">Mel Nielsen</string>
     <string name="card_text">Hace</string>
