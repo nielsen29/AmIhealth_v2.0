@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Home.HomeActivity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="10dp"
+        android:background="@drawable/graf_descrip_bg"
+        >
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_graf_descrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="0.5"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/graf_descrip_margin"
+                    >
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/graf_descrip_margin"
+                        >
+                        <ImageView
+                            android:tint="@color/colorText"
+                            app:srcCompat="@drawable/ic_calendario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/graf_descrip_margin"
+                            />
+                        <TextView
+                            android:id="@+id/fecha_graf_descrip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/graf_descrip_margin"
+                            android:textSize="10dp"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/graf_descrip_margin"
+                        >
+                        <ImageView
+                            android:tint="@color/colorText"
+                            app:srcCompat="@drawable/ic_clock"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/graf_descrip_margin"
+                            />
+                        <TextView
+                            android:id="@+id/hora_graf_descrip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/graf_descrip_margin"
+                            android:textSize="10dp"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/color_graf_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@color/azulBR"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:id="@+id/desrip_graf_descrip"
+                    android:text="DESCRIPCION"
+                    android:textColor="@color/ms_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_margin="@dimen/graf_descrip_margin"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_margin="@dimen/graf_descrip_margin"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="37dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/graf_descrip_margin"
+                                android:tint="@color/ms_white"
+                                app:srcCompat="@drawable/ic_glucosa" />
+
+                            <TextView
+                                android:id="@+id/glucosa_valor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/graf_descrip_margin"
+                                android:gravity="center"
+                                android:hint="000"
+                                android:textColor="@color/ms_white"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/graf_descrip_margin"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+
+                            >
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="25dp"
+                                android:layout_marginRight="@dimen/graf_descrip_margin"
+                                android:tint="@color/ms_white"
+                                app:srcCompat="@drawable/ico_lectura" />
+                            <TextView
+                                android:id="@+id/tipo_lectura"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/graf_descrip_margin"
+                                android:textStyle="bold"
+                                android:textSize="12dp"
+                                android:textColor="@color/ms_white"
+                                android:gravity="center"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/pls_graf_descrip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/graf_descrip_margin"
+                        android:textStyle="bold"
+                        android:textSize="10dp"
+                        android:textColor="@color/ms_white"
+                        android:gravity="center"
+                        />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    </FrameLayout>

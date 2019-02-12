@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="1dp"
+
+    >
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        >
+
+        <LinearLayout
+            android:id="@+id/peso_color_item"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@color/accBlue"
+            >
+
+            <TextView
+
+                android:id="@+id/peso_txt_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="00000"
+                android:textColor="@color/icons"
+                android:textSize="25sp"
+                android:textStyle="bold"
+
+                />
+
+            <TextView
+                android:id="@+id/text_kg_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mg/dl"
+                android:textColor="@color/icons"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lin_imc_color"
+            android:layout_width="98dp"
+            android:layout_height="match_parent"
+            android:background="@color/Froly"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp"
+            app:layout_constraintStart_toEndOf="@+id/peso_color_item">
+
+
+            <TextView
+                android:id="@+id/peso_descrip_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:text="@string/lb_medidas_fecha"
+                android:textColor="@color/icons"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_imc_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/icons"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout11"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/menupopup1"
+            app:layout_constraintStart_toEndOf="@+id/lin_imc_color"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/peso_imc_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="00000"
+                android:textSize="8dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lb_medidas_fecha"
+
+                />
+
+            <TextView
+                android:id="@+id/peso_fecha_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="fecha"
+
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/menupopup1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_more_vert"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</android.support.v7.widget.CardView>
