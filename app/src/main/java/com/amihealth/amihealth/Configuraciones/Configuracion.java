@@ -74,6 +74,14 @@ public class Configuracion {
     public static final  String URL_DELETE_CINTURA = "borrar_cintura";
     public static final  String URL_STATUS_CINTURA = "status_cintura";
 
+    //SECCION PARA LOS ENDPOINT DE GLUCOSA
+
+    public static final  String URL_GET_GLUCOSA = "show_glucosa";
+    public static final  String URL_INSERT_GLUCOSA = "add_glucosa";
+    public static final  String URL_EDIT_GLUCOSA = "update_glucosa";
+    public static final  String URL_DELETE_GLUCOSA = "delete_glucosa";
+
+
     public static final  String URL_verificaremail = "getEmailUser";
 
 

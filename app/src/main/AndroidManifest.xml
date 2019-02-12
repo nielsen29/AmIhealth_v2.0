@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".AppConfig.AppInicio"
@@ -91,6 +93,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.amihealth.amihealth.ModuloHTA.HTAhomeActivity" />
         </activity>
+        <activity
+            android:name=".ModuloHTA.view.fragments.IntroFrecuenciaCardiaca"
+            android:parentActivityName=".ModuloHTA.HTAhomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.ModuloHTA.HTAhomeActivity" />
+        </activity>
+        <activity
+            android:name=".ModuloAntropomorficas.Home.GlucosaMod.Fragments.IntroDieta"
+            android:parentActivityName=".ModuloHTA.HTAhomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.GlucosaActivity" />
+        </activity>
 
         <service
             android:name=".ApiAmIHealth.MyService"
@@ -125,6 +141,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.amihealth.amihealth.Home.HomeActivity" />
         </activity>
+        <activity
+            android:name=".ModuloAntropomorficas.Home.GlucosaMod.GlucosaActivity"
+            android:label="@string/title_glucosaActivity"
+            android:parentActivityName=".Home.HomeActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.Home.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ModuloAntropomorficas.Home.GlucosaMod.dato_bluetooth"
+            android:label="@string/title_glucosaActivity"
+            android:parentActivityName=".Adaptadores.DeviceListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.Home.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".Adaptadores.DeviceListActivity"
+            android:label="@string/title_bluetooth"
+            android:parentActivityName=".ModuloAntropomorficas.Home.GlucosaMod.GlucosaActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.amihealth.amihealth.Home.HomeActivity" />
+        </activity>
 
         <receiver
             android:name=".AppConfig.PusherReceiver"
@@ -139,13 +182,25 @@
             android:name=".AppConfig.MyPusherIntentService"
             android:exported="false" />
 
-        <activity android:name=".AppConfig.notification.NotificationActivity"
-            android:parentActivityName=".Home.HomeActivity"
-            >
+        <activity
+            android:name=".AppConfig.notification.NotificationActivity"
+            android:parentActivityName=".Home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.amihealth.amihealth.Home.HomeActivity" />
         </activity>
+        <activity android:name=".Login.SplashScreen">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+
+        </activity>
+        <activity android:name=".ModuloHTA.view.FrecuenciaCardiaca"></activity>
     </application>
 
 </manifest>

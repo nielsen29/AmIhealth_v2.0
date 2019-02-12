@@ -214,7 +214,7 @@ public class AdapterCinturaGraficas extends RecyclerView.Adapter<AdapterCinturaG
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 //Toast.makeText(context,resultados.get(position).getRealmResults().get((int) e.getX()).toString(),Toast.LENGTH_LONG).show();
-                //holder.graf.setMarker(new CustomHTAMarkerView(context,R.layout.graf_descrip,resultados.get(position).getRealmResults().sort("Date", Sort.DESCENDING).get((int) e.getX())));
+                holder.graf.setMarker(new CustomCinturaMarkerView(context,R.layout.graph_descrip_cintura,resultados.get(position).getRealmResults().sort("datetime", Sort.DESCENDING).get((int) e.getX())));
             }
 
             @Override
@@ -273,7 +273,7 @@ public class AdapterCinturaGraficas extends RecyclerView.Adapter<AdapterCinturaG
             }
 
 
-            LineDataSet lineSys = new LineDataSet(SYS,"Peso");
+            LineDataSet lineSys = new LineDataSet(SYS,"Cintura");
             lineSys.setCircleColor(ContextCompat.getColor(context,R.color.sysGradient));
             lineSys.setColor(ContextCompat.getColor(context,R.color.sysGradient));
             //lineSys.setFillColor(Color.parseColor("#c2bbff"));
@@ -298,7 +298,7 @@ public class AdapterCinturaGraficas extends RecyclerView.Adapter<AdapterCinturaG
             });
 
 
-            LineDataSet lineDis = new LineDataSet(DIS,"IMC");
+            LineDataSet lineDis = new LineDataSet(DIS,"ICA");
             //lineDis.setFillAlpha(200);
             lineDis.setCircleColor(ContextCompat.getColor(context,R.color.disgradient));
             //lineDis.setFillColor(Color.parseColor("#9eb4fe"));

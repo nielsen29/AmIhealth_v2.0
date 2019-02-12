@@ -13,9 +13,6 @@
     <string name="text_card_number2">0 like</string>
 
 
-
-
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="step_btn_back">anterior</string>
@@ -90,6 +87,8 @@
     <string name="detalle_pls">Pulso</string>
     <string name="detalle_fecha_titulo">Medida captada el:</string>
     <string name="info_nueva_medida">Ingresar su peso en KILOGRAMOS</string>
+    <string name="info_nueva_glucosa">(Basal/Antes de comida)</string>
+
     <string name="nuevo_peso_titulo">Nuevo Peso</string>
     <string name="toolbar_titulo_Pesos">Registro de Peso</string>
     <string name="estado_general_titulo">Estado General de sus Medidas</string>
@@ -132,6 +131,7 @@
     <string name="title_activity_home_hta">HomeHTAActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="text_launch_hta">Presión Arterial</string>
+    <string name="text_launch_glucosa">Glucosa</string>
     <string name="title_presionarterial">Presión Arterial</string>
     <string name="title_activity_new_home_hta">NewHomeHTAActivity</string>
     <string name="salir">Salir</string>
@@ -162,10 +162,13 @@
     <string name="text_launch_peso">Peso / IMC</string>
     <string name="title_pesoActivity">Mod Peso</string>
     <string name="title_cinturaActivity">Cintura</string>
+    <string name="title_glucosaActivity">Glucosa</string>
+    <string name="title_bluetooth">Dispositivos Bluetooth</string>
     <string name="editar_peso_title">Editar Medida</string>
     <string name="title_medidas_Graficas">Medida en la Tabla de Calificación</string>
     <string name="title_activity_cintura">CinturaActivity</string>
     <string name="text_launch_cintura">Cintura/altura</string>
+    <string name="none_paired">Ningun dispositivo pudo ser emparejado</string>
 
     <string name="new_message_notification_title_template">New message: %1$s</string>
 
@@ -191,8 +194,15 @@
     <string name="title_disclaimer">Disclaimer</string>
     <string name="title_ayuda">Ayuda</string>
     <string name="nuevo_ICA_titulo">Nueva Medida de Cintura</string>
+    <string name="nuevo_GLUCOSA_titulo">Nueva Medida de Glucosa</string>
+
+
+    <string name="info_nueva_medida_glucosa">Ingresar su medida de glucosa en mg/dl</string>
+
     <string name="info_nueva_medida_cintura">Ingresar su medida de cintura en centímetros</string>
     <string name="editar_Cintura_title">Editar Medida de Cintura</string>
+    <string name="editar_Glucosa_title">Editar Medida de Glucosa</string>
+
     <string name="title_notification_item">Nueva notificación</string>
     <string name="reintentar">Volver a intentar</string>
     <string name="aceptar">Aceptar</string>

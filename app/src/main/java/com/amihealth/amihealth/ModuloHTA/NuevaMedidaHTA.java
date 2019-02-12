@@ -145,8 +145,6 @@ public class NuevaMedidaHTA extends AppCompatActivity implements InterfaceHta {
                 getValues();
             }
         });
-
-
         nSys        = (NumberPicker) findViewById(R.id.nSys);
         nSys        .setMaxValue(250);
         nSys        .setMinValue(60);

@@ -134,7 +134,7 @@ public class  AppInicio extends MultiDexApplication {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -161,7 +161,7 @@ public class  AppInicio extends MultiDexApplication {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
 
             }
 
@@ -197,7 +197,7 @@ public class  AppInicio extends MultiDexApplication {
 
        }else{
 
-           Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
+          // Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
 
        }
 
@@ -229,7 +229,7 @@ public class  AppInicio extends MultiDexApplication {
 
         }else{
 
-            Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(),"No DTA",Toast.LENGTH_LONG).show();
 
         }
 

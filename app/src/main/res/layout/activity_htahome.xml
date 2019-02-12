@@ -27,6 +27,18 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="end|bottom"
         />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_pulso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/logoRed"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/heart"
+        app:useCompatPadding="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom"
+        />
 
 
 </android.support.design.widget.CoordinatorLayout>

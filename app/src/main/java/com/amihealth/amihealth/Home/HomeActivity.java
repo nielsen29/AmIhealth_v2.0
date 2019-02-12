@@ -33,8 +33,14 @@ import com.amihealth.amihealth.AppConfig.WebDialog;
 import com.amihealth.amihealth.AppConfig.notification.NotificationActivity;
 import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
+import com.amihealth.amihealth.Login.SplashScreen;
+import com.amihealth.amihealth.Models.Cintura;
+import com.amihealth.amihealth.Models.Clasificaciones;
+import com.amihealth.amihealth.Models.Glucosa;
+import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.Models.User;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.CinturaActivity;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.GlucosaActivity;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.MedAntroMainActivity;
 import com.amihealth.amihealth.ModuloHTA.HTAhomeActivity;
 import com.amihealth.amihealth.ModuloHTA.MedidaHTAListActivity;
@@ -52,6 +58,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,6 +77,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView nombre;
     private MyPusherService pusherService;
     private Button launchICA_btn;
+    private Button launch_glucosa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,7 @@ public class HomeActivity extends AppCompatActivity
         if(sessionManager.isLoggedIn()){
             realm = Realm.getDefaultInstance();
             user = realm.where(User.class).equalTo("id_InServer", sessionManager.getUserLogin().get(SessionManager.KEY).toString()).findFirst();
+            //getDATA();
 
         }
         if(user == null){
@@ -103,7 +112,14 @@ public class HomeActivity extends AppCompatActivity
         launchHTA_peso = (Button) findViewById(R.id.btnlaunch_peso);
         launchUSER_btn = (Button) findViewById(R.id.btnlaunch_User);
         launchICA_btn = (Button) findViewById(R.id.btnlaunch_cintura);
-
+        launch_glucosa=(Button)findViewById(R.id.btnlaunch_glucosa);
+        launch_glucosa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), GlucosaActivity.class   );
+                startActivity(i);
+            }
+        });
         launchHTA_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,7 +226,11 @@ public class HomeActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), CinturaActivity.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_glucosa) {
+            Intent i = new Intent(getApplicationContext(), GlucosaActivity.class);
+            startActivity(i);
+
+        }else if (id == R.id.nav_manage) {
             Intent i = new Intent(getApplicationContext(), UserActivity.class);
             startActivity(i);
 
@@ -281,5 +301,11 @@ public class HomeActivity extends AppCompatActivity
     public void showTerminos(String url){
         WebDialog webDialog =  WebDialog.newInstance(url);
         webDialog.show(getSupportFragmentManager(),"WEBDIALOG");
+    }
+
+    public void getDATA(){
+        this.realm = Realm.getDefaultInstance();
+        RealmResults<Clasificaciones> realmResults = realm.where(Clasificaciones.class).findAll();
+        Toast.makeText(getApplicationContext(), realmResults.toString(),Toast.LENGTH_LONG).show();
     }
 }

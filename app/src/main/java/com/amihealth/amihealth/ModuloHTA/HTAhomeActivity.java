@@ -33,9 +33,11 @@ import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Home.HomeActivity;
 import com.amihealth.amihealth.Models.AmIHealthNotificacion;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.OnStaticErrorAlarm;
+import com.amihealth.amihealth.ModuloHTA.view.FrecuenciaCardiaca;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.HTAGraficasFragment;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.HTAListFragment;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.IntroAddMedidas;
+import com.amihealth.amihealth.ModuloHTA.view.fragments.IntroFrecuenciaCardiaca;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.lolFragment;
 import com.amihealth.amihealth.R;
@@ -61,7 +63,6 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
     private Spinner spinnerAction;
     private SessionManager sessionManager;
     private FragmentHTAadapter fragmentHTAadapter;
-
     private FragmentManager fragmentManager;
     private List<Fragment> list;
     public String orderT;
@@ -80,21 +81,21 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
         }
     };
     private static ArrayList<OrdenSelectorListener> listaOrdenArray;
-
     public void setOrderListener(OrdenSelectorListener orderListener) {
         this.orderListener = orderListener;
     }
-
     public static void setGrafOrderListener(OrdenSelectorListener.OrdenGraficaListener grafOrderListener) {
         GrafOrderListener = grafOrderListener;
     }
-
-
-
     private StaticError staticError;
     private AlertDialog alertDialog;
 
     private static final String EXTRA_ALERTA = "alerta";
+
+
+
+
+
 
 
     @Override
@@ -124,6 +125,15 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
 
             }
         });
+        FloatingActionButton fabpulso = (FloatingActionButton) findViewById(R.id.fab_pulso);
+        fabpulso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               gofrecuenciaCardiaca();
+
+            }
+        });
 
         alertDialog.show();
         if(getIntent() != null){
@@ -136,6 +146,15 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
 
     }
 
+    private void goNuevaMedidad(){
+        Intent intent = new Intent(this,NuevaMedidaHTA.class);
+        startActivityForResult(intent, 1000);
+    }
+
+    private void gofrecuenciaCardiaca(){
+        Intent i = new Intent(this, FrecuenciaCardiaca.class);
+        startActivity(i);
+    }
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
@@ -149,21 +168,8 @@ public class HTAhomeActivity extends AppCompatActivity implements HTAListFragmen
         //listaOrdenArray.get(savedInstanceState.getInt("tabPos")).orderListener(savedInstanceState.getInt("spPos"));
     }
 
-    private void setAlarmCase(){
 
-        this.runOnUiThread(new Runnable() {
-            public void run() {
-                StaticError staticError = new StaticError();
-                staticError.getError(getApplicationContext(),StaticError.CONEXION);
-            }
-        });
 
-    }
-
-    private void goNuevaMedidad(){
-        Intent intent = new Intent(this,NuevaMedidaHTA.class);
-        startActivityForResult(intent, 1000);
-    }
 
 
     public void showtoolbar(String titulo, boolean mUpbtn){

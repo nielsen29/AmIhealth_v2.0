@@ -217,7 +217,7 @@ public class AdapterPesoGraficas extends RecyclerView.Adapter<AdapterPesoGrafica
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 //Toast.makeText(context,resultados.get(position).getRealmResults().get((int) e.getX()).toString(),Toast.LENGTH_LONG).show();
-                //holder.graf.setMarker(new CustomHTAMarkerView(context,R.layout.graf_descrip,resultados.get(position).getRealmResults().sort("Date", Sort.DESCENDING).get((int) e.getX())));
+                holder.graf.setMarker(new CustomPesoMarkerView(context,R.layout.graph_descrip_peso,resultados.get(position).getRealmResults().sort("datetime", Sort.DESCENDING).get((int) e.getX())));
             }
 
             @Override

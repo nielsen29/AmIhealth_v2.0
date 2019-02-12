@@ -15,8 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.amihealth.amihealth.Models.Cintura;
-import com.amihealth.amihealth.Models.Peso;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.fragments.AddPesoDialogFragment;
 import com.amihealth.amihealth.R;
 
 import io.realm.Realm;
@@ -85,15 +83,11 @@ public class EditCinturaDialogFragment extends DialogFragment {
                     peso.setText("0");
                     mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
 
-                    //mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
                     dialogInterface.cancel();
 
                 }else{
                     mListener.onDialogPositiveEdit(id,Double.valueOf(peso.getText().toString()));
-
-                    //mListener.onDialogPositiveClick(AddCinturaDialogFragment.this,Double.valueOf(peso.getText().toString()));
                     dismiss();
-
                 }
             }
         });

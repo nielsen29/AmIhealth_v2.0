@@ -16,6 +16,10 @@
             android:icon="@drawable/ms_ic_chevron_end"
             android:title="@string/text_launch_cintura" />
         <item
+            android:id="@+id/nav_glucosa"
+            android:icon="@drawable/ic_glucosa"
+            android:title="@string/text_launch_glucosa" />
+        <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_user"
             android:title="@string/text_launch_user" />
