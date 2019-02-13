@@ -18,6 +18,7 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Utils.Medid
 import com.amihealth.amihealth.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -68,6 +69,7 @@ public class AdapterGlucosaGraficas extends RecyclerView.Adapter<AdapterGlucosaG
     public ViewGrafHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.graficas_rec_hta,parent,false);
         return new ViewGrafHolder(v);
+
     }
 
     @Override
@@ -194,6 +196,7 @@ public class AdapterGlucosaGraficas extends RecyclerView.Adapter<AdapterGlucosaG
 
 
 
+
        /* holder.graf.setDrawOrder(new CombinedChart.DrawOrder[]{
                 CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.LINE
         });
@@ -275,7 +278,7 @@ public class AdapterGlucosaGraficas extends RecyclerView.Adapter<AdapterGlucosaG
             }
 
 
-            LineDataSet lineSys = new LineDataSet(SYS,"Glucosa");
+            LineDataSet lineSys = new LineDataSet(SYS,"Glucosa (mg/dl)");
             lineSys.setCircleColor(ContextCompat.getColor(context,R.color.sysGradient));
             lineSys.setColor(ContextCompat.getColor(context,R.color.sysGradient));
             //lineSys.setFillColor(Color.parseColor("#c2bbff"));
@@ -410,8 +413,25 @@ public class AdapterGlucosaGraficas extends RecyclerView.Adapter<AdapterGlucosaG
 
             graf.moveViewToX(-2);
 
+            graf.animateY(500);
+            LimitLine limitLine =  new LimitLine(200,"Peligro!");
+            limitLine.setLineWidth(3f);
+            limitLine.enableDashedLine(10f,10f,10f);
+            limitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+            limitLine.setTextSize(5f);
+
+            YAxis leftAxis= graf.getAxisLeft();
+            leftAxis.removeAllLimitLines();
+            leftAxis.addLimitLine(limitLine);
+
+            LimitLine limitLine2 =  new LimitLine(70,"Mínimo");
+            limitLine.setLineWidth(3f);
+            limitLine.enableDashedLine(10f,10f,10f);
+            limitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+            limitLine.setTextSize(5f);
 
 
+            leftAxis.addLimitLine(limitLine2);
 
 
 

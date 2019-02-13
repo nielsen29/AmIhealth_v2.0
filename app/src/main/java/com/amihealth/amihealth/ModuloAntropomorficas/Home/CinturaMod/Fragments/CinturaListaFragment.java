@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.amihealth.amihealth.ModuloHTA.NuevaMedidaHTA;
 import com.amihealth.amihealth.ModuloHTA.view.fragments.OrdenSelectorListener;
 import com.amihealth.amihealth.R;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -104,6 +107,41 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("ALAVERGAPERRO: ","_______________________CINTURA LIST>>>>>>>>> OnSTART()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("ALAVERGAPERRO: ","_______________________CINTURA LIST>>>>>>>>> OnRESUME()");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("ALAVERGAPERRO: ","_______________________CINTURA LIST>>>>>>>>> OnPAUSE()");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("ALAVERGAPERRO: ","_______________________CINTURA LIST>>>>>>>>> OnSTOP()");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("ALAVERGAPERRO: ","_______________________CINTURA LIST>>>>>>>>> OnDESTRYV()");
+    }
+
+    @Override
+    public void dump(String prefix, FileDescriptor fd, PrintWriter writer, String[] args) {
+        super.dump(prefix, fd, writer, args);
+    }
+
     private void setupSwipeRefresh(){
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -111,7 +149,8 @@ public class CinturaListaFragment extends Fragment implements InterfaceCinturaVi
 
                 medidasCinturaLists.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
-                OnGetAllResponse();
+                cinturaPresenter.RequestGetAll();
+               // OnGetAllResponse();
                 //presenterHta.getMedidas(0);
                 //swipeRefreshLayout.setRefreshing(false);
             }

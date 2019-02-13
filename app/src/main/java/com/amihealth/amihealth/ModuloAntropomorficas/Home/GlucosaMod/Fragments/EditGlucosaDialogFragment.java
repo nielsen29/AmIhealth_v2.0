@@ -70,7 +70,7 @@ public class EditGlucosaDialogFragment extends DialogFragment {
         String[] s = {"Antes de comer","2 horas poscomida"};
         sp_kg.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item,s));
         sp_kg.setEnabled(true);
-        sp_kg.setVisibility(View.VISIBLE);
+        sp_kg.setVisibility(View.INVISIBLE);
         peso.setText(String.valueOf(pes.getGlucosa()));
         builder.setView(v);
         sp_kg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

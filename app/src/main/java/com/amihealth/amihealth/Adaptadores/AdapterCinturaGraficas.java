@@ -409,8 +409,8 @@ public class AdapterCinturaGraficas extends RecyclerView.Adapter<AdapterCinturaG
             graf.moveViewToX(-2);
 
 
-
-
+           // graf.animateX(500);
+            graf.animateY(500);
 
 
 

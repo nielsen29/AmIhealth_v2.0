@@ -30,6 +30,13 @@ public class GlucosaIteractorIMP implements InterfaceGlucosaIteractor {
     }
 
     @Override
+    public void RequestGetAllHbA1c() {
+
+        cinturaRepo.RequestGetAllHbA1c();
+
+    }
+
+    @Override
     public void RequestInsert(Glucosa glucosa) {
         cinturaRepo.RequestInsert(glucosa);
     }

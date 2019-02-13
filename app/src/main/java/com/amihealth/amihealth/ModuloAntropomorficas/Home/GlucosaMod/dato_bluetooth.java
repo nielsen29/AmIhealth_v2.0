@@ -311,6 +311,11 @@ public class dato_bluetooth extends AppCompatActivity implements InterfaceGlucos
     }
 
     @Override
+    public void RequestGetAllHbA1c() {
+
+    }
+
+    @Override
     public void RequestInsert(Glucosa glucosa) {
 
     }

@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,14 +78,13 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("ALAVERGAPERRO: ","_________________________>>>>>>>>>> OngetALL()");
         this.cinturaPresenter = new GlucosaPresenterIMP(this,getContext());
         realm = Realm.getDefaultInstance();
         sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
-
         cinturaList = new ArrayList<>();
         intent = new Intent(getActivity(),NuevaMedidaHTA.class);
-
         assert recyclerView != null;
     }
 
@@ -92,6 +92,7 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("ALAVERGAPERRO: ","_________________________>>>>>>>>>> OnCREATEVIEW()");
         View view = inflater.inflate(R.layout.fragment_htalist, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.htaList_Recycler);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh_hta);
@@ -99,11 +100,25 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
         linearLayout_error_conection = (LinearLayout) view.findViewById(R.id.error_layout_hta);
         linearLayout_error_empty = (LinearLayout) view.findViewById(R.id.errorEmpty_layout_hta);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_hta_frag);
+        cinturaList.clear();
         cinturaPresenter.RequestGetAll();
         setupRecyclerView();
         setupSwipeRefresh();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("ALAVERGAPERRO: ","_________________________>>>>>>>>>> OnRESUME()");
+        try {
+            cinturaList.clear();
+            recyclerView.getAdapter().notifyDataSetChanged();
+            OnGetAllResponse();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupSwipeRefresh(){
@@ -122,6 +137,7 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
     }
 
     private void setupRecyclerView() {
+        Log.d("ALAVERGAPERRO: ","_________________________>>>>>>>>>> setUP RECYCLER()");
         //adapterMedidasList = new AdapterMedidasList(getContext(),this,medidasHTALists);
         recyclerView.setAddStatesFromChildren(true);
         registerForContextMenu(recyclerView);
@@ -143,6 +159,8 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
 
     @Override
     public void OnGetAllResponse() {
+        Log.d("ALAVERGAPERRO: ","_________________________>>>>>>>>>> OngetALL()");
+        
         realm = Realm.getDefaultInstance();
         //Toast.makeText(getContext(), "RESPONDIOOOOOO",Toast.LENGTH_LONG).show();
 
@@ -151,10 +169,12 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
             linearLayout_error_empty.setVisibility(View.VISIBLE);
         }else{
             linearLayout_error_empty.setVisibility(View.INVISIBLE);
+            this.realmResults = realmResults;
+            ordenarARRAY(ORDEN);
         }
         //hiddenLoad();
-        this.realmResults = realmResults;
-        ordenarARRAY(ORDEN);
+
+
         //listo = 1;
         swipeRefreshLayout.setRefreshing(false);
 
@@ -204,6 +224,7 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
 
 
     public void ordenarARRAY(int order){
+        Log.d("ALAVERGAPERRO: ","_________________________>>>>>>>>>> ORDENARRRRR()");
         realm = Realm.getDefaultInstance();
         cinturaList.clear();
         RealmResults<Glucosa> lol;
@@ -248,6 +269,8 @@ public class GlucosaGraficaFragment extends Fragment implements InterfaceGlucosa
                     break;
             }
         }
+
+
         recyclerView.setAdapter(new AdapterGlucosaGraficas(cinturaList,getContext()));
         recyclerView.getAdapter().notifyDataSetChanged();
         realm.close();

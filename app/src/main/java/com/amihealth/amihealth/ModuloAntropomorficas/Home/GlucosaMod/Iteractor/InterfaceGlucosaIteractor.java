@@ -10,6 +10,9 @@ import com.amihealth.amihealth.Models.Glucosa;
 public interface InterfaceGlucosaIteractor {
 
     void RequestGetAll();
+
+    void RequestGetAllHbA1c();
+
     void RequestInsert(Glucosa glucosa);
     void RequestUpdate(Glucosa glucosa);
     void RequestDelete(Glucosa glucosa);

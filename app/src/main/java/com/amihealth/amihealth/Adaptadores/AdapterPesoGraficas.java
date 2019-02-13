@@ -413,7 +413,8 @@ public class AdapterPesoGraficas extends RecyclerView.Adapter<AdapterPesoGrafica
             graf.moveViewToX(-2);
 
 
-
+            //graf.animateX(500);
+            graf.animateY(500);
 
 
 

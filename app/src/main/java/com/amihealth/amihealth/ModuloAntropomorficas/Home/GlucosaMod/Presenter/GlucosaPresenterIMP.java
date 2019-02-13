@@ -1,8 +1,8 @@
 package com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Presenter;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.Glucosa;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.InterfaceGlucosaView;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Iteractor.GlucosaIteractorIMP;
@@ -15,19 +15,19 @@ import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Iteractor.I
 public class GlucosaPresenterIMP implements InterfaceGlucosaPresenter {
 
 
-    private InterfaceGlucosaView cinturaView;
-    private InterfaceGlucosaIteractor cinturaIteractor;
+    private InterfaceGlucosaView glucosaView;
+    private InterfaceGlucosaIteractor glucosaIteractor;
     private Context context;
 
-    public GlucosaPresenterIMP(InterfaceGlucosaView cinturaView, Context context) {
-        this.cinturaView = cinturaView;
+    public GlucosaPresenterIMP(InterfaceGlucosaView glucosaView, Context context) {
+        this.glucosaView = glucosaView;
         this.context = context;
-        this.cinturaIteractor = new GlucosaIteractorIMP(context,this);
+        this.glucosaIteractor = new GlucosaIteractorIMP(context,this);
     }
 
     @Override
     public void OnGetAllResponse() {
-        cinturaView.OnGetAllResponse();
+        glucosaView.OnGetAllResponse();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class GlucosaPresenterIMP implements InterfaceGlucosaPresenter {
 
     @Override
     public void OnDeleteResponse() {
-        cinturaView.OnDeleteResponse();
+        glucosaView.OnDeleteResponse();
     }
 
     @Override
@@ -47,29 +47,35 @@ public class GlucosaPresenterIMP implements InterfaceGlucosaPresenter {
 
     @Override
     public void OnErrorResponse(String error) {
-        cinturaView.OnErrorResponse(error);
+        glucosaView.OnErrorResponse(error);
     }
 
     @Override
-    public void OnErrorMedida(String error) { cinturaView.OnErrorMedida(error); }
+    public void OnErrorMedida(String error) { glucosaView.OnErrorMedida(error); }
 
     @Override
     public void RequestGetAll() {
-        cinturaIteractor.RequestGetAll();
+        glucosaIteractor.RequestGetAll();
+    }
+
+    @Override
+    public void RequestGetAllHbA1c() {
+        Log.d("F-GEThba:","------------->>>>>>>>> PRESENTER GEThba");
+        glucosaIteractor.RequestGetAllHbA1c();
     }
 
     @Override
     public void RequestInsert(Glucosa glucosa) {
-        cinturaIteractor.RequestInsert(glucosa);
+        glucosaIteractor.RequestInsert(glucosa);
     }
 
     @Override
     public void RequestUpdate(Glucosa glucosa) {
-        cinturaIteractor.RequestUpdate(glucosa);
+        glucosaIteractor.RequestUpdate(glucosa);
     }
 
     @Override
     public void RequestDelete(Glucosa glucosa) {
-        cinturaIteractor.RequestDelete(glucosa);
+        glucosaIteractor.RequestDelete(glucosa);
     }
 }

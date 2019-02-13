@@ -430,7 +430,8 @@ public class AdapterMedidasHTAgrafica extends RecyclerView.Adapter<AdapterMedida
 
             graf.moveViewToX(-2);
 
-
+           // graf.animateX(500);
+            graf.animateY(500);
 
 
             //graf.setViewPortOffsets(0f,150f,0f,150f);

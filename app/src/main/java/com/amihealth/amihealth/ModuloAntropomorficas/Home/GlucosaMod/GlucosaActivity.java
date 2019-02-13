@@ -1,6 +1,5 @@
 package com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -30,18 +29,12 @@ import com.amihealth.amihealth.AppConfig.OnDialogResponse;
 import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Glucosa;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.AddCinturaDialogFragment;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.CinturaGraficaFragment;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.CinturaListaFragment;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.EditCinturaDialogFragment;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Fragments.InterfaceCinturaView;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.CinturaPresenterIMP;
-import com.amihealth.amihealth.ModuloAntropomorficas.Home.CinturaMod.Presenter.InterfaceCinturaPresenter;
 
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.AddGlucosaDialogFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.GlucosaGraficaFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.GlucosaListaFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.EditGlucosaDialogFragment;
+import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.HbA1cGraficaFragment;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.InterfaceGlucosaView;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Fragments.IntroDieta;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Presenter.GlucosaPresenterIMP;
@@ -79,7 +72,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
     private SectionsPagerAdapter fragmentHTAadapter;
     private ViewPager viewPager;
     private int tabPos = 0;
-    private InterfaceGlucosaPresenter cinturaPresenter;
+    private InterfaceGlucosaPresenter glucosaPresenter;
 
     private LayoutInflater layoutInflater;
     private SessionManager sessionManager;
@@ -87,6 +80,8 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
     private OrdenSelectorListener ordenSelectorListener;
     private InterfaceGlucosaView viewInterface;
     private InterfaceGlucosaView viewInterfaceGrafica;
+    private InterfaceGlucosaView viewInterfaceGraficaHbA1c;
+
     private OrdenSelectorListener.OrdenGraficaListener GrafOrderListener;
 
     private EditText valorglucosa;
@@ -102,7 +97,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
 
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
-        cinturaPresenter = new GlucosaPresenterIMP(this,getApplicationContext());
+        glucosaPresenter = new GlucosaPresenterIMP(this,getApplicationContext());
         valorglucosa=(EditText)findViewById(R.id.nuevo_glucosa_txt);
         layoutInflater = LayoutInflater.from(getApplicationContext());
 
@@ -172,8 +167,14 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
                         ordenSelectorListener.orderListener(spinnerAction.getSelectedItemPosition());
                         break;
                     case 1:
+                        //glucosaPresenter.RequestGetAll();
                         GrafOrderListener.orderGraficListener(spinnerAction.getSelectedItemPosition());
                         break;
+                    case 2:
+                        GrafOrderListener.orderGraficListener(spinnerAction.getSelectedItemPosition());
+                        ordenSelectorListener.orderListener(spinnerAction.getSelectedItemPosition());
+                        //glucosaPresenter.RequestGetAllHbA1c();
+
 
                 }
 
@@ -195,6 +196,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
                         GrafOrderListener.orderGraficListener(spinnerAction.getSelectedItemPosition());
                         break;
 
+
                 }
 
                 //orderListener.orderListener(spinnerAction.getSelectedItemPosition());
@@ -215,6 +217,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
                         GrafOrderListener.orderGraficListener(i);
                         break;
 
+
                 }
 
             }
@@ -229,6 +232,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
                     case 1:
                         GrafOrderListener.orderGraficListener(adapterView.getSelectedItemPosition());
                         break;
+
 
                 }
 
@@ -324,7 +328,8 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
     @Override
     protected void onResume() {
         super.onResume();
-        cinturaPresenter.RequestGetAll();
+        glucosaPresenter.RequestGetAll();
+        glucosaPresenter.RequestGetAllHbA1c();
         //listaOrdenArray = new ArrayList<>();
         //Toast.makeText(getApplicationContext(),"ONRESUME", Toast.LENGTH_LONG).show();
     }
@@ -353,7 +358,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
             Glucosa glucosa = new Glucosa();
             glucosa.setGlucosa(String.valueOf(value));
             glucosa.setTipolectura(String.valueOf(pos));
-            cinturaPresenter.RequestInsert(glucosa);
+            glucosaPresenter.RequestInsert(glucosa);
             alertDialog.show();
         }else{
             staticError.getErrorD(getApplicationContext(),StaticError.VACIO);
@@ -381,7 +386,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
             glucosa.setGlucosa(String.valueOf(value));
             glucosa.setTipolectura(String.valueOf(pos));
             alertDialog.show();
-            cinturaPresenter.RequestUpdate(glucosa);
+            glucosaPresenter.RequestUpdate(glucosa);
         }else{
             staticError.getErrorD(getApplicationContext(),StaticError.VACIO);
         }
@@ -400,7 +405,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
         //alertDialog.show();
         viewInterface.OnGetAllResponse();
         viewInterfaceGrafica.OnGetAllResponse();
-        viewInterface.RespuestaActivity(2);
+        viewInterface.RespuestaActivity(3);
         alertDialog.cancel();
     }
 
@@ -454,7 +459,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
                         Realm realm = Realm.getDefaultInstance();
                         glucosa.setId(realm.where(Glucosa.class).equalTo("id",id).findFirst().getId());
                         alertDialog.show();
-                        cinturaPresenter.RequestDelete(glucosa);
+                        glucosaPresenter.RequestDelete(glucosa);
                     }
                 }).setActionTextColor(getResources().getColor(R.color.ms_white));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -466,8 +471,8 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
     @Override
     public void retryConection() {
 
-        cinturaPresenter.RequestGetAll();
-
+        glucosaPresenter.RequestGetAll();
+        glucosaPresenter.RequestGetAllHbA1c();
     }
 
     @Override
@@ -500,7 +505,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private String title[] = new String[]{"Medidas", "Graficas"};
+        private String title[] = new String[]{"Medidas", "Graficas","HbA1c"};
         public final String orderData;
 
         private FragmentManager frag;
@@ -526,6 +531,10 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
                     GrafOrderListener = (OrdenSelectorListener.OrdenGraficaListener) f;
                     viewInterfaceGrafica = (InterfaceGlucosaView) f;
                     break;
+                case 2:
+                    f = new HbA1cGraficaFragment();
+                    viewInterfaceGraficaHbA1c = (InterfaceGlucosaView) f;
+                    break;
                 default:
                     f = new lolFragment();
                     break;
@@ -544,7 +553,7 @@ public class GlucosaActivity extends AppCompatActivity implements InterfaceGluco
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override

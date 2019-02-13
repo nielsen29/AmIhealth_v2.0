@@ -94,6 +94,7 @@
     <string name="estado_general_titulo">Estado General de sus Medidas</string>
     <string name="estado_general_medidas_titulo">Medidas</string>
     <string name="medidas_titulo_graf">Gráfica de medidas</string>
+    <string name="hba1c_titulo_graf">Gráfica de Hemoglobina Glucosilada</string>
     <string name="graf_peso_titulo">Gráfica de Peso-IMC</string>
     <string name="lb_medidas_fecha">Fecha</string>
     <string name="btn_fecha">fecha</string>
@@ -188,6 +189,7 @@
     <string name="accept">Acepto</string>
     <string name="semena">Semana</string>
     <string name="mes">Mes</string>
+    <string name="trimestre">Trimestre</string>
     <string name="year">Año</string>
     <string name="title_terminos">Términos y Condiciones</string>
     <string name="title_politica">Política de Privacidad</string>

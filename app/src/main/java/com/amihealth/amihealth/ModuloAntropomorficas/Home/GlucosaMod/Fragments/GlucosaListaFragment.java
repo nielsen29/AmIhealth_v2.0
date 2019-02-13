@@ -153,10 +153,11 @@ public class GlucosaListaFragment extends Fragment implements InterfaceGlucosaVi
             linearLayout_error_empty.setVisibility(View.VISIBLE);
         }else{
             linearLayout_error_empty.setVisibility(View.INVISIBLE);
+            this.realmResults = realmResults;
+            ordenarARRAY(ORDEN);
         }
         //hiddenLoad();
-        this.realmResults = realmResults;
-        ordenarARRAY(ORDEN);
+
         //listo = 1;
         swipeRefreshLayout.setRefreshing(false);
         mListenerErrorActivity.OnProgressOff();

@@ -4,6 +4,7 @@ import com.amihealth.amihealth.Configuraciones.Configuracion;
 import com.amihealth.amihealth.Models.AmIHealthNotificacion;
 import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.Glucosa;
+import com.amihealth.amihealth.Models.HbA1c;
 import com.amihealth.amihealth.Models.MedidaHTA;
 import com.amihealth.amihealth.Models.Peso;
 import com.amihealth.amihealth.Models.User;
@@ -117,6 +118,9 @@ public interface ServiceRetrofit {
 
     @GET(Configuracion.URL_GET_GLUCOSA)
     Observable<Response<ArrayList<Glucosa>>> getMedidas_glucosa();
+
+    @GET(Configuracion.URL_GET_HBA1C)
+    Observable<Response<ArrayList<HbA1c>>> getMedidas_HbA1c();
 
     @POST(Configuracion.URL_INSERT_GLUCOSA)
     Observable<Response<Glucosa>> insert_Glucosa(@Body Glucosa glucosa);

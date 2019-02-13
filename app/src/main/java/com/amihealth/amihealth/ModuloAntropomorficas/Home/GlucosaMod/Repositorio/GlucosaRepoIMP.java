@@ -8,6 +8,7 @@ import com.amihealth.amihealth.AppConfig.StaticError;
 import com.amihealth.amihealth.Configuraciones.SessionManager;
 import com.amihealth.amihealth.Models.Cintura;
 import com.amihealth.amihealth.Models.Glucosa;
+import com.amihealth.amihealth.Models.HbA1c;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Presenter.GlucosaPresenterIMP;
 import com.amihealth.amihealth.ModuloAntropomorficas.Home.GlucosaMod.Presenter.InterfaceGlucosaPresenter;
 import com.amihealth.amihealth.Parsers.ParserError;
@@ -33,7 +34,7 @@ public class GlucosaRepoIMP implements InterfaceGlucosaRepo {
     private String token;
     private RetrofitAdapter retrofitAdapter;
     private Realm realm;
-
+   // final RealmResults<HbA1c> results = realm.where(HbA1c.class).findAll();
 
     public GlucosaRepoIMP(Context context, GlucosaPresenterIMP cinturaPresenterIMP) {
         this.context = context;
@@ -56,10 +57,30 @@ public class GlucosaRepoIMP implements InterfaceGlucosaRepo {
                 }, throwable -> {
                     Log.i("ERROR", "RxJava2, HTTP Error: " + throwable.getMessage());
                     cinturaPresenter.OnErrorResponse(StaticError.CONEXION);
-
                 });
-
     }
+
+    @Override
+    public void RequestGetAllHbA1c() {
+        Log.d("F-GEThba:","------------->>>>>>>>> REPO GEThba");
+        Observable<Response<ArrayList<HbA1c>>> observable = retrofitAdapter.getClientService(token).getMedidas_HbA1c();
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(arrayListResponse -> {
+                    if(arrayListResponse.isSuccessful()){
+                        Log.d("F-GEThba:","------------->>>>>>>>> RESPONSE SUSS GEThba");
+                        insertar_HbA1c_REALM(arrayListResponse.body());
+                    }else{
+                        Log.d("F-GEThba:","------------->>>>>>>>> RESPONSE ERROR GEThba");
+                        EliminarFromHbA1c();
+                        cinturaPresenter.OnErrorResponse(arrayListResponse.errorBody().string());
+                    }
+                }, throwable -> {
+                    Log.i("ERROR", "RxJava2, HTTP Error: " + throwable.getMessage());
+                    cinturaPresenter.OnErrorResponse(StaticError.CONEXION);
+                });
+    }
+
 
     @Override
     public void RequestInsert(Glucosa glucosa) {
@@ -140,6 +161,7 @@ public class GlucosaRepoIMP implements InterfaceGlucosaRepo {
                                     }
                                 });
                                 realm.close();
+                                EliminarFromHbA1c();
                                 cinturaPresenter.OnDeleteResponse();
                             }else {
                                 cinturaPresenter.OnErrorResponse(cinturaResponse.errorBody().string());
@@ -249,6 +271,111 @@ public class GlucosaRepoIMP implements InterfaceGlucosaRepo {
         cinturaPresenter.OnGetAllResponse();
     }
 
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////
+    public void insertar_HbA1c_REALM(final ArrayList<HbA1c> medidas){
+
+        int x = 0;
+        final ArrayList<String> id = new ArrayList<>();
+        final boolean encontrado = false;
+
+        this.realm = Realm.getDefaultInstance();
+        RealmResults<HbA1c> realmResults = realm.where(HbA1c.class).findAll();
+        if(realmResults.isEmpty()){
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insertOrUpdate(medidas);
+                }
+            });
+            realm.close();
+            cinturaPresenter.OnGetAllResponse();
+        }else{
+
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insertOrUpdate(medidas);
+                }
+            });
+            realm.close();
+            Realm realmTo = Realm.getDefaultInstance();
+            RealmResults<HbA1c> result = realmTo.where(HbA1c.class).findAll();
+
+
+            while (x == 0){
+                for (int i = 0; i < result.size(); i++) {
+                    String busco = result.get(i).getId().toString();
+
+                    for (int j = 0; j < medidas.size() ; j++) {
+                        if(medidas.get(j).getId().equals(busco)){
+                            x = 1;
+                            //Toast.makeText(context,result.get(i).getId(),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    if(x == 0){
+                        id.add(busco);
+                    }
+                    x = 0;
+
+                }
+                x =1;
+            }
+
+            if(id.isEmpty()){
+
+                //COMUNICAR SE CARGARON LOS DATOS
+
+
+            }else{
+
+                //presenterHta.response("Sincronizando datos...!");
+
+                for (int i = 0; i < id.size() ; i++) {
+                    Realm realmR = Realm.getDefaultInstance();
+                    final int finalI = i;
+                    realmR.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            realm.where(HbA1c.class).equalTo("id",id.get(finalI)).findFirst().deleteFromRealm();
+                        }
+                    });
+                    realmR.close();
+                }
+            }
+            cinturaPresenter.OnGetAllResponse();
+
+        }
+
+
+    }
+
+
+    public void EliminarFromHbA1c(){
+
+        Log.d("F-GEThba:","------------->>>>>>>>> ELIMINAR REALM GEThba");
+        this.realm = Realm.getDefaultInstance();
+
+        RealmResults<HbA1c> realmResults = realm.where(HbA1c.class).findAll();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realmResults.deleteAllFromRealm();
+                Log.d("F-HBA:","------------->>>>>>>>> ELIMINOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+
+            }
+        });
+
+        realm.close();
+    }
 
 
 }

@@ -77,6 +77,7 @@ public class Configuracion {
     //SECCION PARA LOS ENDPOINT DE GLUCOSA
 
     public static final  String URL_GET_GLUCOSA = "show_glucosa";
+    public static final  String URL_GET_HBA1C = "show_hbglucosilada";
     public static final  String URL_INSERT_GLUCOSA = "add_glucosa";
     public static final  String URL_EDIT_GLUCOSA = "update_glucosa";
     public static final  String URL_DELETE_GLUCOSA = "delete_glucosa";
